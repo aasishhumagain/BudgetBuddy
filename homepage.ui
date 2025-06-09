@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>homepage</class>
+ <widget class="QDialog" name="homepage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="labelTitle">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>100</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Welcome! Let’s get started!</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonAddTransaction">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>170</y>
+     <width>121</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Add Transactions</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonSetGoal">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>260</y>
+     <width>121</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Set Monthly Goal</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonAnalyzeReport">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>260</y>
+     <width>121</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Analyze Report</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonViewTransaction">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>170</y>
+     <width>121</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>View Transactions</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
