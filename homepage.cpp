@@ -1,7 +1,9 @@
 #include "homepage.h"
 #include "ui_homepage.h"
-#include <QMessageBox>
 #include "transactions.h"
+#include "monthlygoals.h"  // ✅ Include this!
+#include <QMessageBox>
+
 
 homepage::homepage(QWidget *parent) :
     QDialog(parent),
@@ -28,7 +30,9 @@ void homepage::on_buttonViewTransaction_clicked()
 
 void homepage::on_buttonSetGoal_clicked()
 {
-    QMessageBox::information(this, "Info", "Set Monthly Goal clicked!");
+    // ✅ Replaced message box with actual window
+    monthlygoals *goalWindow = new monthlygoals(this);
+    goalWindow->exec();
 }
 
 void homepage::on_buttonAnalyzeReport_clicked()

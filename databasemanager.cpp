@@ -60,12 +60,15 @@ void DatabaseManager::initializeTables()
                "date TEXT,"
                "FOREIGN KEY(user_id) REFERENCES users(id))");
 
-    query.exec("CREATE TABLE IF NOT EXISTS monthly_budget ("
-               "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-               "user_id INTEGER,"
-               "month TEXT,"
-               "budget_amount REAL,"
-               "FOREIGN KEY(user_id) REFERENCES users(id))");
+
+    query.exec("CREATE TABLE IF NOT EXISTS monthly_goals ("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "user_id INTEGER, "
+               "month TEXT, "
+               "year INTEGER, "
+               "amount REAL, "
+               "UNIQUE(user_id, month, year))");
+
 
     query.exec("CREATE TABLE IF NOT EXISTS alerts ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"

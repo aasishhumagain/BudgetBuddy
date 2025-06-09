@@ -13,6 +13,173 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QLabel" name="labelTitle">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>80</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Set Monthly Goals</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxMonth">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>140</y>
+     <width>82</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>January </string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>February</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>March</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>April</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>May</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>June</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>July</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>August</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>September</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>October</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>November</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>December</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="labelMonth">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>140</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Select Month:</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxYear">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>180</y>
+     <width>81</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::InputMethodHint::ImhNone</set>
+   </property>
+   <property name="minimum">
+    <number>2000</number>
+   </property>
+   <property name="maximum">
+    <number>2030</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelYear">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>190</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Select Year:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>230</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input Your Budget:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditAmount">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>230</y>
+     <width>113</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::InputMethodHint::ImhDigitsOnly</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonSubmit">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>280</y>
+     <width>83</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Submit</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

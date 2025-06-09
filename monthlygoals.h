@@ -15,8 +15,12 @@ public:
     explicit monthlygoals(QWidget *parent = nullptr);
     ~monthlygoals();
 
+private slots:
+    void on_buttonSubmit_clicked();
+
 private:
     Ui::monthlygoals *ui;
+    void showMessage(const QString &msg);
 };
 
 #endif // MONTHLYGOALS_H
