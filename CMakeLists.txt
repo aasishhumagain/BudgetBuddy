@@ -30,6 +30,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         homepage.h homepage.cpp homepage.ui
         transactions.h transactions.cpp transactions.ui
         monthlygoals.h monthlygoals.cpp monthlygoals.ui
+        viewtransactions.h viewtransactions.cpp viewtransactions.ui
+        analyzereport.h analyzereport.cpp analyzereport.ui
     )
 else()
     if(ANDROID)
@@ -75,3 +77,8 @@ install(TARGETS BudgetBuddy_2
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(BudgetBuddy_2)
 endif()
+
+find_package(Qt6 REQUIRED COMPONENTS Charts)
+
+target_link_libraries(BudgetBuddy_2 PRIVATE Qt6::Charts)
+

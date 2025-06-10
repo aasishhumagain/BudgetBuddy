@@ -3,6 +3,9 @@
 #include "transactions.h"
 #include "monthlygoals.h"  // ✅ Include this!
 #include <QMessageBox>
+#include "viewtransactions.h"
+#include "analyzereport.h"
+
 
 
 homepage::homepage(QWidget *parent) :
@@ -25,7 +28,8 @@ void homepage::on_buttonAddTransaction_clicked()
 
 void homepage::on_buttonViewTransaction_clicked()
 {
-    QMessageBox::information(this, "Info", "View Transactions clicked!");
+    viewtransactions *vt = new viewtransactions(this);
+    vt->exec();
 }
 
 void homepage::on_buttonSetGoal_clicked()
@@ -35,7 +39,10 @@ void homepage::on_buttonSetGoal_clicked()
     goalWindow->exec();
 }
 
+
 void homepage::on_buttonAnalyzeReport_clicked()
 {
-    QMessageBox::information(this, "Info", "Analyze Report clicked!");
+    analyzereport *report = new analyzereport(this);
+    report->exec();
 }
+
