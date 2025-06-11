@@ -26,16 +26,6 @@
     <string>Your Report Analysis</string>
    </property>
   </widget>
-  <widget class="QWidget" name="chartWidget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>150</y>
-     <width>321</width>
-     <height>261</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="buttonBack">
    <property name="geometry">
     <rect>
@@ -153,6 +143,22 @@
    </property>
    <property name="text">
     <string>Filter</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="chartWidget">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>150</y>
+     <width>381</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Shape::VLine</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Shadow::Raised</enum>
    </property>
   </widget>
  </widget>

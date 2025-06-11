@@ -9,54 +9,47 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# ---- Required Qt modules ----
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts)
 
+# ---- Source files ----
 set(PROJECT_SOURCES
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    databasemanager.cpp
-    databasemanager.h
+    mainwindow.cpp mainwindow.h mainwindow.ui
+    databasemanager.cpp databasemanager.h
+    login.cpp login.h login.ui
+    signup.cpp signup.h signup.ui
+    homepage.cpp homepage.h homepage.ui
+    transactions.cpp transactions.h transactions.ui
+    monthlygoals.cpp monthlygoals.h monthlygoals.ui
+    viewtransactions.cpp viewtransactions.h viewtransactions.ui
+    analyzereport.cpp analyzereport.h analyzereport.ui
 )
 
+# ---- Executable ----
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(BudgetBuddy_2
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        login.h login.cpp login.ui
-        signup.h signup.cpp signup.ui
-        homepage.h homepage.cpp homepage.ui
-        transactions.h transactions.cpp transactions.ui
-        monthlygoals.h monthlygoals.cpp monthlygoals.ui
-        viewtransactions.h viewtransactions.cpp viewtransactions.ui
-        analyzereport.h analyzereport.cpp analyzereport.ui
     )
 else()
-    if(ANDROID)
-        add_library(BudgetBuddy_2 SHARED
-            ${PROJECT_SOURCES}
-        )
-    else()
-        add_executable(BudgetBuddy_2
-            ${PROJECT_SOURCES}
-        )
-    endif()
+    add_executable(BudgetBuddy_2 ${PROJECT_SOURCES})
 endif()
 
-# ✅ MOVE THIS DOWN HERE after the executable is defined
+# ---- Link libraries ----
 target_link_libraries(BudgetBuddy_2
     PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Sql
+    Qt${QT_VERSION_MAJOR}::Charts   # ✅ Charts for PieChart
 )
 
-# macOS/iOS specific (leave as is)
+# ---- macOS/iOS bundle settings ----
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.BudgetBuddy_2)
+    set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.BudgetBuddy_2)
 endif()
 
 set_target_properties(BudgetBuddy_2 PROPERTIES
@@ -67,6 +60,7 @@ set_target_properties(BudgetBuddy_2 PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+# ---- Installation paths ----
 include(GNUInstallDirs)
 install(TARGETS BudgetBuddy_2
     BUNDLE DESTINATION .
@@ -74,11 +68,7 @@ install(TARGETS BudgetBuddy_2
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+# ---- Qt6 specific finalization ----
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(BudgetBuddy_2)
 endif()
-
-find_package(Qt6 REQUIRED COMPONENTS Charts)
-
-target_link_libraries(BudgetBuddy_2 PRIVATE Qt6::Charts)
-
