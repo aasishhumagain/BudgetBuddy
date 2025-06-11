@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(BudgetBuddy_2 VERSION 0.1 LANGUAGES CXX)
 
+# Enable Qt features
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -9,11 +10,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# ---- Required Qt modules ----
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+# -------- Find Required Qt Modules --------
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Charts)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts)
 
-# ---- Source files ----
+# -------- All Source Files --------
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp mainwindow.h mainwindow.ui
@@ -27,7 +28,7 @@ set(PROJECT_SOURCES
     analyzereport.cpp analyzereport.h analyzereport.ui
 )
 
-# ---- Executable ----
+# -------- Add Executable --------
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(BudgetBuddy_2
         MANUAL_FINALIZATION
@@ -37,30 +38,30 @@ else()
     add_executable(BudgetBuddy_2 ${PROJECT_SOURCES})
 endif()
 
-# ---- Link libraries ----
+# -------- Link Required Qt Libraries --------
 target_link_libraries(BudgetBuddy_2
     PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Sql
-    Qt${QT_VERSION_MAJOR}::Charts   # ✅ Charts for PieChart
+    Qt${QT_VERSION_MAJOR}::Charts
 )
 
-# ---- macOS/iOS bundle settings ----
+# -------- macOS/iOS Configuration (Optional) --------
 if(${QT_VERSION} VERSION_LESS 6.1.0)
     set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.BudgetBuddy_2)
 endif()
 
 set_target_properties(BudgetBuddy_2 PROPERTIES
     ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
-# ---- Installation paths ----
+# -------- Installation --------
 include(GNUInstallDirs)
 install(TARGETS BudgetBuddy_2
     BUNDLE DESTINATION .
@@ -68,7 +69,7 @@ install(TARGETS BudgetBuddy_2
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# ---- Qt6 specific finalization ----
+# -------- Finalize for Qt6 --------
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(BudgetBuddy_2)
 endif()

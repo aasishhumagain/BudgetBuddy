@@ -18,10 +18,10 @@ public:
 private slots:
     void onBackButtonClicked();
     void onFilterClicked();
+    void generatePieChart(const QString &month, int year);
 
 private:
     Ui::analyzereport *ui;
-    void generatePieChart(const QString &month, int year);
 };
 
 #endif // ANALYZEREPORT_H

@@ -1,31 +1,33 @@
 #include "analyzereport.h"
 #include "ui_analyzereport.h"
+
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
+#include <QtCharts/QChart>
+#include <QVBoxLayout>
 #include <QSqlQuery>
 #include <QSqlError>
-#include <QVBoxLayout>
 #include <QDate>
+#include <QDebug>
+
 analyzereport::analyzereport(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::analyzereport)
 {
     ui->setupUi(this);
 
-    // Populate month combo
-    QStringList months = {"January", "February", "March", "April", "May", "June",
-                          "July", "August", "September", "October", "November", "December"};
+    QStringList months = {
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    };
     ui->comboBoxMonth->addItems(months);
 
-    // Set current year
-    int currentYear = QDate::currentDate().year();
     ui->spinBoxYear->setRange(2000, 2100);
-    ui->spinBoxYear->setValue(currentYear);
+    ui->spinBoxYear->setValue(QDate::currentDate().year());
 
     connect(ui->buttonBack, &QPushButton::clicked, this, &analyzereport::onBackButtonClicked);
     connect(ui->buttonFilter, &QPushButton::clicked, this, &analyzereport::onFilterClicked);
 
-    // Draw for current month/year by default
     onFilterClicked();
 }
 
@@ -41,15 +43,17 @@ void analyzereport::onBackButtonClicked()
 
 void analyzereport::onFilterClicked()
 {
-    QString selectedMonth = ui->comboBoxMonth->currentText();
-    int selectedYear = ui->spinBoxYear->value();
-    generatePieChart(selectedMonth, selectedYear);
+    QString month = ui->comboBoxMonth->currentText();
+    int year = ui->spinBoxYear->value();
+    generatePieChart(month, year);
 }
 
 void analyzereport::generatePieChart(const QString &month, int year)
 {
-    QPieSeries *series = new QPieSeries();
+    int monthIndex = ui->comboBoxMonth->currentIndex() + 1;
+    QString formattedMonth = QString("%1").arg(monthIndex, 2, 10, QChar('0'));
 
+    QPieSeries *series = new QPieSeries();
     QSqlQuery query;
     query.prepare(R"(
         SELECT category, SUM(amount)
@@ -60,15 +64,11 @@ void analyzereport::generatePieChart(const QString &month, int year)
         GROUP BY category
     )");
 
-    // Format month as two-digit (e.g., "06" for June)
-    int monthIndex = ui->comboBoxMonth->currentIndex() + 1;
-    QString formattedMonth = QString("%1").arg(monthIndex, 2, 10, QChar('0'));
-
     query.bindValue(":month", formattedMonth);
     query.bindValue(":year", QString::number(year));
 
     if (!query.exec()) {
-        qDebug() << "Chart Query Error:" << query.lastError().text();
+        qDebug() << "Chart query failed:" << query.lastError().text();
         return;
     }
 
@@ -86,11 +86,15 @@ void analyzereport::generatePieChart(const QString &month, int year)
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    // Remove old chart
-    QLayoutItem *child;
-    while ((child = ui->chartWidget->layout()->takeAt(0)) != nullptr) {
-        delete child->widget();
-        delete child;
+    // Clear layout if already set
+    QLayout *oldLayout = ui->chartWidget->layout();
+    if (oldLayout) {
+        QLayoutItem *item;
+        while ((item = oldLayout->takeAt(0)) != nullptr) {
+            delete item->widget();
+            delete item;
+        }
+        delete oldLayout;
     }
 
     QVBoxLayout *layout = new QVBoxLayout(ui->chartWidget);
