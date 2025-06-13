@@ -74,8 +74,8 @@
   <widget class="QPushButton" name="buttonLogin">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>260</y>
+     <x>260</x>
+     <y>270</y>
      <width>83</width>
      <height>29</height>
     </rect>
@@ -87,8 +87,8 @@
   <widget class="QPushButton" name="buttonSignup">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>320</y>
+     <x>260</x>
+     <y>350</y>
      <width>83</width>
      <height>29</height>
     </rect>
@@ -100,8 +100,8 @@
   <widget class="QLabel" name="labelOr">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>290</y>
+     <x>200</x>
+     <y>320</y>
      <width>111</width>
      <height>21</height>
     </rect>
@@ -110,13 +110,13 @@
     <string>Not registered?</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelForgotPassword">
+  <widget class="QPushButton" name="buttonForgotPassword">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>270</y>
+     <x>330</x>
+     <y>300</y>
      <width>121</width>
-     <height>20</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">

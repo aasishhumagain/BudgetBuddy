@@ -16,8 +16,10 @@ public:
     ~login();
 
 private slots:
-    void on_buttonLogin_clicked();   // ✅ only declaration here
-    void on_buttonSignup_clicked();  // for signup
+    void on_buttonLogin_clicked();
+    void on_buttonSignup_clicked();
+    void on_buttonForgotPassword_clicked();  // 👈 Must be here
+
 
 private:
     Ui::login *ui;

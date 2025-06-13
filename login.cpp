@@ -4,14 +4,19 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include "signup.h"
+#include "forgotpassword.h"
+
 
 login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login)
 {
     ui->setupUi(this);
+
+    // Mask password input
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 }
+
 
 login::~login()
 {
@@ -49,3 +54,10 @@ void login::on_buttonSignup_clicked()
     signup *signupWindow = new signup(this);
     signupWindow->exec();  // Open the signup dialog as modal
 }
+
+void login::on_buttonForgotPassword_clicked()
+{
+    ForgotPassword *fp = new ForgotPassword(this);
+    fp->exec();
+}
+

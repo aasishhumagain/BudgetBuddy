@@ -26,6 +26,8 @@ set(PROJECT_SOURCES
     monthlygoals.cpp monthlygoals.h monthlygoals.ui
     viewtransactions.cpp viewtransactions.h viewtransactions.ui
     analyzereport.cpp analyzereport.h analyzereport.ui
+    forgotpassword.cpp forgotpassword.h
+
 )
 
 # -------- Add Executable --------
@@ -33,6 +35,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(BudgetBuddy_2
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        forgotpassword.h forgotpassword.cpp
     )
 else()
     add_executable(BudgetBuddy_2 ${PROJECT_SOURCES})
