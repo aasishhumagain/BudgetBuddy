@@ -28,9 +28,15 @@ void signup::on_buttonCreateAccount_clicked()
 {
     QString username = ui->lineEditUsername->text();
     QString password = ui->lineEditPassword->text();
+    QString confirmPassword = ui->lineEditConfirmPwd->text();
 
-    if (username.isEmpty() || password.isEmpty()) {
-        showMessage("Please fill in both username and password.");
+    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        showMessage("Please fill in all fields.");
+        return;
+    }
+
+    if (password != confirmPassword) {
+        showMessage("Passwords do not match.");
         return;
     }
 
