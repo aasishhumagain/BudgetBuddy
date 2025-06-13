@@ -3,16 +3,16 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QMessageBox>
-#include <qlineedit.h>
-
+#include <QLineEdit>
 
 signup::signup(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::signup)
 {
     ui->setupUi(this);
+    ui->lineEditUsername->setPlaceholderText("Enter Username");
+    ui->lineEditPassword->setPlaceholderText("Enter Password");
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
-    ui->lineEditConfirmPwd->setEchoMode(QLineEdit::Password);
 }
 
 signup::~signup()
@@ -26,40 +26,32 @@ void signup::showMessage(const QString &msg) {
 
 void signup::on_buttonCreateAccount_clicked()
 {
-    QString name = ui->lineEditName->text();
-    QString dob = ui->dateEdit->date().toString("yyyy-MM-dd");
-    QString email = ui->lineEditEmail->text();
+    QString username = ui->lineEditUsername->text();
     QString password = ui->lineEditPassword->text();
-    QString confirmPassword = ui->lineEditConfirmPwd->text();
 
-    if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-        showMessage("Please fill in all fields.");
-        return;
-    }
-
-    if (password != confirmPassword) {
-        showMessage("Passwords do not match.");
+    if (username.isEmpty() || password.isEmpty()) {
+        showMessage("Please fill in both username and password.");
         return;
     }
 
     QSqlQuery checkQuery;
-    checkQuery.prepare("SELECT id FROM users WHERE username = :email");
-    checkQuery.bindValue(":email", email);
+    checkQuery.prepare("SELECT id FROM users WHERE username = :username");
+    checkQuery.bindValue(":username", username);
     checkQuery.exec();
 
     if (checkQuery.next()) {
-        showMessage("Email already registered.");
+        showMessage("Username already exists.");
         return;
     }
 
     QSqlQuery insertQuery;
-    insertQuery.prepare("INSERT INTO users (username, password) VALUES (:email, :password)");
-    insertQuery.bindValue(":email", email);
+    insertQuery.prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+    insertQuery.bindValue(":username", username);
     insertQuery.bindValue(":password", password);
 
     if (insertQuery.exec()) {
-        showMessage("Account created! You can now login.");
-        close(); // Close signup window
+        showMessage("Account created! You can now log in.");
+        this->close();
     } else {
         showMessage("Signup failed: " + insertQuery.lastError().text());
     }
