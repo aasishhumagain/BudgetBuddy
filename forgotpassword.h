@@ -2,10 +2,8 @@
 #define FORGOTPASSWORD_H
 
 #include <QDialog>
-
-class QLabel;
-class QLineEdit;
-class QPushButton;
+#include <QLineEdit>
+#include <QPushButton>
 
 class ForgotPassword : public QDialog
 {
@@ -18,6 +16,8 @@ public:
 private slots:
     void on_buttonReset_clicked();
     void on_buttonCancel_clicked();
+    void toggleNewPasswordVisibility();
+    void toggleConfirmPasswordVisibility();
 
 private:
     QLineEdit *lineEditUsername;
@@ -25,6 +25,11 @@ private:
     QLineEdit *lineEditConfirmPassword;
     QPushButton *buttonReset;
     QPushButton *buttonCancel;
+    QPushButton *toggleNewPasswordBtn;
+    QPushButton *toggleConfirmPasswordBtn;
+
+    bool newPassVisible = false;
+    bool confirmPassVisible = false;
 
     void showMessage(const QString &msg);
 };
