@@ -17,10 +17,15 @@ public:
 
 private slots:
     void on_buttonCreateAccount_clicked();
+    void on_buttonTogglePassword_clicked();
 
 private:
     Ui::signup *ui;
     void showMessage(const QString &msg);
+
+    bool passwordVisible;
+    QString iconClosedPath;
+    QString iconOpenPath;
 };
 
 #endif // SIGNUP_H
