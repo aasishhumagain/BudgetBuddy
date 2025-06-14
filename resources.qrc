@@ -1,0 +1,3 @@
+<RCC>
+    <qresource lang="&lt;qresource prefix=&quot;/images&quot;>&#xa;    &lt;file>icons/eye_open.png&lt;/file>&#xa;    &lt;file>icons/eye_closed.png&lt;/file>&#xa;&lt;/qresource>&#xa;" prefix="/images"/>
+</RCC>

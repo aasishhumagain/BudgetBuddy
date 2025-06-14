@@ -52,7 +52,7 @@
     <string/>
    </property>
    <property name="placeholderText">
-    <string>Email</string>
+    <string>Username</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditPassword">
@@ -65,7 +65,7 @@
     </rect>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::EchoMode::Password</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>Password</string>
@@ -121,6 +121,22 @@
    </property>
    <property name="text">
     <string>Forgot Password?</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonTogglePassword">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>220</y>
+     <width>31</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

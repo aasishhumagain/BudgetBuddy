@@ -18,12 +18,16 @@ public:
 private slots:
     void on_buttonLogin_clicked();
     void on_buttonSignup_clicked();
-    void on_buttonForgotPassword_clicked();  // 👈 Must be here
-
+    void on_buttonForgotPassword_clicked();
+    void on_buttonTogglePassword_clicked();
 
 private:
     Ui::login *ui;
     void showMessage(const QString &message);
+    bool passwordVisible;
+
+    QString iconClosedPath;
+    QString iconOpenPath;
 };
 
 #endif // LOGIN_H

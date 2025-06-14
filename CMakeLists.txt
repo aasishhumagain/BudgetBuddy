@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         forgotpassword.h forgotpassword.cpp
+
     )
 else()
     add_executable(BudgetBuddy_2 ${PROJECT_SOURCES})
