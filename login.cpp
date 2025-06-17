@@ -45,12 +45,12 @@ void login::showMessage(const QString &message)
 
 void login::on_buttonLogin_clicked()
 {
-    QString email = ui->lineEditEmail->text();
+    QString Username = ui->lineEditUsername->text();
     QString password = ui->lineEditPassword->text();
 
     QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE username = :email AND password = :password");
-    query.bindValue(":email", email);
+    query.prepare("SELECT * FROM users WHERE Username = :Username AND password = :password");
+    query.bindValue(":Username", Username);
     query.bindValue(":password", password);
 
     if (query.exec() && query.next()) {
@@ -59,7 +59,7 @@ void login::on_buttonLogin_clicked()
         home->show();
         this->hide();
     } else {
-        showMessage("Invalid email or password.");
+        showMessage("Invalid Username or password.");
     }
 }
 

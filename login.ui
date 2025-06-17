@@ -39,7 +39,7 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditEmail">
+  <widget class="QLineEdit" name="lineEditUsername">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -128,22 +128,6 @@
     <rect>
      <x>370</x>
      <y>220</y>
-     <width>31</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="buttonTogglePassword_2">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>320</y>
      <width>31</width>
      <height>29</height>
     </rect>
