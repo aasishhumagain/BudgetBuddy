@@ -14,6 +14,7 @@ class login : public QDialog
 public:
     explicit login(QWidget *parent = nullptr);
     ~login();
+    int getCurrentUserId() const;
 
 private slots:
     void on_buttonLogin_clicked();
@@ -25,7 +26,7 @@ private:
     Ui::login *ui;
     void showMessage(const QString &message);
     bool passwordVisible;
-
+    int currentUserId = -1;
     QString iconClosedPath;
     QString iconOpenPath;
 };

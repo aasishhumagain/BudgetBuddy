@@ -12,13 +12,16 @@ class viewtransactions : public QDialog
     Q_OBJECT
 
 public:
-    explicit viewtransactions(QWidget *parent = nullptr);
+    explicit viewtransactions(QWidget *parent = nullptr, int userId = -1); // 👈 add userId
     ~viewtransactions();
+
+private slots:
+    void onBackButtonClicked();
 
 private:
     Ui::viewtransactions *ui;
-    void loadTransactionData(); // function to fill the table
-    void onBackButtonClicked();
+    int currentUserId; // 👈 store user ID
+    void loadTransactionData();
 };
 
 #endif // VIEWTRANSACTIONS_H

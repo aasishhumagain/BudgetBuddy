@@ -5,17 +5,14 @@
 #include <QTableWidgetItem>
 #include <QDebug>
 
-void viewtransactions::onBackButtonClicked()
-{
-    this->close();  // or this->hide();
-}
-
-viewtransactions::viewtransactions(QWidget *parent) :
+viewtransactions::viewtransactions(QWidget *parent, int userId) :
     QDialog(parent),
-    ui(new Ui::viewtransactions)
+    ui(new Ui::viewtransactions),
+    currentUserId(userId)
 {
     ui->setupUi(this);
     loadTransactionData();
+    connect(ui->buttonBack, &QPushButton::clicked, this, &viewtransactions::onBackButtonClicked);
 }
 
 viewtransactions::~viewtransactions()
@@ -23,28 +20,41 @@ viewtransactions::~viewtransactions()
     delete ui;
 }
 
+void viewtransactions::onBackButtonClicked()
+{
+    this->close();
+}
+
 void viewtransactions::loadTransactionData()
 {
     ui->tableWidgetTransactions->setRowCount(0);
     ui->tableWidgetTransactions->setColumnCount(4);
-    connect(ui->buttonBack, &QPushButton::clicked, this, &viewtransactions::onBackButtonClicked);
     QStringList headers = {"Date", "Category", "Type", "Amount"};
     ui->tableWidgetTransactions->setHorizontalHeaderLabels(headers);
 
     QSqlQuery query;
+
     QString sql = R"(
         SELECT date, category, type, amount FROM transactions
+        WHERE user_id = :user_id
+
         UNION ALL
+
         SELECT
-            '01-' || month || '-' || year AS date,
-            month,
+            printf('%04d-%02d-01', year, month) AS date,
+            'Monthly Goal',
             'MonthlyGoal',
             amount
         FROM monthly_goals
+        WHERE user_id = :user_id
+
         ORDER BY date DESC
     )";
 
-    if (!query.exec(sql)) {
+    query.prepare(sql);
+    query.bindValue(":user_id", currentUserId);
+
+    if (!query.exec()) {
         qDebug() << "SQL error:" << query.lastError().text();
         return;
     }

@@ -12,7 +12,7 @@ class homepage : public QDialog
     Q_OBJECT
 
 public:
-    explicit homepage(QWidget *parent = nullptr);
+    explicit homepage(int userId, QWidget *parent = nullptr);
     ~homepage();
 
 private slots:
@@ -23,6 +23,7 @@ private slots:
 
 private:
     Ui::homepage *ui;
+    int currentUserId;
 };
 
 #endif // HOMEPAGE_H

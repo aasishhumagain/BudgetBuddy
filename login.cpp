@@ -13,7 +13,8 @@
 login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login),
-    passwordVisible(false)
+    passwordVisible(false),
+    currentUserId(-1)
 {
     ui->setupUi(this);
 
@@ -30,7 +31,6 @@ login::login(QWidget *parent) :
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
     ui->buttonTogglePassword->setIcon(QIcon(iconClosedPath));
     ui->buttonTogglePassword->setIconSize(QSize(24, 24));
-
 }
 
 login::~login()
@@ -49,16 +49,18 @@ void login::on_buttonLogin_clicked()
     QString password = ui->lineEditPassword->text();
 
     QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE Username = :Username AND password = :password");
-    query.bindValue(":Username", Username);
+    query.prepare("SELECT id FROM users WHERE username = :username AND password = :password");
+    query.bindValue(":username", Username);
     query.bindValue(":password", password);
 
     if (query.exec() && query.next()) {
+        int userId = query.value("id").toInt();
         showMessage("Login successful!");
-        homepage *home = new homepage(this);
+        homepage *home = new homepage(userId, this);  // ✅ pass userId
         home->show();
         this->hide();
-    } else {
+    }
+    else {
         showMessage("Invalid Username or password.");
     }
 }
@@ -79,12 +81,17 @@ void login::on_buttonTogglePassword_clicked()
 {
     passwordVisible = !passwordVisible;
 
-    // Forcefully re-apply echo mode to ensure redraw
+    // Toggle visibility
     ui->lineEditPassword->setEchoMode(passwordVisible ? QLineEdit::Normal : QLineEdit::Password);
-    ui->lineEditPassword->setFocus();  // Helps apply update
+    ui->lineEditPassword->setFocus();
     ui->lineEditPassword->update();
 
-    // Switch icon
-    QIcon icon(passwordVisible ? iconOpenPath : iconClosedPath);
-    ui->buttonTogglePassword->setIcon(icon);
+    // Toggle icon
+    ui->buttonTogglePassword->setIcon(QIcon(passwordVisible ? iconOpenPath : iconClosedPath));
+}
+
+// Getter function (optional, if needed elsewhere)
+int login::getCurrentUserId() const
+{
+    return currentUserId;
 }

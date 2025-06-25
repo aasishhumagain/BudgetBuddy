@@ -12,15 +12,16 @@ class monthlygoals : public QDialog
     Q_OBJECT
 
 public:
-    explicit monthlygoals(QWidget *parent = nullptr);
+    explicit monthlygoals(int userId, QWidget *parent = nullptr);  // pass userId from homepage
     ~monthlygoals();
 
 private slots:
-    void on_buttonSubmit_clicked();
+    void onSubmitClicked();
 
 private:
     Ui::monthlygoals *ui;
-    void showMessage(const QString &msg);
+    int currentUserId;  // ✅ only here
+    void showMessage(const QString &msg);  // ✅ Add this line
 };
 
 #endif // MONTHLYGOALS_H

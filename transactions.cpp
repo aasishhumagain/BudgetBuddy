@@ -5,18 +5,19 @@
 #include <QMessageBox>
 #include <QDoubleValidator>
 
-transactions::transactions(QWidget *parent) :
+transactions::transactions(QWidget *parent, int userId) :
     QDialog(parent),
-    ui(new Ui::transactions)
+    ui(new Ui::transactions),
+    currentUserId(userId)
 {
     ui->setupUi(this);
 
-    // Validate amount to accept only decimals
+    // Validator
     QDoubleValidator *validator = new QDoubleValidator(0.01, 1000000.00, 2, this);
     validator->setNotation(QDoubleValidator::StandardNotation);
     ui->lineEditAmount->setValidator(validator);
 
-    // Ensure some default values (if needed)
+    // Defaults
     ui->comboBoxCategory->addItems({"Food", "Fuel", "Rent", "Shopping", "Salary", "Misc"});
     ui->comboBoxType->addItems({"Income", "Expense"});
     ui->dateEdit->setCalendarPopup(true);
@@ -54,7 +55,7 @@ void transactions::on_buttonSubmit_clicked()
     QSqlQuery query;
     query.prepare("INSERT INTO transactions (user_id, type, category, amount, date) "
                   "VALUES (:user_id, :type, :category, :amount, :date)");
-    query.bindValue(":user_id", 1); // TEMP: replace with actual logged-in user ID
+    query.bindValue(":user_id", currentUserId); // ✅ use the actual user ID
     query.bindValue(":type", type);
     query.bindValue(":category", category);
     query.bindValue(":amount", amount);

@@ -3,30 +3,22 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QMessageBox>
-#include <QDoubleValidator>
-#include <QDate>
+#include <qdatetime.h>
 
-monthlygoals::monthlygoals(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::monthlygoals)
+monthlygoals::monthlygoals(int userId, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::monthlygoals)
+    , currentUserId(userId)
 {
     ui->setupUi(this);
 
-    // Validator for budget amount
-    QDoubleValidator *validator = new QDoubleValidator(0.01, 1000000.0, 2, this);
-    validator->setNotation(QDoubleValidator::StandardNotation);
-    ui->lineEditAmount->setValidator(validator);
-
-    // Month list
-    QStringList months = {"January", "February", "March", "April", "May", "June",
-                          "July", "August", "September", "October", "November", "December"};
-    ui->comboBoxMonth->addItems(months);
-
-    // Default year to current
-    ui->spinBoxYear->setMinimum(2000);
-    ui->spinBoxYear->setMaximum(2100);
+    ui->comboBoxMonth->addItems({"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"});
+    ui->spinBoxYear->setRange(2000, 2100);
     ui->spinBoxYear->setValue(QDate::currentDate().year());
+
+    connect(ui->buttonSubmit, &QPushButton::clicked, this, &monthlygoals::onSubmitClicked);
 }
+
 
 monthlygoals::~monthlygoals()
 {
@@ -35,42 +27,38 @@ monthlygoals::~monthlygoals()
 
 void monthlygoals::showMessage(const QString &msg)
 {
-    QMessageBox::information(this, "Monthly Budget", msg);
+    QMessageBox::information(this, "Monthly Goal", msg);
 }
 
-void monthlygoals::on_buttonSubmit_clicked()
+void monthlygoals::onSubmitClicked()
 {
     QString month = ui->comboBoxMonth->currentText();
     int year = ui->spinBoxYear->value();
-    QString budgetText = ui->lineEditAmount->text();
+    QString amountText = ui->lineEditAmount->text();
 
-    if (budgetText.isEmpty()) {
+    if (amountText.isEmpty()) {
         showMessage("Please enter a budget amount.");
         return;
     }
 
-    double amount = budgetText.toDouble();
+    double amount = amountText.toDouble();
     if (amount <= 0.0) {
-        showMessage("Budget must be greater than 0.");
+        showMessage("Amount must be greater than zero.");
         return;
     }
 
     QSqlQuery query;
-    query.prepare("INSERT INTO monthly_goals (user_id, month, year, amount) "
-                  "VALUES (:user_id, :month, :year, :amount) "
-                  "ON CONFLICT(user_id, month, year) "
-                  "DO UPDATE SET amount = excluded.amount");
-
-    query.bindValue(":user_id", 1);
+    query.prepare(R"(
+        INSERT INTO monthly_goals (user_id, month, year, amount)
+        VALUES (:user_id, :month, :year, :amount)
+    )");
+    query.bindValue(":user_id", currentUserId);
     query.bindValue(":month", month);
     query.bindValue(":year", year);
     query.bindValue(":amount", amount);
 
-    query.exec();
-
-
     if (query.exec()) {
-        showMessage("Monthly budget saved successfully!");
+        showMessage("Monthly goal set!");
         this->close();
     } else {
         showMessage("Error: " + query.lastError().text());

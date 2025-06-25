@@ -10,9 +10,10 @@
 #include <QDate>
 #include <QDebug>
 
-analyzereport::analyzereport(QWidget *parent) :
+analyzereport::analyzereport(int userId, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::analyzereport)
+    ui(new Ui::analyzereport),
+    currentUserId(userId)
 {
     ui->setupUi(this);
 
@@ -59,11 +60,13 @@ void analyzereport::generatePieChart(const QString &month, int year)
         SELECT category, SUM(amount)
         FROM transactions
         WHERE type = 'Expense'
+          AND user_id = :userId
           AND strftime('%m', date) = :month
           AND strftime('%Y', date) = :year
         GROUP BY category
     )");
 
+    query.bindValue(":userId", currentUserId);
     query.bindValue(":month", formattedMonth);
     query.bindValue(":year", QString::number(year));
 

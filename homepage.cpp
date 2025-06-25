@@ -1,16 +1,15 @@
 #include "homepage.h"
 #include "ui_homepage.h"
 #include "transactions.h"
-#include "monthlygoals.h"  // ✅ Include this!
-#include <QMessageBox>
+#include "monthlygoals.h"
 #include "viewtransactions.h"
 #include "analyzereport.h"
+#include <QMessageBox>
 
-
-
-homepage::homepage(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::homepage)
+homepage::homepage(int userId, QWidget *parent)
+    : QDialog(parent),
+    ui(new Ui::homepage),
+    currentUserId(userId)
 {
     ui->setupUi(this);
 }
@@ -22,27 +21,24 @@ homepage::~homepage()
 
 void homepage::on_buttonAddTransaction_clicked()
 {
-    transactions *txnWindow = new transactions(this);
+    transactions *txnWindow = new transactions(this, currentUserId);
     txnWindow->exec();
 }
 
 void homepage::on_buttonViewTransaction_clicked()
 {
-    viewtransactions *vt = new viewtransactions(this);
+    viewtransactions *vt = new viewtransactions(this, currentUserId);
     vt->exec();
 }
 
 void homepage::on_buttonSetGoal_clicked()
 {
-    // ✅ Replaced message box with actual window
-    monthlygoals *goalWindow = new monthlygoals(this);
+    monthlygoals *goalWindow = new monthlygoals(currentUserId, this);
     goalWindow->exec();
 }
 
-
 void homepage::on_buttonAnalyzeReport_clicked()
 {
-    analyzereport *report = new analyzereport(this);
+    analyzereport *report = new analyzereport(currentUserId, this);
     report->exec();
 }
-
