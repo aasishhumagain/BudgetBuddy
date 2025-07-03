@@ -4,6 +4,7 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include <QDoubleValidator>
+#include <QDebug>
 
 transactions::transactions(QWidget *parent, int userId) :
     QDialog(parent),
@@ -12,12 +13,10 @@ transactions::transactions(QWidget *parent, int userId) :
 {
     ui->setupUi(this);
 
-    // Validator
     QDoubleValidator *validator = new QDoubleValidator(0.01, 1000000.00, 2, this);
     validator->setNotation(QDoubleValidator::StandardNotation);
     ui->lineEditAmount->setValidator(validator);
 
-    // Defaults
     ui->comboBoxCategory->addItems({"Food", "Fuel", "Rent", "Shopping", "Salary", "Misc"});
     ui->comboBoxType->addItems({"Income", "Expense"});
     ui->dateEdit->setCalendarPopup(true);
@@ -39,7 +38,8 @@ void transactions::on_buttonSubmit_clicked()
     QString amountText = ui->lineEditAmount->text();
     QString category = ui->comboBoxCategory->currentText();
     QString type = ui->comboBoxType->currentText();
-    QString date = ui->dateEdit->date().toString("yyyy-MM-dd");
+    QDate date = ui->dateEdit->date();
+    QString dateStr = date.toString("yyyy-MM-dd");
 
     if (amountText.isEmpty()) {
         showMessage("Please enter an amount.");
@@ -52,14 +52,83 @@ void transactions::on_buttonSubmit_clicked()
         return;
     }
 
+    if (type == "Expense") {
+        int year = date.year();
+        int month = date.month();
+        QString paddedMonth = QString("%1").arg(month, 2, 10, QLatin1Char('0'));
+        QString monthStr = date.toString("yyyy-MM");
+
+        // 1. Get total monthly goal
+        QSqlQuery goalQuery;
+        goalQuery.prepare(R"(
+            SELECT SUM(amount)
+            FROM monthly_goals
+            WHERE user_id = :user_id AND year = :year AND month = :month
+        )");
+        goalQuery.bindValue(":user_id", currentUserId);
+        goalQuery.bindValue(":year", year);
+        goalQuery.bindValue(":month", paddedMonth);
+
+        double totalGoal = 0;
+        if (goalQuery.exec() && goalQuery.next()) {
+            totalGoal = goalQuery.value(0).toDouble();
+        }
+
+        // 2. Get total spent this month
+        QSqlQuery sumQuery;
+        sumQuery.prepare(R"(
+            SELECT SUM(amount)
+            FROM transactions
+            WHERE user_id = :user_id AND type = 'Expense'
+              AND strftime('%Y-%m', date) = :month_str
+        )");
+        sumQuery.bindValue(":user_id", currentUserId);
+        sumQuery.bindValue(":month_str", monthStr);
+
+        double totalSpent = 0;
+        if (sumQuery.exec() && sumQuery.next()) {
+            totalSpent = sumQuery.value(0).toDouble();
+        }
+
+        double afterAddition = totalSpent + amount;
+        double remaining = totalGoal - totalSpent;
+        double exceededBy = afterAddition - totalGoal;
+
+        qDebug() << "TotalGoal:" << totalGoal
+                 << "TotalSpent:" << totalSpent
+                 << "AfterAddition:" << afterAddition;
+
+        if (totalGoal > 0 && afterAddition > totalGoal) {
+            QMessageBox::StandardButton reply = QMessageBox::warning(
+                this,
+                "⚠️ Monthly Limit Exceeded",
+                QString("This expense exceeds your monthly goal!\n\n"
+                        "Monthly Limit: ₹%1\nSpent So Far: ₹%2\nRemaining: ₹%3\n"
+                        "Attempting to Add: ₹%4\nYou’d exceed by: ₹%5\n\n"
+                        "Do you still want to add this transaction?")
+                    .arg(totalGoal)
+                    .arg(totalSpent)
+                    .arg(remaining)
+                    .arg(amount)
+                    .arg(exceededBy),
+                QMessageBox::Yes | QMessageBox::Cancel
+                );
+
+            if (reply != QMessageBox::Yes) {
+                return; // User cancelled
+            }
+        }
+    }
+
+    // 3. Insert the transaction
     QSqlQuery query;
     query.prepare("INSERT INTO transactions (user_id, type, category, amount, date) "
                   "VALUES (:user_id, :type, :category, :amount, :date)");
-    query.bindValue(":user_id", currentUserId); // ✅ use the actual user ID
+    query.bindValue(":user_id", currentUserId);
     query.bindValue(":type", type);
     query.bindValue(":category", category);
     query.bindValue(":amount", amount);
-    query.bindValue(":date", date);
+    query.bindValue(":date", dateStr);
 
     if (query.exec()) {
         showMessage("Transaction added successfully!");
@@ -68,3 +137,4 @@ void transactions::on_buttonSubmit_clicked()
         showMessage("Failed to add transaction: " + query.lastError().text());
     }
 }
+

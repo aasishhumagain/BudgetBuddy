@@ -3,7 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QMessageBox>
-#include <qdatetime.h>
+#include <QDateTime>
 
 monthlygoals::monthlygoals(int userId, QWidget *parent)
     : QDialog(parent)
@@ -19,7 +19,6 @@ monthlygoals::monthlygoals(int userId, QWidget *parent)
     connect(ui->buttonSubmit, &QPushButton::clicked, this, &monthlygoals::onSubmitClicked);
 }
 
-
 monthlygoals::~monthlygoals()
 {
     delete ui;
@@ -32,6 +31,19 @@ void monthlygoals::showMessage(const QString &msg)
 
 void monthlygoals::onSubmitClicked()
 {
+    // DEBUG: Show all rows in monthly_goals
+    QSqlQuery debugQuery;
+    if (debugQuery.exec("SELECT user_id, year, month, amount FROM monthly_goals")) {
+        while (debugQuery.next()) {
+            qDebug() << "Goal Row - User:" << debugQuery.value(0).toInt()
+            << "Year:" << debugQuery.value(1).toInt()
+            << "Month:" << debugQuery.value(2).toString()
+            << "Amount:" << debugQuery.value(3).toDouble();
+        }
+    } else {
+        qDebug() << "DEBUG query failed:" << debugQuery.lastError().text();
+    }
+
     QString month = ui->comboBoxMonth->currentText();
     int year = ui->spinBoxYear->value();
     QString amountText = ui->lineEditAmount->text();
@@ -47,10 +59,13 @@ void monthlygoals::onSubmitClicked()
         return;
     }
 
+    // ✅ Use INSERT OR REPLACE to avoid UNIQUE constraint error
     QSqlQuery query;
     query.prepare(R"(
         INSERT INTO monthly_goals (user_id, month, year, amount)
         VALUES (:user_id, :month, :year, :amount)
+        ON CONFLICT(user_id, month, year)
+        DO UPDATE SET amount = excluded.amount
     )");
     query.bindValue(":user_id", currentUserId);
     query.bindValue(":month", month);
@@ -58,7 +73,7 @@ void monthlygoals::onSubmitClicked()
     query.bindValue(":amount", amount);
 
     if (query.exec()) {
-        showMessage("Monthly goal set!");
+        showMessage("Monthly goal saved!");
         this->close();
     } else {
         showMessage("Error: " + query.lastError().text());

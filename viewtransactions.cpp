@@ -59,8 +59,6 @@ void viewtransactions::loadTransactionData()
         return;
     }
 
-
-
     query.prepare(sql);
     query.bindValue(":uid1", currentUserId);
     query.bindValue(":uid2", currentUserId);
