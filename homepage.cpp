@@ -4,7 +4,11 @@
 #include "monthlygoals.h"
 #include "viewtransactions.h"
 #include "analyzereport.h"
+#include "profilepage.h"
 #include <QMessageBox>
+#include "profilepage.h"
+#include "login.h"
+
 
 homepage::homepage(int userId, QWidget *parent)
     : QDialog(parent),
@@ -41,4 +45,21 @@ void homepage::on_buttonAnalyzeReport_clicked()
 {
     analyzereport *report = new analyzereport(currentUserId, this);
     report->exec();
+}
+
+void homepage::on_buttonProfile_clicked()
+{
+    profilepage *profile = new profilepage(currentUserId, this);
+    connect(profile, &profilepage::logoutRequested, this, &homepage::handleLogout);
+    profile->exec();
+}
+
+
+void homepage::handleLogout()
+{
+    this->close();  // Close homepage
+    // Maybe reopen login
+    // Example:
+    login *loginPage = new login();
+    loginPage->show();
 }

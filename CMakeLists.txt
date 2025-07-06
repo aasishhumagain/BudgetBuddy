@@ -36,6 +36,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         forgotpassword.h forgotpassword.cpp
+        profilepage.h profilepage.cpp profilepage.ui
+        changepassword.h changepassword.cpp
 
     )
 else()

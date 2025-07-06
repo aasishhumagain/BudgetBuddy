@@ -78,6 +78,19 @@
     <string>View Transactions</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="buttonProfile">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>30</y>
+     <width>83</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Profile</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

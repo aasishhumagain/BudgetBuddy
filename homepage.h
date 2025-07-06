@@ -20,7 +20,8 @@ private slots:
     void on_buttonViewTransaction_clicked();
     void on_buttonSetGoal_clicked();
     void on_buttonAnalyzeReport_clicked();
-
+    void on_buttonProfile_clicked();
+    void handleLogout();
 private:
     Ui::homepage *ui;
     int currentUserId;

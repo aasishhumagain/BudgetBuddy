@@ -9,19 +9,20 @@ class DatabaseManager : public QObject
     Q_OBJECT
 
 public:
+    explicit DatabaseManager(QObject *parent = nullptr);
+    ~DatabaseManager(); // ✅ Must be public
+
     static DatabaseManager& instance();
+
     QSqlDatabase getDatabase();
     bool openDatabase();
     void closeDatabase();
 
+    QString getUserNameById(int userId); // ✅ Declare this!
+
 private:
-    explicit DatabaseManager(QObject *parent = nullptr);
-    ~DatabaseManager();
-
-    DatabaseManager(const DatabaseManager&) = delete;
-    DatabaseManager& operator=(const DatabaseManager&) = delete;
-
     QSqlDatabase m_database;
+
     void initializeTables();
 };
 

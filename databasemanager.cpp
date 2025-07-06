@@ -77,3 +77,15 @@ void DatabaseManager::initializeTables()
                "created_at TEXT,"
                "FOREIGN KEY(user_id) REFERENCES users(id))");
 }
+
+QString DatabaseManager::getUserNameById(int userId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT username FROM users WHERE id = :id"); // ✅ Correct column name!
+    query.bindValue(":id", userId);
+    if (query.exec() && query.next()) {
+        return query.value(0).toString();
+    }
+    return "User";
+}
+
