@@ -7,6 +7,12 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include "changepassword.h"
+#include <QFileDialog>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QPixmap>
+#include <QCoreApplication>
 
 
 profilepage::profilepage(int userId, QWidget *parent) :
@@ -19,6 +25,15 @@ profilepage::profilepage(int userId, QWidget *parent) :
     // ✅ Use singleton instance
     QString userName = DatabaseManager::instance().getUserNameById(currentUserId);
     ui->labelWelcome->setText("Welcome, " + userName);
+
+    QString photoPath = DatabaseManager::instance().getUserPhotoPath(currentUserId);
+    if (!photoPath.isEmpty() && QFile::exists(photoPath)) {
+        QPixmap pix(photoPath);
+        ui->labelPhoto->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    } else {
+        ui->labelPhoto->setText("No photo");
+    }
+
 }
 
 profilepage::~profilepage()
@@ -38,4 +53,38 @@ void profilepage::on_buttonLogout_clicked()
     this->close();
 }
 
+void profilepage::on_buttonChangePhoto_clicked()
+{
+    QString filePath = QFileDialog::getOpenFileName(
+        this,
+        "Select Profile Photo",
+        QDir::homePath(),
+        "Images (*.png *.jpg *.jpeg *.bmp)"
+        );
 
+    if (filePath.isEmpty())
+        return;
+
+    // Make sure photo directory exists
+    QString destDir = QCoreApplication::applicationDirPath() + "/user_photos";
+    QDir().mkpath(destDir);
+
+    // Properly declare QFileInfo and get the filename
+    QFileInfo info(filePath);
+    QString name = info.fileName();
+    QString destPath = destDir + "/" + name;
+
+    if (QFile::exists(destPath))
+        QFile::remove(destPath);
+
+    QFile::copy(filePath, destPath);
+
+    // Save path in DB
+    if (DatabaseManager::instance().updateUserPhotoPath(currentUserId, destPath)) {
+        QPixmap pix(destPath);
+        ui->labelPhoto->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        QMessageBox::information(this, "Success", "Profile photo updated!");
+    } else {
+        QMessageBox::warning(this, "Error", "Failed to save photo to database.");
+    }
+}

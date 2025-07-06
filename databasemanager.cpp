@@ -49,7 +49,8 @@ void DatabaseManager::initializeTables()
     query.exec("CREATE TABLE IF NOT EXISTS users ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "username TEXT UNIQUE,"
-               "password TEXT)");
+               "password TEXT,"
+               "photo TEXT)");  // ✅ only one definition, with photo!
 
     query.exec("CREATE TABLE IF NOT EXISTS transactions ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -60,7 +61,6 @@ void DatabaseManager::initializeTables()
                "date TEXT,"
                "FOREIGN KEY(user_id) REFERENCES users(id))");
 
-
     query.exec("CREATE TABLE IF NOT EXISTS monthly_goals ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "user_id INTEGER, "
@@ -69,7 +69,6 @@ void DatabaseManager::initializeTables()
                "amount REAL, "
                "UNIQUE(user_id, month, year))");
 
-
     query.exec("CREATE TABLE IF NOT EXISTS alerts ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "user_id INTEGER,"
@@ -77,6 +76,7 @@ void DatabaseManager::initializeTables()
                "created_at TEXT,"
                "FOREIGN KEY(user_id) REFERENCES users(id))");
 }
+
 
 QString DatabaseManager::getUserNameById(int userId)
 {
@@ -89,3 +89,22 @@ QString DatabaseManager::getUserNameById(int userId)
     return "User";
 }
 
+QString DatabaseManager::getUserPhotoPath(int userId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT photo FROM users WHERE id = :id");
+    query.bindValue(":id", userId);
+    if (query.exec() && query.next()) {
+        return query.value(0).toString();
+    }
+    return QString();
+}
+
+bool DatabaseManager::updateUserPhotoPath(int userId, const QString &path)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE users SET photo = :photo WHERE id = :id");
+    query.bindValue(":photo", path);
+    query.bindValue(":id", userId);
+    return query.exec();
+}

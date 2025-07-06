@@ -20,6 +20,10 @@ public:
 
     QString getUserNameById(int userId); // ✅ Declare this!
 
+    QString getUserPhotoPath(int userId);
+    bool updateUserPhotoPath(int userId, const QString &path);
+
+
 private:
     QSqlDatabase m_database;
 
