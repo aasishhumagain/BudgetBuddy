@@ -16,8 +16,8 @@
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>50</y>
+     <x>240</x>
+     <y>0</y>
      <width>141</width>
      <height>41</height>
     </rect>
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>430</y>
+     <y>450</y>
      <width>141</width>
      <height>29</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QComboBox" name="comboBoxMonth">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>100</y>
+     <x>110</x>
+     <y>50</y>
      <width>82</width>
      <height>28</height>
     </rect>
@@ -52,8 +52,8 @@
   <widget class="QLabel" name="labelFilter">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>100</y>
+     <x>20</x>
+     <y>50</y>
      <width>63</width>
      <height>20</height>
     </rect>
@@ -65,8 +65,8 @@
   <widget class="QSpinBox" name="spinBoxYear">
    <property name="geometry">
     <rect>
-     <x>313</x>
-     <y>100</y>
+     <x>223</x>
+     <y>50</y>
      <width>71</width>
      <height>29</height>
     </rect>
@@ -75,8 +75,8 @@
   <widget class="QPushButton" name="buttonFilter">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>100</y>
+     <x>340</x>
+     <y>50</y>
      <width>83</width>
      <height>29</height>
     </rect>
@@ -89,7 +89,7 @@
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>150</y>
+     <y>170</y>
      <width>381</width>
      <height>271</height>
     </rect>
@@ -99,6 +99,71 @@
    </property>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelTotalIncome">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>100</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Income:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelTotalExpenses">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>100</y>
+     <width>171</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Expenses: </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelWarnings">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>150</y>
+     <width>261</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status: </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelTotalMonthlyGoal">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>130</y>
+     <width>241</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Monthly Goal: </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelRemainingBudget">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>130</y>
+     <width>241</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Remaining Budget: </string>
    </property>
   </widget>
  </widget>
