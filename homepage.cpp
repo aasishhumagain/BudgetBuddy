@@ -63,3 +63,13 @@ void homepage::handleLogout()
     login *loginPage = new login();
     loginPage->show();
 }
+
+void homepage::on_buttonLogout_clicked()
+{
+    this->close();  // Close the current homepage window
+
+    // Show the login page again
+    login *loginPage = new login();
+    loginPage->show();
+}
+

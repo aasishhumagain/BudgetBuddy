@@ -22,6 +22,8 @@ private slots:
     void on_buttonAnalyzeReport_clicked();
     void on_buttonProfile_clicked();
     void handleLogout();
+    void on_buttonLogout_clicked();
+
 private:
     Ui::homepage *ui;
     int currentUserId;
