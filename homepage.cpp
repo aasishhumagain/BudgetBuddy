@@ -66,10 +66,18 @@ void homepage::handleLogout()
 
 void homepage::on_buttonLogout_clicked()
 {
-    this->close();  // Close the current homepage window
+    QMessageBox::StandardButton reply = QMessageBox::question(
+        this,
+        "Confirm Logout",
+        "Are you sure you want to logout?",
+        QMessageBox::Yes | QMessageBox::Cancel
+        );
 
-    // Show the login page again
-    login *loginPage = new login();
-    loginPage->show();
+    if (reply == QMessageBox::Yes) {
+        this->close();
+
+        login *loginPage = new login();
+        loginPage->show();
+    }
+    // If Cancel, do nothing — user stays on homepage.
 }
-

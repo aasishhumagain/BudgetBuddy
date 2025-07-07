@@ -13,6 +13,7 @@
 #include <QFileInfo>
 #include <QPixmap>
 #include <QCoreApplication>
+#include "login.h"
 
 
 profilepage::profilepage(int userId, QWidget *parent) :
@@ -46,8 +47,20 @@ void profilepage::on_buttonChangePassword_clicked()
 
 void profilepage::on_buttonLogout_clicked()
 {
-    emit logoutRequested();  // Tell parent you want to logout
-    this->close();
+    QMessageBox::StandardButton reply = QMessageBox::question(
+        this,
+        "Confirm Logout",
+        "Are you sure you want to logout?",
+        QMessageBox::Yes | QMessageBox::Cancel
+        );
+
+    if (reply == QMessageBox::Yes) {
+        this->close();
+
+        login *loginPage = new login();
+        loginPage->show();
+    }
+    // If Cancel, do nothing — user stays on homepage.
 }
 
 void profilepage::on_buttonChangePhoto_clicked()
