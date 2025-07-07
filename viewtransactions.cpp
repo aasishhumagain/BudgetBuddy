@@ -28,44 +28,33 @@ void viewtransactions::onBackButtonClicked()
 void viewtransactions::loadTransactionData()
 {
     ui->tableWidgetTransactions->setRowCount(0);
-    ui->tableWidgetTransactions->setColumnCount(4);
-    QStringList headers = {"Date", "Category", "Type", "Amount"};
+    ui->tableWidgetTransactions->setColumnCount(5);
+    QStringList headers = {"Date", "Category", "Type", "Amount", "Remarks"};
     ui->tableWidgetTransactions->setHorizontalHeaderLabels(headers);
 
     QString sql = R"(
-    SELECT date, category, type, amount FROM transactions
-    WHERE user_id = :user_id
+        SELECT date, category, type, amount, remarks
+        FROM transactions
+        WHERE user_id = :uid1
 
-    UNION ALL
+        UNION ALL
 
-    SELECT
-        printf('%04d-%02d-01', year, month) AS date,
-        'Monthly Goal' AS category,
-        'MonthlyGoal' AS type,
-        amount
-    FROM monthly_goals
-    WHERE user_id = :user_id
+        SELECT
+            printf('%04d-%02d-01', year, month) AS date,
+            'Monthly Goal' AS category,
+            'MonthlyGoal' AS type,
+            amount,
+            '' AS remarks
+        FROM monthly_goals
+        WHERE user_id = :uid2
 
-    ORDER BY date DESC
-)";
-
+        ORDER BY date DESC
+    )";
 
     QSqlQuery query;
     query.prepare(sql);
-    query.bindValue(":user_id", currentUserId);
-
-    if (!query.exec()) {
-        qDebug() << "SQL error:" << query.lastError().text();
-        return;
-    }
-
-    query.prepare(sql);
     query.bindValue(":uid1", currentUserId);
     query.bindValue(":uid2", currentUserId);
-
-
-    query.prepare(sql);
-    query.bindValue(":user_id", currentUserId);
 
     if (!query.exec()) {
         qDebug() << "SQL error:" << query.lastError().text();
@@ -75,9 +64,11 @@ void viewtransactions::loadTransactionData()
     int row = 0;
     while (query.next()) {
         ui->tableWidgetTransactions->insertRow(row);
-        for (int col = 0; col < 4; ++col) {
-            ui->tableWidgetTransactions->setItem(row, col,
-                                                 new QTableWidgetItem(query.value(col).toString()));
+        for (int col = 0; col < 5; ++col) {
+            ui->tableWidgetTransactions->setItem(
+                row, col,
+                new QTableWidgetItem(query.value(col).toString())
+                );
         }
         row++;
     }

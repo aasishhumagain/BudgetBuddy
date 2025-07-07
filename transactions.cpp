@@ -21,8 +21,6 @@ transactions::transactions(QWidget *parent, int userId) :
     ui->comboBoxType->addItems({"Income", "Expense"});
     ui->dateEdit->setCalendarPopup(true);
     ui->dateEdit->setDate(QDate::currentDate());
-    ui->buttonSubmit->setDefault(true);
-
 }
 
 transactions::~transactions()
