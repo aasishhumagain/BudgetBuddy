@@ -50,7 +50,8 @@ void DatabaseManager::initializeTables()
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "username TEXT UNIQUE,"
                "password TEXT,"
-               "photo TEXT)");  // ✅ only one definition, with photo!
+               "photo BLOB"
+               ")");
 
     query.exec("CREATE TABLE IF NOT EXISTS transactions ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -100,11 +101,23 @@ QString DatabaseManager::getUserPhotoPath(int userId)
     return QString();
 }
 
-bool DatabaseManager::updateUserPhotoPath(int userId, const QString &path)
+bool DatabaseManager::updateUserPhoto(int userId, const QByteArray &imageData)
 {
     QSqlQuery query;
     query.prepare("UPDATE users SET photo = :photo WHERE id = :id");
-    query.bindValue(":photo", path);
+    query.bindValue(":photo", imageData);
     query.bindValue(":id", userId);
     return query.exec();
 }
+
+QByteArray DatabaseManager::getUserPhoto(int userId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT photo FROM users WHERE id = :id");
+    query.bindValue(":id", userId);
+    if (query.exec() && query.next()) {
+        return query.value(0).toByteArray();
+    }
+    return QByteArray();
+}
+

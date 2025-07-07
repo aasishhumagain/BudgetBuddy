@@ -21,7 +21,8 @@ public:
     QString getUserNameById(int userId); // ✅ Declare this!
 
     QString getUserPhotoPath(int userId);
-    bool updateUserPhotoPath(int userId, const QString &path);
+    bool updateUserPhoto(int userId, const QByteArray &imageData);
+    QByteArray getUserPhoto(int userId);
 
 
 private:

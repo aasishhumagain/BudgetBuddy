@@ -22,13 +22,10 @@ profilepage::profilepage(int userId, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // ✅ Use singleton instance
-    QString userName = DatabaseManager::instance().getUserNameById(currentUserId);
-    ui->labelWelcome->setText("Welcome, " + userName);
-
-    QString photoPath = DatabaseManager::instance().getUserPhotoPath(currentUserId);
-    if (!photoPath.isEmpty() && QFile::exists(photoPath)) {
-        QPixmap pix(photoPath);
+    QByteArray imageData = DatabaseManager::instance().getUserPhoto(currentUserId);
+    if (!imageData.isEmpty()) {
+        QPixmap pix;
+        pix.loadFromData(imageData);
         ui->labelPhoto->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     } else {
         ui->labelPhoto->setText("No photo");
@@ -65,23 +62,17 @@ void profilepage::on_buttonChangePhoto_clicked()
     if (filePath.isEmpty())
         return;
 
-    // Make sure photo directory exists
-    QString destDir = QCoreApplication::applicationDirPath() + "/user_photos";
-    QDir().mkpath(destDir);
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::warning(this, "Error", "Could not open file.");
+        return;
+    }
 
-    // Properly declare QFileInfo and get the filename
-    QFileInfo info(filePath);
-    QString name = info.fileName();
-    QString destPath = destDir + "/" + name;
+    QByteArray imageData = file.readAll();
 
-    if (QFile::exists(destPath))
-        QFile::remove(destPath);
-
-    QFile::copy(filePath, destPath);
-
-    // Save path in DB
-    if (DatabaseManager::instance().updateUserPhotoPath(currentUserId, destPath)) {
-        QPixmap pix(destPath);
+    if (DatabaseManager::instance().updateUserPhoto(currentUserId, imageData)) {
+        QPixmap pix;
+        pix.loadFromData(imageData);
         ui->labelPhoto->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         QMessageBox::information(this, "Success", "Profile photo updated!");
     } else {
