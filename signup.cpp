@@ -63,39 +63,76 @@ void signup::on_buttonTogglePassword_clicked()
 
 void signup::on_buttonCreateAccount_clicked()
 {
-    QString username = ui->lineEditUsername->text();
+    QString username = ui->lineEditUsername->text().trimmed();
     QString password = ui->lineEditPassword->text();
     QString confirmPassword = ui->lineEditConfirmPwd->text();
 
-    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-        showMessage("Please fill in all fields.");
+    // Username empty check
+    if (username.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Username cannot be empty.");
         return;
     }
 
+    // Username rules
+    bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+    for (const QChar &ch : username) {
+        if (ch.isUpper()) hasUpper = true;
+        else if (ch.isLower()) hasLower = true;
+        else if (ch.isDigit()) hasDigit = true;
+        else hasSpecial = true;
+    }
+
+    if (hasSpecial) {
+        QMessageBox::warning(this, "Error", "Username must not contain special characters.");
+        return;
+    }
+
+    if (!(hasUpper && hasLower && hasDigit)) {
+        QMessageBox::warning(this, "Error", "Username must contain at least 1 uppercase, 1 lowercase, and 1 number.");
+        return;
+    }
+
+    // Password length
+    if (password.length() < 8) {
+        QMessageBox::warning(this, "Error", "Password must be at least 8 characters long.");
+        return;
+    }
+
+    // Password rules
+    bool passHasUpper = false, passHasLower = false, passHasDigit = false, passHasSpecial = false;
+    for (const QChar &ch : password) {
+        if (ch.isUpper()) passHasUpper = true;
+        else if (ch.isLower()) passHasLower = true;
+        else if (ch.isDigit()) passHasDigit = true;
+        else passHasSpecial = true; // anything else is special
+    }
+
+    if (!(passHasUpper && passHasLower && passHasDigit && passHasSpecial)) {
+        QMessageBox::warning(this, "Error", "Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.");
+        return;
+    }
+
+    // Confirm match
     if (password != confirmPassword) {
-        showMessage("Passwords do not match.");
+        QMessageBox::warning(this, "Error", "Passwords do not match.");
         return;
     }
 
-    QSqlQuery checkQuery;
-    checkQuery.prepare("SELECT id FROM users WHERE username = :username");
-    checkQuery.bindValue(":username", username);
-    checkQuery.exec();
+    // Insert plain password (for dev only!)
+    QSqlQuery query;
+    query.prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+    query.bindValue(":username", username);
+    query.bindValue(":password", password);
 
-    if (checkQuery.next()) {
-        showMessage("Username already exists.");
+    if (!query.exec()) {
+        if (query.lastError().nativeErrorCode() == "19") { // UNIQUE constraint fail
+            QMessageBox::warning(this, "Error", "Username already exists.");
+        } else {
+            QMessageBox::warning(this, "Error", "Signup failed: " + query.lastError().text());
+        }
         return;
     }
 
-    QSqlQuery insertQuery;
-    insertQuery.prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
-    insertQuery.bindValue(":username", username);
-    insertQuery.bindValue(":password", password);
-
-    if (insertQuery.exec()) {
-        showMessage("Account created! You can now log in.");
-        this->close();
-    } else {
-        showMessage("Signup failed: " + insertQuery.lastError().text());
-    }
+    QMessageBox::information(this, "Success", "Account created! You can now log in.");
+    this->accept();
 }

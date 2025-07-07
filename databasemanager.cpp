@@ -60,6 +60,7 @@ void DatabaseManager::initializeTables()
                "category TEXT,"
                "amount REAL,"
                "date TEXT,"
+               "remarks TEXT,"
                "FOREIGN KEY(user_id) REFERENCES users(id))");
 
     query.exec("CREATE TABLE IF NOT EXISTS monthly_goals ("
