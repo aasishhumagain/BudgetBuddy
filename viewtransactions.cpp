@@ -13,8 +13,21 @@ viewtransactions::viewtransactions(QWidget *parent, int userId) :
     currentUserId(userId)
 {
     ui->setupUi(this);
-    loadTransactionData();
+
+    // Setup filters
+    ui->comboBoxTypeFilter->addItems({"All", "Income", "Expense"});
+    ui->comboBoxCategoryFilter->addItem("All");
+    ui->comboBoxCategoryFilter->addItems({"Food", "Fuel", "Rent", "Shopping", "Salary", "Misc"});
+
+    QDate today = QDate::currentDate();
+    QDate firstOfMonth(today.year(), today.month(), 1);
+    ui->dateEditFrom->setDate(firstOfMonth);
+    ui->dateEditTo->setDate(today);
+
     connect(ui->buttonBack, &QPushButton::clicked, this, &viewtransactions::onBackButtonClicked);
+    connect(ui->buttonApplyFilter, &QPushButton::clicked, this, &viewtransactions::loadTransactionData);
+
+    loadTransactionData();
 }
 
 viewtransactions::~viewtransactions()
@@ -29,21 +42,35 @@ void viewtransactions::onBackButtonClicked()
 
 void viewtransactions::loadTransactionData()
 {
-    // Setup table columns
     ui->tableWidgetTransactions->setRowCount(0);
     ui->tableWidgetTransactions->setColumnCount(5);
 
     QStringList headers = {"Date", "Category", "Type", "Amount", "Remarks"};
     ui->tableWidgetTransactions->setHorizontalHeaderLabels(headers);
-
-    // Stretch Remarks column for better readability
     ui->tableWidgetTransactions->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+
+    // Get filter values
+    QString selectedType = ui->comboBoxTypeFilter->currentText();
+    QString selectedCategory = ui->comboBoxCategoryFilter->currentText();
+    QDate fromDate = ui->dateEditFrom->date();
+    QDate toDate = ui->dateEditTo->date();
 
     QString sql = R"(
         SELECT date, category, type, amount, remarks
         FROM transactions
         WHERE user_id = :uid1
+          AND date >= :from_date AND date <= :to_date
+    )";
 
+    if (selectedType != "All") {
+        sql += " AND type = :type";
+    }
+
+    if (selectedCategory != "All") {
+        sql += " AND category = :category";
+    }
+
+    sql += R"(
         UNION ALL
 
         SELECT
@@ -69,6 +96,8 @@ void viewtransactions::loadTransactionData()
             END || ' ' || year AS remarks
         FROM monthly_goals
         WHERE user_id = :uid2
+          AND printf('%04d-%02d-01', year, month) >= :from_date
+          AND printf('%04d-%02d-01', year, month) <= :to_date
 
         ORDER BY date DESC
     )";
@@ -77,6 +106,16 @@ void viewtransactions::loadTransactionData()
     query.prepare(sql);
     query.bindValue(":uid1", currentUserId);
     query.bindValue(":uid2", currentUserId);
+    query.bindValue(":from_date", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to_date", toDate.toString("yyyy-MM-dd"));
+
+    if (selectedType != "All") {
+        query.bindValue(":type", selectedType);
+    }
+
+    if (selectedCategory != "All") {
+        query.bindValue(":category", selectedCategory);
+    }
 
     if (!query.exec()) {
         qDebug() << "SQL error:" << query.lastError().text();
@@ -87,8 +126,10 @@ void viewtransactions::loadTransactionData()
     while (query.next()) {
         ui->tableWidgetTransactions->insertRow(row);
         for (int col = 0; col < 5; ++col) {
-            QString value = query.value(col).toString();
-            ui->tableWidgetTransactions->setItem(row, col, new QTableWidgetItem(value));
+            ui->tableWidgetTransactions->setItem(
+                row, col,
+                new QTableWidgetItem(query.value(col).toString())
+                );
         }
         row++;
     }
