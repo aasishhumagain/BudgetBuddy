@@ -28,8 +28,6 @@ analyzereport::analyzereport(int userId, QWidget *parent) :
 
     connect(ui->buttonBack, &QPushButton::clicked, this, &analyzereport::onBackButtonClicked);
     connect(ui->buttonFilter, &QPushButton::clicked, this, &analyzereport::onFilterClicked);
-
-    onFilterClicked();
 }
 
 analyzereport::~analyzereport()
