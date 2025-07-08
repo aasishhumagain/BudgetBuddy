@@ -17,6 +17,7 @@ public:
 
 private slots:
     void onBackButtonClicked();
+    void on_buttonExport_clicked();
 
 private:
     Ui::viewtransactions *ui;

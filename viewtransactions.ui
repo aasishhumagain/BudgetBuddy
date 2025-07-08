@@ -154,6 +154,19 @@
     <string>Apply Filter!</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="buttonExport">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>160</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Export Transactions</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

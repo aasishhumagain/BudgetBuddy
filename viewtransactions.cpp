@@ -1,11 +1,14 @@
 #include "viewtransactions.h"
 #include "ui_viewtransactions.h"
-
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QDebug>
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
+#include <QMessageBox>
 
 viewtransactions::viewtransactions(QWidget *parent, int userId) :
     QDialog(parent),
@@ -26,6 +29,7 @@ viewtransactions::viewtransactions(QWidget *parent, int userId) :
 
     connect(ui->buttonBack, &QPushButton::clicked, this, &viewtransactions::onBackButtonClicked);
     connect(ui->buttonApplyFilter, &QPushButton::clicked, this, &viewtransactions::loadTransactionData);
+
 
     loadTransactionData();
 }
@@ -133,4 +137,48 @@ void viewtransactions::loadTransactionData()
         }
         row++;
     }
+}
+
+void viewtransactions::on_buttonExport_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        "Export Transactions",
+        QDir::homePath() + "/transactions.csv",
+        "CSV Files (*.csv)"
+        );
+
+    if (fileName.isEmpty()) {
+        return; // user cancelled
+    }
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Could not open file for writing.");
+        return;
+    }
+
+    QTextStream out(&file);
+
+    // Write header row
+    out << "Date,Category,Type,Amount,Remarks\n";
+
+    // Write each row
+    int rows = ui->tableWidgetTransactions->rowCount();
+    int cols = ui->tableWidgetTransactions->columnCount();
+
+    for (int i = 0; i < rows; ++i) {
+        QStringList rowData;
+        for (int j = 0; j < cols; ++j) {
+            QString cell = ui->tableWidgetTransactions->item(i, j)->text();
+            // Escape commas
+            cell.replace(",", " ");
+            rowData << cell;
+        }
+        out << rowData.join(",") << "\n";
+    }
+
+    file.close();
+
+    QMessageBox::information(this, "Success", "Transactions exported successfully!");
 }
