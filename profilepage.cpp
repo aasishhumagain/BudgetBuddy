@@ -1,7 +1,8 @@
 #include "profilepage.h"
 #include "ui_profilepage.h"
+
 #include <QMessageBox>
-#include <qlineedit.h>
+#include <QLineEdit>
 #include "databasemanager.h"
 #include <QInputDialog>
 #include <QSqlQuery>
@@ -15,13 +16,15 @@
 #include <QCoreApplication>
 #include "login.h"
 
-
 profilepage::profilepage(int userId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::profilepage),
     currentUserId(userId)
 {
     ui->setupUi(this);
+
+    // ✅ This must be inside the body, not initializer list!
+    connect(ui->buttonBack, &QPushButton::clicked, this, &profilepage::on_backButton_clicked);
 
     QByteArray imageData = DatabaseManager::instance().getUserPhoto(currentUserId);
     if (!imageData.isEmpty()) {
@@ -31,7 +34,6 @@ profilepage::profilepage(int userId, QWidget *parent) :
     } else {
         ui->labelPhoto->setText("No photo");
     }
-
 }
 
 profilepage::~profilepage()
@@ -39,10 +41,15 @@ profilepage::~profilepage()
     delete ui;
 }
 
+void profilepage::on_backButton_clicked()
+{
+    this->close();
+}
+
 void profilepage::on_buttonChangePassword_clicked()
 {
     ChangePassword dlg(currentUserId, this);
-    dlg.exec();  // The dialog runs its own checks and stays open on fail
+    dlg.exec();  // Opens password change dialog
 }
 
 void profilepage::on_buttonLogout_clicked()
@@ -60,7 +67,7 @@ void profilepage::on_buttonLogout_clicked()
         login *loginPage = new login();
         loginPage->show();
     }
-    // If Cancel, do nothing — user stays on homepage.
+    // If Cancel, do nothing.
 }
 
 void profilepage::on_buttonChangePhoto_clicked()
@@ -72,8 +79,7 @@ void profilepage::on_buttonChangePhoto_clicked()
         "Images (*.png *.jpg *.jpeg *.bmp)"
         );
 
-    if (filePath.isEmpty())
-        return;
+    if (filePath.isEmpty()) return;
 
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {

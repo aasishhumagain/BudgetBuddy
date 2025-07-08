@@ -145,7 +145,7 @@
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>140</y>
+     <y>90</y>
      <width>91</width>
      <height>29</height>
     </rect>
@@ -165,6 +165,19 @@
    </property>
    <property name="text">
     <string>Export Transactions</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonClearFilter">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>140</y>
+     <width>91</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clear Filter!</string>
    </property>
   </widget>
  </widget>

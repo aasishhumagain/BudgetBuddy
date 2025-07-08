@@ -19,6 +19,10 @@ private slots:
     void onBackButtonClicked();
     void loadTransactionData();
     void on_buttonExport_clicked();
+    void showContextMenu(const QPoint &pos);
+    void editSelectedTransaction();
+    void deleteSelectedTransaction();
+    void clearFilters();
 
 private:
     Ui::viewtransactions *ui;
