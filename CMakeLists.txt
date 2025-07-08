@@ -13,6 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # -------- Find Required Qt Modules --------
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Charts)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Charts PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts PrintSupport)
+
 
 # -------- All Source Files --------
 set(PROJECT_SOURCES
@@ -52,6 +55,8 @@ target_link_libraries(BudgetBuddy_2
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Sql
     Qt${QT_VERSION_MAJOR}::Charts
+    Qt${QT_VERSION_MAJOR}::PrintSupport
+
 )
 
 # -------- macOS/iOS Configuration (Optional) --------

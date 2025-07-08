@@ -1,5 +1,6 @@
 #include "viewtransactions.h"
 #include "ui_viewtransactions.h"
+
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QTableWidgetItem>
@@ -9,6 +10,10 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QPrinter>
+#include <QTextDocument>
+#include <QInputDialog>
+#include "databasemanager.h"
 
 viewtransactions::viewtransactions(QWidget *parent, int userId) :
     QDialog(parent),
@@ -16,6 +21,9 @@ viewtransactions::viewtransactions(QWidget *parent, int userId) :
     currentUserId(userId)
 {
     ui->setupUi(this);
+
+    // ✅ Cache username once
+    this->currentUserName = DatabaseManager::instance().getUserNameById(currentUserId);
 
     // Setup filters
     ui->comboBoxTypeFilter->addItems({"All", "Income", "Expense"});
@@ -29,7 +37,6 @@ viewtransactions::viewtransactions(QWidget *parent, int userId) :
 
     connect(ui->buttonBack, &QPushButton::clicked, this, &viewtransactions::onBackButtonClicked);
     connect(ui->buttonApplyFilter, &QPushButton::clicked, this, &viewtransactions::loadTransactionData);
-
 
     loadTransactionData();
 }
@@ -141,44 +148,94 @@ void viewtransactions::loadTransactionData()
 
 void viewtransactions::on_buttonExport_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(
+    // Choose format
+    QStringList formats = {"CSV", "PDF"};
+    bool ok;
+    QString selectedFormat = QInputDialog::getItem(
         this,
-        "Export Transactions",
-        QDir::homePath() + "/transactions.csv",
-        "CSV Files (*.csv)"
+        "Export Format",
+        "Choose export format:",
+        formats,
+        0,
+        false,
+        &ok
         );
 
-    if (fileName.isEmpty()) {
-        return; // user cancelled
-    }
-
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QMessageBox::warning(this, "Error", "Could not open file for writing.");
+    if (!ok || selectedFormat.isEmpty()) {
         return;
     }
 
-    QTextStream out(&file);
+    bool exportAsCSV = (selectedFormat == "CSV");
 
-    // Write header row
-    out << "Date,Category,Type,Amount,Remarks\n";
+    QString fileFilter = exportAsCSV ? "CSV Files (*.csv)" : "PDF Files (*.pdf)";
+    QString defaultName = exportAsCSV ? "transactions.csv" : "transactions.pdf";
 
-    // Write each row
-    int rows = ui->tableWidgetTransactions->rowCount();
-    int cols = ui->tableWidgetTransactions->columnCount();
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        "Export Transactions",
+        QDir::homePath() + "/" + defaultName,
+        fileFilter
+        );
 
-    for (int i = 0; i < rows; ++i) {
-        QStringList rowData;
-        for (int j = 0; j < cols; ++j) {
-            QString cell = ui->tableWidgetTransactions->item(i, j)->text();
-            // Escape commas
-            cell.replace(",", " ");
-            rowData << cell;
-        }
-        out << rowData.join(",") << "\n";
+    if (fileName.isEmpty()) {
+        return;
     }
 
-    file.close();
+    if (exportAsCSV) {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QMessageBox::warning(this, "Error", "Could not open file for writing.");
+            return;
+        }
 
-    QMessageBox::information(this, "Success", "Transactions exported successfully!");
+        QTextStream out(&file);
+        out << "Date,Category,Type,Amount,Remarks\n";
+
+        int rows = ui->tableWidgetTransactions->rowCount();
+        int cols = ui->tableWidgetTransactions->columnCount();
+
+        for (int i = 0; i < rows; ++i) {
+            QStringList rowData;
+            for (int j = 0; j < cols; ++j) {
+                QString cell = ui->tableWidgetTransactions->item(i, j)->text();
+                cell.replace(",", " ");
+                rowData << cell;
+            }
+            out << rowData.join(",") << "\n";
+        }
+
+        file.close();
+
+        QMessageBox::information(this, "Success", "Transactions exported as CSV!");
+
+    } else {
+        QString html = "<h2>Welcome " + currentUserName + "! Your Transactions Statements</h2>"
+                                                          "<table border='1' cellspacing='0' cellpadding='4'>"
+                                                          "<tr><th>Date</th><th>Category</th><th>Type</th><th>Amount</th><th>Remarks</th></tr>";
+
+        int rows = ui->tableWidgetTransactions->rowCount();
+        int cols = ui->tableWidgetTransactions->columnCount();
+
+        for (int i = 0; i < rows; ++i) {
+            html += "<tr>";
+            for (int j = 0; j < cols; ++j) {
+                QString cell = ui->tableWidgetTransactions->item(i, j)->text();
+                html += "<td>" + cell + "</td>";
+            }
+            html += "</tr>";
+        }
+
+        html += "</table>";
+
+        QTextDocument doc;
+        doc.setHtml(html);
+
+        QPrinter printer;
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setOutputFileName(fileName);
+
+        doc.print(&printer);
+
+        QMessageBox::information(this, "Success", "Transactions exported as PDF!");
+    }
 }
