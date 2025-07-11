@@ -23,7 +23,6 @@ profilepage::profilepage(int userId, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // ✅ This must be inside the body, not initializer list!
     connect(ui->buttonBack, &QPushButton::clicked, this, &profilepage::on_backButton_clicked);
 
     QByteArray imageData = DatabaseManager::instance().getUserPhoto(currentUserId);

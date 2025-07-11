@@ -6,160 +6,282 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>1080</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>BudgetBuddy - Add Transaction</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">
+    background-color: rgb(202, 219, 194);
+   </string>
+  </property>
+
+  <!-- Title -->
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>70</y>
-     <width>111</width>
-     <height>21</height>
+     <x>440</x>
+     <y>60</y>
+     <width>200</width>
+     <height>40</height>
     </rect>
    </property>
    <property name="text">
     <string>Add Transaction</string>
    </property>
-  </widget>
-  <widget class="QComboBox" name="comboBoxCategory">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>190</y>
-     <width>82</width>
-     <height>28</height>
-    </rect>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 18pt "Segoe UI";
+     color: rgb(0, 0, 0);
+   </string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBoxType">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>240</y>
-     <width>82</width>
-     <height>28</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QDateEdit" name="dateEdit">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>290</y>
-     <width>151</width>
-     <height>29</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="buttonSubmit">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>360</y>
-     <width>83</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Submit</string>
-   </property>
-  </widget>
+
+  <!-- Amount Label -->
   <widget class="QLabel" name="labelAmount">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>140</y>
-     <width>63</width>
-     <height>20</height>
+     <x>340</x>
+     <y>150</y>
+     <width>100</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string>Amount:</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
   </widget>
+
+  <!-- Amount Input -->
+  <widget class="QLineEdit" name="lineEditAmount">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>150</y>
+     <width>200</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Enter amount</string>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     background: white;
+     color: rgb(0, 0, 0);
+     border: 2px solid black;
+     border-radius: 6px;
+     padding-left: 8px;
+   </string>
+   </property>
+  </widget>
+
+  <!-- Category Label -->
   <widget class="QLabel" name="labelCategory">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>190</y>
-     <width>63</width>
-     <height>20</height>
+     <x>340</x>
+     <y>200</y>
+     <width>100</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string>Category:</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
   </widget>
+
+  <!-- Category Combo -->
+  <widget class="QComboBox" name="comboBoxCategory">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>200</y>
+     <width>200</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     background: white;
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
+  </widget>
+
+  <!-- Type Label -->
   <widget class="QLabel" name="labelType">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>240</y>
-     <width>63</width>
-     <height>20</height>
+     <x>340</x>
+     <y>250</y>
+     <width>100</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string>Type:</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
   </widget>
+
+  <!-- Type Combo -->
+  <widget class="QComboBox" name="comboBoxType">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>250</y>
+     <width>200</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     background: white;
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
+  </widget>
+
+  <!-- Date Label -->
   <widget class="QLabel" name="labelDate">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>290</y>
-     <width>63</width>
-     <height>20</height>
+     <x>340</x>
+     <y>300</y>
+     <width>100</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string>Date:</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditAmount">
+
+  <!-- Date Edit -->
+  <widget class="QDateEdit" name="dateEdit">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>140</y>
-     <width>113</width>
-     <height>28</height>
+     <x>460</x>
+     <y>300</y>
+     <width>200</width>
+     <height>35</height>
     </rect>
    </property>
-   <property name="inputMethodHints">
-    <set>Qt::InputMethodHint::ImhPreferNumbers</set>
-   </property>
-   <property name="text">
-    <string/>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     background: white;
+     color: rgb(0, 0, 0);
+   </string>
    </property>
   </widget>
+
+  <!-- Remarks Label -->
   <widget class="QLabel" name="labelRemarks">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>330</y>
-     <width>63</width>
-     <height>20</height>
+     <x>340</x>
+     <y>350</y>
+     <width>100</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string>Remarks:</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     color: rgb(0, 0, 0);
+   </string>
+   </property>
   </widget>
+
+  <!-- Remarks Input -->
   <widget class="QLineEdit" name="lineEditRemarks">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>330</y>
-     <width>141</width>
-     <height>28</height>
+     <x>460</x>
+     <y>350</y>
+     <width>200</width>
+     <height>35</height>
     </rect>
    </property>
+   <property name="placeholderText">
+    <string>Optional</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt "Segoe UI";
+     background: white;
+     color: rgb(0, 0, 0);
+     border: 2px solid black;
+     border-radius: 6px;
+     padding-left: 8px;
+   </string>
+   </property>
   </widget>
+
+  <!-- Submit Button -->
+  <widget class="QPushButton" name="buttonSubmit">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>420</y>
+     <width>200</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Submit</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 12pt "Segoe UI";
+     background: white;
+     color: rgb(0, 0, 0);
+     border: 2px solid black;
+     border-radius: 6px;
+   </string>
+   </property>
+  </widget>
+
  </widget>
  <resources/>
  <connections/>
