@@ -21,7 +21,7 @@ login::login(QWidget *parent) :
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
     // Connect checkbox to toggle visibility
-    connect(ui->checkBox, &QCheckBox::toggled, this, &login::on_checkBox_toggled);
+    connect(ui->checkBoxShowPassword, &QCheckBox::toggled, this, &login::on_checkBox_toggled);
 }
 
 login::~login()
