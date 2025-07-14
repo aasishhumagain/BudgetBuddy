@@ -20,7 +20,8 @@ private slots:
     void on_buttonLogin_clicked();
     void on_buttonSignup_clicked();
     void on_buttonForgotPassword_clicked();
-    void on_buttonTogglePassword_clicked();
+    void on_checkBox_toggled(bool checked);
+
 
 private:
     Ui::login *ui;
