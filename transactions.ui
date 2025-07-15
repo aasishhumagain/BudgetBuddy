@@ -18,71 +18,59 @@
     background-color: rgb(202, 219, 194);
    </string>
   </property>
-
-  <!-- Title -->
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>400</x>
      <y>60</y>
-     <width>200</width>
+     <width>381</width>
      <height>40</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 20pt &quot;Segoe UI&quot;;
+     color: rgb(0, 0, 0);
+   </string>
    </property>
    <property name="text">
     <string>Add Transaction</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 18pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
-  <!-- Amount Label -->
   <widget class="QLabel" name="labelAmount">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>150</y>
-     <width>100</width>
+     <x>330</x>
+     <y>140</y>
+     <width>111</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 14pt &quot;Segoe UI&quot;;
+     color: rgb(0, 0, 0);
+   </string>
    </property>
    <property name="text">
     <string>Amount:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- Amount Input -->
   <widget class="QLineEdit" name="lineEditAmount">
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>150</y>
-     <width>200</width>
-     <height>35</height>
+     <y>134</y>
+     <width>251</width>
+     <height>51</height>
     </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Enter amount</string>
-   </property>
-   <property name="inputMethodHints">
-    <set>Qt::InputMethodHint::ImhPreferNumbers</set>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt "Segoe UI";
+     font: 600 11pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
      border: 2px solid black;
@@ -90,165 +78,157 @@
      padding-left: 8px;
    </string>
    </property>
+   <property name="inputMethodHints">
+    <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+   </property>
+   <property name="placeholderText">
+    <string>Enter amount</string>
+   </property>
   </widget>
-
-  <!-- Category Label -->
   <widget class="QLabel" name="labelCategory">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>200</y>
-     <width>100</width>
-     <height>25</height>
+     <x>320</x>
+     <y>194</y>
+     <width>111</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 14pt &quot;Segoe UI&quot;;
+     color: rgb(0, 0, 0);
+   </string>
    </property>
    <property name="text">
     <string>Category:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- Category Combo -->
   <widget class="QComboBox" name="comboBoxCategory">
    <property name="geometry">
     <rect>
      <x>460</x>
      <y>200</y>
-     <width>200</width>
-     <height>35</height>
+     <width>251</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt "Segoe UI";
+     font: 600 11pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
-   </string>
+        border-radius: 6px;
+  border: 2px solid black;
+     </string>
    </property>
   </widget>
-
-  <!-- Type Label -->
   <widget class="QLabel" name="labelType">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>250</y>
+     <x>370</x>
+     <y>270</y>
      <width>100</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 14pt &quot;Segoe UI&quot;;
+     color: rgb(0, 0, 0);
+   </string>
    </property>
    <property name="text">
     <string>Type:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- Type Combo -->
   <widget class="QComboBox" name="comboBoxType">
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>250</y>
-     <width>200</width>
-     <height>35</height>
+     <y>266</y>
+     <width>251</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt "Segoe UI";
+     font: 600 11pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
-   </string>
+     border: 2px solid black;
+     border-radius: 6px;</string>
    </property>
   </widget>
-
-  <!-- Date Label -->
   <widget class="QLabel" name="labelDate">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>300</y>
-     <width>100</width>
-     <height>25</height>
+     <x>370</x>
+     <y>330</y>
+     <width>131</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 14pt &quot;Segoe UI&quot;;
+     color: rgb(0, 0, 0);
+   </string>
    </property>
    <property name="text">
     <string>Date:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- Date Edit -->
   <widget class="QDateEdit" name="dateEdit">
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>300</y>
-     <width>200</width>
-     <height>35</height>
+     <y>330</y>
+     <width>251</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt "Segoe UI";
+     font: 600 11pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
+  border: 2px solid black;
+     border-radius: 6px;
    </string>
    </property>
   </widget>
-
-  <!-- Remarks Label -->
   <widget class="QLabel" name="labelRemarks">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>350</y>
+     <x>330</x>
+     <y>410</y>
      <width>100</width>
      <height>25</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Remarks:</string>
-   </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt "Segoe UI";
+     font: 600 14pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
    </string>
    </property>
+   <property name="text">
+    <string>Remarks:</string>
+   </property>
   </widget>
-
-  <!-- Remarks Input -->
   <widget class="QLineEdit" name="lineEditRemarks">
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>350</y>
-     <width>200</width>
-     <height>35</height>
+     <y>396</y>
+     <width>252</width>
+     <height>51</height>
     </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Optional</string>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt "Segoe UI";
+     font: 600 11pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
      border: 2px solid black;
@@ -256,32 +236,32 @@
      padding-left: 8px;
    </string>
    </property>
+   <property name="placeholderText">
+    <string>Optional</string>
+   </property>
   </widget>
-
-  <!-- Submit Button -->
   <widget class="QPushButton" name="buttonSubmit">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>420</y>
-     <width>200</width>
-     <height>40</height>
+     <x>460</x>
+     <y>462</y>
+     <width>251</width>
+     <height>51</height>
     </rect>
-   </property>
-   <property name="text">
-    <string>Submit</string>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 12pt "Segoe UI";
+     font: 600 12pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
      border: 2px solid black;
      border-radius: 6px;
    </string>
    </property>
+   <property name="text">
+    <string>Submit</string>
+   </property>
   </widget>
-
  </widget>
  <resources/>
  <connections/>

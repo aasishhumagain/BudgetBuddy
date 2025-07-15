@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QCoreApplication>
+#include <QPixmap>
 
 login::login(QWidget *parent) :
     QDialog(parent),
@@ -16,6 +17,17 @@ login::login(QWidget *parent) :
     currentUserId(-1)
 {
     ui->setupUi(this);
+
+    // Set up blob image as full background
+    ui->labelBlob->setGeometry(0, 0, this->width(), this->height());
+    QPixmap Pixmap(":/images/blob.png"); // Uses the image from resources.qrc
+    if (!Pixmap.isNull()) {
+        ui->labelBlob->setPixmap(Pixmap);
+    } else {
+        qDebug() << "❌ Failed to load blob.png";
+    }
+    ui->labelBlob->setScaledContents(true);
+    ui->labelBlob->lower(); // Send blob behind all UI elements
 
     // Setup password field
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);

@@ -16,35 +16,31 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(202, 219, 194);</string>
   </property>
-
-  <!-- App Title -->
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>235</x>
-     <y>100</y>
-     <width>531</width>
-     <height>81</height>
+     <x>280</x>
+     <y>90</y>
+     <width>601</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(0, 0, 0);
-font: 700 48pt "Segoe UI";
+font: 700 48pt &quot;Segoe UI&quot;;
 background-color: transparent;</string>
    </property>
    <property name="text">
     <string>BUDGETBUDDY</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
-  <!-- Username -->
   <widget class="QLineEdit" name="lineEditUsername">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>440</x>
      <y>230</y>
      <width>201</width>
      <height>31</height>
@@ -52,7 +48,7 @@ background-color: transparent;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: transparent;
-font: 600 12pt "Segoe UI";
+font: 600 12pt &quot;Segoe UI&quot;;
 color: rgb(0, 0, 0);
 border: 2px solid rgb(0, 0, 0);
 border-radius: 10px;</string>
@@ -61,38 +57,34 @@ border-radius: 10px;</string>
     <string>Username</string>
    </property>
   </widget>
-
-  <!-- Password -->
   <widget class="QLineEdit" name="lineEditPassword">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>280</y>
+     <x>440</x>
+     <y>290</y>
      <width>201</width>
      <height>31</height>
     </rect>
    </property>
-   <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
-   </property>
    <property name="styleSheet">
     <string notr="true">background-color: transparent;
-font: 600 12pt "Segoe UI";
+font: 600 12pt &quot;Segoe UI&quot;;
 color: rgb(0, 0, 0);
 border: 2px solid rgb(0, 0, 0);
 border-radius: 10px;</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::EchoMode::Password</enum>
    </property>
    <property name="placeholderText">
     <string>Password</string>
    </property>
   </widget>
-
-  <!-- Show Password Checkbox -->
   <widget class="QCheckBox" name="checkBoxShowPassword">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>285</y>
+     <x>660</x>
+     <y>300</y>
      <width>131</width>
      <height>21</height>
     </rect>
@@ -108,13 +100,11 @@ border-radius: 10px;</string>
     <string>Show Password</string>
    </property>
   </widget>
-
-  <!-- Forgot Password -->
   <widget class="QPushButton" name="buttonForgotPassword">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>320</y>
+     <x>480</x>
+     <y>330</y>
      <width>200</width>
      <height>20</height>
     </rect>
@@ -128,20 +118,18 @@ border: none;</string>
     <string>Forgot Password?</string>
    </property>
   </widget>
-
-  <!-- Login Button -->
   <widget class="QPushButton" name="buttonLogin">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>360</y>
+     <x>470</x>
+     <y>370</y>
      <width>161</width>
      <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(58, 116, 86);
-font: 700 12pt "Segoe UI";
+font: 700 12pt &quot;Segoe UI&quot;;
 color: rgb(0, 0, 0);
 border: 2px solid rgb(0, 0, 0);
 border-radius: 10px;</string>
@@ -150,14 +138,12 @@ border-radius: 10px;</string>
     <string>LOG IN</string>
    </property>
   </widget>
-
-  <!-- OR Text -->
   <widget class="QLabel" name="labelOr">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>400</y>
-     <width>101</width>
+     <x>540</x>
+     <y>410</y>
+     <width>121</width>
      <height>20</height>
     </rect>
    </property>
@@ -169,16 +155,14 @@ color: rgb(0, 0, 0);</string>
     <string>Not Registered?</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
-  <!-- Sign Up -->
   <widget class="QPushButton" name="buttonSignup">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>430</y>
+     <x>470</x>
+     <y>450</y>
      <width>161</width>
      <height>31</height>
     </rect>
@@ -186,7 +170,7 @@ color: rgb(0, 0, 0);</string>
    <property name="styleSheet">
     <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(101, 101, 152);
-font: 700 12pt "Segoe UI";
+font: 700 12pt &quot;Segoe UI&quot;;
 border: 2px solid rgb(0, 0, 0);
 border-radius: 10px;</string>
    </property>
@@ -194,29 +178,25 @@ border-radius: 10px;</string>
     <string>SIGN UP</string>
    </property>
   </widget>
-
-  <!-- Decorative Blob / Logo Placeholder (Optional) -->
   <widget class="QLabel" name="labelBlob">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>180</y>
-     <width>300</width>
-     <height>300</height>
+     <x>230</x>
+     <y>10</y>
+     <width>681</width>
+     <height>551</height>
     </rect>
-   </property>
-   <property name="pixmap">
-    <pixmap>icons/blob.png</pixmap> <!-- if applicable -->
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="pixmap">
+    <pixmap resource="resources.qrc">:/images/blob.png</pixmap>
+   </property>
   </widget>
-
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

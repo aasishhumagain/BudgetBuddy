@@ -41,6 +41,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         forgotpassword.h forgotpassword.cpp
         profilepage.h profilepage.cpp profilepage.ui
         changepassword.h changepassword.cpp
+        resources.qrc
+
 
     )
 else()
