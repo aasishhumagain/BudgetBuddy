@@ -262,6 +262,28 @@
     <string>Submit</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="buttonBack">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>520</y>
+     <width>251</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 12pt &quot;Segoe UI&quot;;
+     background: white;
+     color: rgb(0, 0, 0);
+     border: 2px solid black;
+     border-radius: 6px;
+   </string>
+   </property>
+   <property name="text">
+    <string>Back to Homepage</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

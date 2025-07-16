@@ -17,6 +17,7 @@ public:
 
 private slots:
     void onSubmitClicked();
+    void on_buttonBack_clicked();
 
 private:
     Ui::monthlygoals *ui;

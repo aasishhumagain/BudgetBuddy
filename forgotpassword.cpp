@@ -83,6 +83,25 @@ void ForgotPassword::on_buttonReset_clicked()
         return;
     }
 
+    // Enforce password complexity
+    if (newPassword.length() < 8) {
+        showMessage("Password must be at least 8 characters long.");
+        return;
+    }
+
+    bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+    for (const QChar &ch : newPassword) {
+        if (ch.isUpper()) hasUpper = true;
+        else if (ch.isLower()) hasLower = true;
+        else if (ch.isDigit()) hasDigit = true;
+        else hasSpecial = true;
+    }
+
+    if (!(hasUpper && hasLower && hasDigit && hasSpecial)) {
+        showMessage("Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.");
+        return;
+    }
+
     // Check if old password is the same
     QSqlQuery checkQuery;
     checkQuery.prepare("SELECT password FROM users WHERE username = :username");

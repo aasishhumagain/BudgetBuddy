@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QCheckBox>
 
 class ChangePassword : public QDialog
 {
@@ -16,11 +17,11 @@ public:
 private slots:
     void on_buttonChange_clicked();
     void on_buttonCancel_clicked();
-    void toggleOldPasswordVisibility();
-    void toggleNewPasswordVisibility();
-    void toggleConfirmPasswordVisibility();
+    void on_checkBoxShowPassword_toggled(bool checked);
 
 private:
+    int currentUserId;
+
     QLineEdit *lineEditOldPassword;
     QLineEdit *lineEditNewPassword;
     QLineEdit *lineEditConfirmPassword;
@@ -28,15 +29,7 @@ private:
     QPushButton *buttonChange;
     QPushButton *buttonCancel;
 
-    QPushButton *toggleOldPasswordBtn;
-    QPushButton *toggleNewPasswordBtn;
-    QPushButton *toggleConfirmPasswordBtn;
-
-    bool oldPassVisible = false;
-    bool newPassVisible = false;
-    bool confirmPassVisible = false;
-
-    int currentUserId;
+    QCheckBox *checkBoxShowPassword;
 
     void showMessage(const QString &msg);
 };

@@ -29,37 +29,19 @@ ChangePassword::ChangePassword(int userId, QWidget *parent) :
     lineEditNewPassword->setEchoMode(QLineEdit::Password);
     lineEditConfirmPassword->setEchoMode(QLineEdit::Password);
 
-    // Toggle buttons
-    toggleOldPasswordBtn = new QPushButton("👁️");
-    toggleNewPasswordBtn = new QPushButton("👁️");
-    toggleConfirmPasswordBtn = new QPushButton("👁️");
-
-    toggleOldPasswordBtn->setFixedWidth(30);
-    toggleNewPasswordBtn->setFixedWidth(30);
-    toggleConfirmPasswordBtn->setFixedWidth(30);
+    // Show password checkbox
+    checkBoxShowPassword = new QCheckBox("Show password");
+    checkBoxShowPassword->setStyleSheet("font: 600 10pt \"Segoe UI\"; color: black;");
 
     // Main buttons
     buttonChange = new QPushButton("Change Password");
     buttonCancel = new QPushButton("Cancel");
 
-    // Layouts for inputs with toggles
-    QHBoxLayout *oldPassLayout = new QHBoxLayout;
-    oldPassLayout->addWidget(lineEditOldPassword);
-    oldPassLayout->addWidget(toggleOldPasswordBtn);
-
-    QHBoxLayout *newPassLayout = new QHBoxLayout;
-    newPassLayout->addWidget(lineEditNewPassword);
-    newPassLayout->addWidget(toggleNewPasswordBtn);
-
-    QHBoxLayout *confirmPassLayout = new QHBoxLayout;
-    confirmPassLayout->addWidget(lineEditConfirmPassword);
-    confirmPassLayout->addWidget(toggleConfirmPasswordBtn);
-
     // Form layout
     QFormLayout *formLayout = new QFormLayout;
-    formLayout->addRow(labelOldPassword, oldPassLayout);
-    formLayout->addRow(labelNewPassword, newPassLayout);
-    formLayout->addRow(labelConfirmPassword, confirmPassLayout);
+    formLayout->addRow(labelOldPassword, lineEditOldPassword);
+    formLayout->addRow(labelNewPassword, lineEditNewPassword);
+    formLayout->addRow(labelConfirmPassword, lineEditConfirmPassword);
 
     // Button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout;
@@ -69,20 +51,19 @@ ChangePassword::ChangePassword(int userId, QWidget *parent) :
     // Main layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(formLayout);
+    mainLayout->addWidget(checkBoxShowPassword);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
     // Connections
     connect(buttonChange, &QPushButton::clicked, this, &ChangePassword::on_buttonChange_clicked);
     connect(buttonCancel, &QPushButton::clicked, this, &ChangePassword::on_buttonCancel_clicked);
-    connect(toggleOldPasswordBtn, &QPushButton::clicked, this, &ChangePassword::toggleOldPasswordVisibility);
-    connect(toggleNewPasswordBtn, &QPushButton::clicked, this, &ChangePassword::toggleNewPasswordVisibility);
-    connect(toggleConfirmPasswordBtn, &QPushButton::clicked, this, &ChangePassword::toggleConfirmPasswordVisibility);
+    connect(checkBoxShowPassword, &QCheckBox::toggled, this, &ChangePassword::on_checkBoxShowPassword_toggled);
 }
 
 ChangePassword::~ChangePassword()
 {
-    // Children cleaned up by Qt
+    // Children auto-deleted by Qt
 }
 
 void ChangePassword::showMessage(const QString &msg)
@@ -98,12 +79,36 @@ void ChangePassword::on_buttonChange_clicked()
 
     if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
         showMessage("Please fill in all fields.");
-        return; // ❌ stays open
+        return;
     }
 
     if (newPassword != confirmPassword) {
         showMessage("New passwords do not match.");
-        return; // ❌ stays open
+        return;
+    }
+
+    if (oldPassword == newPassword) {
+        showMessage("New password must be different from the old password.");
+        return;
+    }
+
+    // Enforce password complexity
+    if (newPassword.length() < 8) {
+        showMessage("Password must be at least 8 characters long.");
+        return;
+    }
+
+    bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+    for (const QChar &ch : newPassword) {
+        if (ch.isUpper()) hasUpper = true;
+        else if (ch.isLower()) hasLower = true;
+        else if (ch.isDigit()) hasDigit = true;
+        else hasSpecial = true;
+    }
+
+    if (!(hasUpper && hasLower && hasDigit && hasSpecial)) {
+        showMessage("Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.");
+        return;
     }
 
     QSqlQuery query(DatabaseManager::instance().getDatabase());
@@ -112,13 +117,13 @@ void ChangePassword::on_buttonChange_clicked()
 
     if (!query.exec() || !query.next()) {
         showMessage("Failed to check old password.");
-        return; // ❌ stays open
+        return;
     }
 
     QString currentPassword = query.value(0).toString();
     if (currentPassword != oldPassword) {
         showMessage("Old password is incorrect.");
-        return; // ❌ stays open
+        return;
     }
 
     query.prepare("UPDATE users SET password = :password WHERE id = :id");
@@ -127,7 +132,7 @@ void ChangePassword::on_buttonChange_clicked()
 
     if (query.exec()) {
         showMessage("Password changed successfully!");
-        accept(); // ✅ closes only if success
+        accept();
     } else {
         showMessage("Failed to update password.");
     }
@@ -135,26 +140,13 @@ void ChangePassword::on_buttonChange_clicked()
 
 void ChangePassword::on_buttonCancel_clicked()
 {
-    reject();  // Close dialog
+    reject();
 }
 
-void ChangePassword::toggleOldPasswordVisibility()
+void ChangePassword::on_checkBoxShowPassword_toggled(bool checked)
 {
-    oldPassVisible = !oldPassVisible;
-    lineEditOldPassword->setEchoMode(oldPassVisible ? QLineEdit::Normal : QLineEdit::Password);
-    toggleOldPasswordBtn->setText(oldPassVisible ? "🙈" : "👁️");
-}
-
-void ChangePassword::toggleNewPasswordVisibility()
-{
-    newPassVisible = !newPassVisible;
-    lineEditNewPassword->setEchoMode(newPassVisible ? QLineEdit::Normal : QLineEdit::Password);
-    toggleNewPasswordBtn->setText(newPassVisible ? "🙈" : "👁️");
-}
-
-void ChangePassword::toggleConfirmPasswordVisibility()
-{
-    confirmPassVisible = !confirmPassVisible;
-    lineEditConfirmPassword->setEchoMode(confirmPassVisible ? QLineEdit::Normal : QLineEdit::Password);
-    toggleConfirmPasswordBtn->setText(confirmPassVisible ? "🙈" : "👁️");
+    QLineEdit::EchoMode mode = checked ? QLineEdit::Normal : QLineEdit::Password;
+    lineEditOldPassword->setEchoMode(mode);
+    lineEditNewPassword->setEchoMode(mode);
+    lineEditConfirmPassword->setEchoMode(mode);
 }

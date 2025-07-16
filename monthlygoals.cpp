@@ -17,6 +17,7 @@ monthlygoals::monthlygoals(int userId, QWidget *parent)
     ui->spinBoxYear->setValue(QDate::currentDate().year());
 
     connect(ui->buttonSubmit, &QPushButton::clicked, this, &monthlygoals::onSubmitClicked);
+    connect(ui->buttonBack, &QPushButton::clicked, this, &::monthlygoals::on_buttonBack_clicked);
 }
 
 monthlygoals::~monthlygoals()
@@ -78,4 +79,9 @@ void monthlygoals::onSubmitClicked()
     } else {
         showMessage("Error: " + query.lastError().text());
     }
+}
+
+void monthlygoals::on_buttonBack_clicked()
+{
+    this->close();
 }

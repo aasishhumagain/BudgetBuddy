@@ -17,6 +17,7 @@ public:
 
 private slots:
     void on_buttonSubmit_clicked();
+    void on_buttonBack_clicked();
 
 private:
     Ui::transactions *ui;

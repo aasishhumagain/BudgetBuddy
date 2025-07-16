@@ -106,11 +106,11 @@ void analyzereport::generatePieChart(const QString &month, int year)
     }
 
     // 4️⃣ Update labels
-    ui->labelTotalIncome->setText("Total Income: ₹" + QString::number(totalIncome));
-    ui->labelTotalExpenses->setText("Total Expenses: ₹" + QString::number(totalExpense));
-    ui->labelTotalMonthlyGoal->setText("Total Monthly Goal: ₹" + QString::number(goalAmount));
+    ui->labelTotalIncome->setText("Total Income: " + QString::number(totalIncome));
+    ui->labelTotalExpenses->setText("Total Expenses: " + QString::number(totalExpense));
+    ui->labelTotalMonthlyGoal->setText("Total Monthly Goal: " + QString::number(goalAmount));
     double remaining = goalAmount - totalExpense;
-    ui->labelRemainingBudget->setText("Remaining Budget: ₹" + QString::number(remaining));
+    ui->labelRemainingBudget->setText("Remaining Budget: " + QString::number(remaining));
 
     // 5️⃣ Pie chart: Expense split by category
     QPieSeries *series = new QPieSeries();

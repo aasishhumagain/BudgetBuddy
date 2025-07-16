@@ -1,6 +1,5 @@
 #include "profilepage.h"
 #include "ui_profilepage.h"
-
 #include <QMessageBox>
 #include <QLineEdit>
 #include "databasemanager.h"
@@ -23,7 +22,7 @@ profilepage::profilepage(int userId, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->buttonBack, &QPushButton::clicked, this, &profilepage::on_backButton_clicked);
+    connect(ui->buttonBack, &QPushButton::clicked, this, &profilepage::on_buttonBack_clicked);
 
     QByteArray imageData = DatabaseManager::instance().getUserPhoto(currentUserId);
     if (!imageData.isEmpty()) {
@@ -40,7 +39,7 @@ profilepage::~profilepage()
     delete ui;
 }
 
-void profilepage::on_backButton_clicked()
+void profilepage::on_buttonBack_clicked()
 {
     this->close();
 }

@@ -21,6 +21,7 @@ transactions::transactions(QWidget *parent, int userId) :
     ui->comboBoxType->addItems({"Income", "Expense"});
     ui->dateEdit->setCalendarPopup(true);
     ui->dateEdit->setDate(QDate::currentDate());
+    connect(ui->buttonBack, &QPushButton::clicked, this, &::transactions::on_buttonBack_clicked);
 }
 
 transactions::~transactions()
@@ -131,4 +132,9 @@ void transactions::on_buttonSubmit_clicked()
     } else {
         showMessage("Failed to add transaction: " + query.lastError().text());
     }
+}
+
+void transactions::on_buttonBack_clicked()
+{
+    this->close();
 }
