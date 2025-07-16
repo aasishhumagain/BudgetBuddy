@@ -6,6 +6,10 @@
 #include <QDoubleValidator>
 #include <QDebug>
 
+// Category presets
+const QStringList expenseCategories = {"Food", "Fuel", "Rent", "Shopping", "Misc"};
+const QStringList incomeCategories = {"Salary", "Misc"};
+
 transactions::transactions(QWidget *parent, int userId) :
     QDialog(parent),
     ui(new Ui::transactions),
@@ -13,15 +17,22 @@ transactions::transactions(QWidget *parent, int userId) :
 {
     ui->setupUi(this);
 
+    // Amount validator
     QDoubleValidator *validator = new QDoubleValidator(0.01, 1000000.00, 2, this);
     validator->setNotation(QDoubleValidator::StandardNotation);
     ui->lineEditAmount->setValidator(validator);
 
-    ui->comboBoxCategory->addItems({"Food", "Fuel", "Rent", "Shopping", "Salary", "Misc"});
+    // Type selector
     ui->comboBoxType->addItems({"Income", "Expense"});
     ui->dateEdit->setCalendarPopup(true);
     ui->dateEdit->setDate(QDate::currentDate());
-    connect(ui->buttonBack, &QPushButton::clicked, this, &::transactions::on_buttonBack_clicked);
+
+    // Connect events
+    connect(ui->comboBoxType, &QComboBox::currentTextChanged, this, &transactions::on_typeChanged);
+    connect(ui->buttonBack, &QPushButton::clicked, this, &transactions::on_buttonBack_clicked);
+
+    // Set initial category options
+    on_typeChanged(ui->comboBoxType->currentText());
 }
 
 transactions::~transactions()
@@ -32,6 +43,17 @@ transactions::~transactions()
 void transactions::showMessage(const QString &msg)
 {
     QMessageBox::information(this, "Transaction", msg);
+}
+
+void transactions::on_typeChanged(const QString &type)
+{
+    ui->comboBoxCategory->clear();
+
+    if (type == "Income") {
+        ui->comboBoxCategory->addItems(incomeCategories);
+    } else if (type == "Expense") {
+        ui->comboBoxCategory->addItems(expenseCategories);
+    }
 }
 
 void transactions::on_buttonSubmit_clicked()

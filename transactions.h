@@ -18,6 +18,7 @@ public:
 private slots:
     void on_buttonSubmit_clicked();
     void on_buttonBack_clicked();
+    void on_typeChanged(const QString &type);
 
 private:
     Ui::transactions *ui;
