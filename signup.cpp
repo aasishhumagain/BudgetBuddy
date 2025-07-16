@@ -3,37 +3,25 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QMessageBox>
-#include <QFile>
-#include <QCoreApplication>
 #include <QDebug>
 
 signup::signup(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::signup),
-    passwordVisible(false)
+    ui(new Ui::signup)
 {
     ui->setupUi(this);
 
+    // Set placeholder text
     ui->lineEditUsername->setPlaceholderText("Enter Username");
     ui->lineEditPassword->setPlaceholderText("Enter Password");
     ui->lineEditConfirmPwd->setPlaceholderText("Confirm Password");
 
-    // Set password fields to Password mode initially
+    // Start with password fields hidden
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
     ui->lineEditConfirmPwd->setEchoMode(QLineEdit::Password);
 
-    // Load icons from assets folder
-    QString basePath = QCoreApplication::applicationDirPath();
-    iconClosedPath = basePath + "/assets/eye_closed.png";
-    iconOpenPath = basePath + "/assets/eye_open.png";
-
-    if (!QFile::exists(iconClosedPath) || !QFile::exists(iconOpenPath)) {
-        qWarning() << "❗ Eye icon(s) not found!";
-    }
-
-    // Set initial icon and connect toggle button
-    ui->buttonTogglePassword->setIcon(QIcon(iconClosedPath));
-    ui->buttonTogglePassword->setIconSize(QSize(24, 24));
+    // Connect checkbox for visibility toggle
+    connect(ui->checkBoxShowPassword, &QCheckBox::toggled, this, &signup::on_checkBoxShowPassword_toggled);
 }
 
 signup::~signup()
@@ -46,19 +34,10 @@ void signup::showMessage(const QString &msg)
     QMessageBox::information(this, "Signup", msg);
 }
 
-void signup::on_buttonTogglePassword_clicked()
+void signup::on_checkBoxShowPassword_toggled(bool checked)
 {
-    passwordVisible = !passwordVisible;
-
-    // Explicitly force echo modes again for both fields
-    ui->lineEditPassword->setEchoMode(passwordVisible ? QLineEdit::Normal : QLineEdit::Password);
-    ui->lineEditConfirmPwd->setEchoMode(passwordVisible ? QLineEdit::Normal : QLineEdit::Password);
-
-    // Update icon
-    ui->buttonTogglePassword->setIcon(QIcon(passwordVisible ? iconOpenPath : iconClosedPath));
-
-    // Debug logs
-    qDebug() << "Password toggle clicked. Now visible:" << passwordVisible;
+    ui->lineEditPassword->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
+    ui->lineEditConfirmPwd->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
 }
 
 void signup::on_buttonCreateAccount_clicked()
@@ -67,13 +46,12 @@ void signup::on_buttonCreateAccount_clicked()
     QString password = ui->lineEditPassword->text();
     QString confirmPassword = ui->lineEditConfirmPwd->text();
 
-    // Username empty check
     if (username.isEmpty()) {
         QMessageBox::warning(this, "Error", "Username cannot be empty.");
         return;
     }
 
-    // Username rules
+    // Username validation
     bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
     for (const QChar &ch : username) {
         if (ch.isUpper()) hasUpper = true;
@@ -92,19 +70,17 @@ void signup::on_buttonCreateAccount_clicked()
         return;
     }
 
-    // Password length
     if (password.length() < 8) {
         QMessageBox::warning(this, "Error", "Password must be at least 8 characters long.");
         return;
     }
 
-    // Password rules
     bool passHasUpper = false, passHasLower = false, passHasDigit = false, passHasSpecial = false;
     for (const QChar &ch : password) {
         if (ch.isUpper()) passHasUpper = true;
         else if (ch.isLower()) passHasLower = true;
         else if (ch.isDigit()) passHasDigit = true;
-        else passHasSpecial = true; // anything else is special
+        else passHasSpecial = true;
     }
 
     if (!(passHasUpper && passHasLower && passHasDigit && passHasSpecial)) {
@@ -112,20 +88,18 @@ void signup::on_buttonCreateAccount_clicked()
         return;
     }
 
-    // Confirm match
     if (password != confirmPassword) {
         QMessageBox::warning(this, "Error", "Passwords do not match.");
         return;
     }
 
-    // Insert plain password (for dev only!)
     QSqlQuery query;
     query.prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
     query.bindValue(":username", username);
     query.bindValue(":password", password);
 
     if (!query.exec()) {
-        if (query.lastError().nativeErrorCode() == "19") { // UNIQUE constraint fail
+        if (query.lastError().nativeErrorCode() == "19") {
             QMessageBox::warning(this, "Error", "Username already exists.");
         } else {
             QMessageBox::warning(this, "Error", "Signup failed: " + query.lastError().text());

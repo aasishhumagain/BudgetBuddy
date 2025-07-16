@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include "signup.h"
 #include "forgotpassword.h"
-#include <QIcon>
 #include <QDebug>
 #include <QFile>
 #include <QCoreApplication>
@@ -17,6 +16,9 @@ login::login(QWidget *parent) :
     currentUserId(-1)
 {
     ui->setupUi(this);
+    ui->buttonLogin->setDefault(true);
+    ui->lineEditUsername->setPlaceholderText("Enter Username");
+    ui->lineEditPassword->setPlaceholderText("Enter Password");
 
     // Set up blob image as full background
     ui->labelBlob->setGeometry(0, 0, this->width(), this->height());
@@ -33,7 +35,7 @@ login::login(QWidget *parent) :
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
     // Connect checkbox to toggle visibility
-    connect(ui->checkBoxShowPassword, &QCheckBox::toggled, this, &login::on_checkBox_toggled);
+    connect(ui->checkBoxPassword, &QCheckBox::toggled, this, &login::on_checkBoxPassword_toggled);
 }
 
 login::~login()
@@ -80,7 +82,7 @@ void login::on_buttonForgotPassword_clicked()
     fp->exec();
 }
 
-void login::on_checkBox_toggled(bool checked)
+void login::on_checkBoxPassword_toggled(bool checked)
 {
     ui->lineEditPassword->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
 }

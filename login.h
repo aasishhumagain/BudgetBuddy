@@ -20,7 +20,7 @@ private slots:
     void on_buttonLogin_clicked();
     void on_buttonSignup_clicked();
     void on_buttonForgotPassword_clicked();
-    void on_checkBox_toggled(bool checked);
+    void on_checkBoxPassword_toggled(bool checked);
 
 
 private:
@@ -28,8 +28,6 @@ private:
     void showMessage(const QString &message);
     bool passwordVisible;
     int currentUserId = -1;
-    QString iconClosedPath;
-    QString iconOpenPath;
 };
 
 #endif // LOGIN_H
