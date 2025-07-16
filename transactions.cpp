@@ -23,7 +23,7 @@ transactions::transactions(QWidget *parent, int userId) :
     ui->lineEditAmount->setValidator(validator);
 
     // Type selector
-    ui->comboBoxType->addItems({"Income", "Expense"});
+    ui->comboBoxType->addItems({"Expense", "Income"});
     ui->dateEdit->setCalendarPopup(true);
     ui->dateEdit->setDate(QDate::currentDate());
 
