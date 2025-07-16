@@ -2,8 +2,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QMessageBox>
-#include <QLineEdit>
-#include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QFormLayout>
@@ -27,30 +25,19 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     lineEditNewPassword->setEchoMode(QLineEdit::Password);
     lineEditConfirmPassword->setEchoMode(QLineEdit::Password);
 
-    // Visibility toggle buttons
-    toggleNewPasswordBtn = new QPushButton("👁️");
-    toggleConfirmPasswordBtn = new QPushButton("👁️");
-    toggleNewPasswordBtn->setFixedWidth(30);
-    toggleConfirmPasswordBtn->setFixedWidth(30);
+    // Show password checkbox - now placed BELOW both fields
+    checkBoxShowPassword = new QCheckBox("Show password");
+    checkBoxShowPassword->setStyleSheet("font: 600 10pt \"Segoe UI\"; color: black;");
 
     // Buttons
     buttonReset = new QPushButton("Reset Password");
     buttonCancel = new QPushButton("Cancel");
 
-    // Password layout with toggle
-    QHBoxLayout *newPassLayout = new QHBoxLayout;
-    newPassLayout->addWidget(lineEditNewPassword);
-    newPassLayout->addWidget(toggleNewPasswordBtn);
-
-    QHBoxLayout *confirmPassLayout = new QHBoxLayout;
-    confirmPassLayout->addWidget(lineEditConfirmPassword);
-    confirmPassLayout->addWidget(toggleConfirmPasswordBtn);
-
     // Form layout
     QFormLayout *formLayout = new QFormLayout;
     formLayout->addRow(labelUsername, lineEditUsername);
-    formLayout->addRow(labelNewPassword, newPassLayout);
-    formLayout->addRow(labelConfirmPassword, confirmPassLayout);
+    formLayout->addRow(labelNewPassword, lineEditNewPassword);
+    formLayout->addRow(labelConfirmPassword, lineEditConfirmPassword);
 
     // Button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout;
@@ -60,19 +47,19 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     // Main layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(formLayout);
+    mainLayout->addWidget(checkBoxShowPassword);  // Show password below all inputs
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
     // Connections
     connect(buttonReset, &QPushButton::clicked, this, &ForgotPassword::on_buttonReset_clicked);
     connect(buttonCancel, &QPushButton::clicked, this, &ForgotPassword::on_buttonCancel_clicked);
-    connect(toggleNewPasswordBtn, &QPushButton::clicked, this, &ForgotPassword::toggleNewPasswordVisibility);
-    connect(toggleConfirmPasswordBtn, &QPushButton::clicked, this, &ForgotPassword::toggleConfirmPasswordVisibility);
+    connect(checkBoxShowPassword, &QCheckBox::toggled, this, &ForgotPassword::on_checkBoxShowPassword_toggled);
 }
 
 ForgotPassword::~ForgotPassword()
 {
-    // Qt handles deletion of children automatically
+    // Children auto-deleted
 }
 
 void ForgotPassword::showMessage(const QString &msg)
@@ -82,7 +69,7 @@ void ForgotPassword::showMessage(const QString &msg)
 
 void ForgotPassword::on_buttonReset_clicked()
 {
-    QString username = lineEditUsername->text();
+    QString username = lineEditUsername->text().trimmed();
     QString newPassword = lineEditNewPassword->text();
     QString confirmPassword = lineEditConfirmPassword->text();
 
@@ -96,16 +83,32 @@ void ForgotPassword::on_buttonReset_clicked()
         return;
     }
 
-    QSqlQuery query;
-    query.prepare("UPDATE users SET password = :password WHERE username = :username");
-    query.bindValue(":password", newPassword);
-    query.bindValue(":username", username);
+    // Check if old password is the same
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT password FROM users WHERE username = :username");
+    checkQuery.bindValue(":username", username);
+    if (checkQuery.exec() && checkQuery.next()) {
+        QString oldPassword = checkQuery.value(0).toString();
+        if (oldPassword == newPassword) {
+            showMessage("Old and new passwords must not be the same.");
+            return;
+        }
+    } else {
+        showMessage("Username not found.");
+        return;
+    }
 
-    if (query.exec() && query.numRowsAffected() > 0) {
+    // Update password
+    QSqlQuery updateQuery;
+    updateQuery.prepare("UPDATE users SET password = :password WHERE username = :username");
+    updateQuery.bindValue(":password", newPassword);
+    updateQuery.bindValue(":username", username);
+
+    if (updateQuery.exec() && updateQuery.numRowsAffected() > 0) {
         showMessage("Password updated successfully!");
         accept();  // Close dialog
     } else {
-        showMessage("Username not found or update failed.");
+        showMessage("Password update failed.");
     }
 }
 
@@ -114,16 +117,8 @@ void ForgotPassword::on_buttonCancel_clicked()
     reject();  // Close dialog
 }
 
-void ForgotPassword::toggleNewPasswordVisibility()
+void ForgotPassword::on_checkBoxShowPassword_toggled(bool checked)
 {
-    newPassVisible = !newPassVisible;
-    lineEditNewPassword->setEchoMode(newPassVisible ? QLineEdit::Normal : QLineEdit::Password);
-    toggleNewPasswordBtn->setText(newPassVisible ? "🙈" : "👁️");
-}
-
-void ForgotPassword::toggleConfirmPasswordVisibility()
-{
-    confirmPassVisible = !confirmPassVisible;
-    lineEditConfirmPassword->setEchoMode(confirmPassVisible ? QLineEdit::Normal : QLineEdit::Password);
-    toggleConfirmPasswordBtn->setText(confirmPassVisible ? "🙈" : "👁️");
+    lineEditNewPassword->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
+    lineEditConfirmPassword->setEchoMode(checked ? QLineEdit::Normal : QLineEdit::Password);
 }

@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QCheckBox>
 
 class ForgotPassword : public QDialog
 {
@@ -16,8 +17,7 @@ public:
 private slots:
     void on_buttonReset_clicked();
     void on_buttonCancel_clicked();
-    void toggleNewPasswordVisibility();
-    void toggleConfirmPasswordVisibility();
+    void on_checkBoxShowPassword_toggled(bool checked);
 
 private:
     QLineEdit *lineEditUsername;
@@ -25,11 +25,7 @@ private:
     QLineEdit *lineEditConfirmPassword;
     QPushButton *buttonReset;
     QPushButton *buttonCancel;
-    QPushButton *toggleNewPasswordBtn;
-    QPushButton *toggleConfirmPasswordBtn;
-
-    bool newPassVisible = false;
-    bool confirmPassVisible = false;
+    QCheckBox *checkBoxShowPassword;
 
     void showMessage(const QString &msg);
 };
