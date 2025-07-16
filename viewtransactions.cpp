@@ -27,7 +27,7 @@ viewtransactions::viewtransactions(QWidget *parent, int userId) :
 
     ui->comboBoxTypeFilter->addItems({"All", "Income", "Expense"});
     ui->comboBoxCategoryFilter->addItem("All");
-    ui->comboBoxCategoryFilter->addItems({"Food", "Fuel", "Rent", "Shopping", "Salary", "Misc"});
+    ui->comboBoxCategoryFilter->addItems({"Food", "Fuel", "Rent", "Shopping", "Salary", "Misc", "Monthly Goal"});
 
     QDate today = QDate::currentDate();
     QDate firstOfMonth(today.year(), today.month(), 1);
@@ -63,88 +63,95 @@ void viewtransactions::loadTransactionData()
     QStringList headers = {"ID", "Date", "Category", "Type", "Amount", "Remarks"};
     ui->tableWidgetTransactions->setHorizontalHeaderLabels(headers);
     ui->tableWidgetTransactions->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
-    ui->tableWidgetTransactions->setColumnHidden(0, true); // Hide ID
+    ui->tableWidgetTransactions->setColumnHidden(0, true);
 
     QString selectedType = ui->comboBoxTypeFilter->currentText();
     QString selectedCategory = ui->comboBoxCategoryFilter->currentText();
+
     QDate fromDate = ui->dateEditFrom->date();
     QDate toDate = ui->dateEditTo->date();
 
-    QString sql = R"(
-        SELECT id, date, category, type, amount, remarks
-        FROM transactions
-        WHERE user_id = :uid1
-          AND date >= :from_date AND date <= :to_date
-    )";
-
-    if (selectedType != "All") {
-        sql += " AND type = :type";
-    }
-    if (selectedCategory != "All") {
-        sql += " AND category = :category";
-    }
-
-    sql += R"(
-        UNION ALL
-
-        SELECT
-            -1 AS id,
-            printf('%04d-%02d-01', year, month) AS date,
-            'Monthly Goal' AS category,
-            'MonthlyGoal' AS type,
-            amount,
-            'Monthly Goal for ' ||
-            CASE CAST(month AS INTEGER)
-                WHEN 1 THEN 'January'
-                WHEN 2 THEN 'February'
-                WHEN 3 THEN 'March'
-                WHEN 4 THEN 'April'
-                WHEN 5 THEN 'May'
-                WHEN 6 THEN 'June'
-                WHEN 7 THEN 'July'
-                WHEN 8 THEN 'August'
-                WHEN 9 THEN 'September'
-                WHEN 10 THEN 'October'
-                WHEN 11 THEN 'November'
-                WHEN 12 THEN 'December'
-                ELSE 'Unknown'
-            END || ' ' || year AS remarks
-        FROM monthly_goals
-        WHERE user_id = :uid2
-          AND printf('%04d-%02d-01', year, month) >= :from_date
-          AND printf('%04d-%02d-01', year, month) <= :to_date
-
-        ORDER BY date DESC
-    )";
-
-    QSqlQuery query;
-    query.prepare(sql);
-    query.bindValue(":uid1", currentUserId);
-    query.bindValue(":uid2", currentUserId);
-    query.bindValue(":from_date", fromDate.toString("yyyy-MM-dd"));
-    query.bindValue(":to_date", toDate.toString("yyyy-MM-dd"));
-
-    if (selectedType != "All") {
-        query.bindValue(":type", selectedType);
-    }
-    if (selectedCategory != "All") {
-        query.bindValue(":category", selectedCategory);
-    }
-
-    if (!query.exec()) {
-        qDebug() << "SQL error:" << query.lastError().text();
-        return;
-    }
+    QDate startOfFromMonth(fromDate.year(), fromDate.month(), 1);
+    QDate endOfToMonth(toDate.year(), toDate.month(), QDate(toDate.year(), toDate.month(), 1).daysInMonth());
 
     int row = 0;
-    while (query.next()) {
-        ui->tableWidgetTransactions->insertRow(row);
-        for (int col = 0; col < 6; ++col) {
-            ui->tableWidgetTransactions->setItem(
-                row, col,
-                new QTableWidgetItem(query.value(col).toString()));
+
+    // 🟦 Fetch transactions
+    if (selectedCategory != "Monthly Goal") {
+        QString sql = R"(
+            SELECT id, date, category, type, amount, remarks
+            FROM transactions
+            WHERE user_id = :uid
+              AND date >= :from_date AND date <= :to_date
+        )";
+
+        if (selectedType != "All") sql += " AND type = :type";
+        if (selectedCategory != "All") sql += " AND category = :category";
+
+        sql += " ORDER BY date DESC";
+
+        QSqlQuery query;
+        query.prepare(sql);
+        query.bindValue(":uid", currentUserId);
+        query.bindValue(":from_date", startOfFromMonth.toString("yyyy-MM-dd"));
+        query.bindValue(":to_date", endOfToMonth.toString("yyyy-MM-dd"));
+
+        if (selectedType != "All") {
+            query.bindValue(":type", selectedType);
         }
-        row++;
+        if (selectedCategory != "All") {
+            query.bindValue(":category", selectedCategory);
+        }
+
+        if (query.exec()) {
+            while (query.next()) {
+                ui->tableWidgetTransactions->insertRow(row);
+                for (int col = 0; col < 6; ++col) {
+                    ui->tableWidgetTransactions->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
+                }
+                row++;
+            }
+        } else {
+            qDebug() << "Transaction query failed:" << query.lastError().text();
+        }
+    }
+
+    // 🟨 Fetch monthly goals if category is "All" or explicitly "Monthly Goal"
+    if (selectedCategory == "All" || selectedCategory == "Monthly Goal") {
+        QSqlQuery goalQuery;
+        goalQuery.prepare(R"(
+            SELECT year, month, amount
+            FROM monthly_goals
+            WHERE user_id = :uid
+        )");
+        goalQuery.bindValue(":uid", currentUserId);
+
+        if (!goalQuery.exec()) {
+            qDebug() << "Monthly goal query failed:" << goalQuery.lastError().text();
+            return;
+        }
+
+        while (goalQuery.next()) {
+            int year = goalQuery.value(0).toInt();
+            int month = goalQuery.value(1).toInt();
+            double amount = goalQuery.value(2).toDouble();
+
+            QDate goalDate(year, month, 1);
+            if (goalDate < startOfFromMonth || goalDate > endOfToMonth)
+                continue;
+
+            QString monthStr = QDate(2000, month, 1).toString("MMMM");
+            QString remarks = QString("Monthly Goal for %1 %2").arg(monthStr).arg(year);
+
+            ui->tableWidgetTransactions->insertRow(row);
+            ui->tableWidgetTransactions->setItem(row, 0, new QTableWidgetItem("-1"));
+            ui->tableWidgetTransactions->setItem(row, 1, new QTableWidgetItem(goalDate.toString("yyyy-MM-dd")));
+            ui->tableWidgetTransactions->setItem(row, 2, new QTableWidgetItem("Monthly Goal"));
+            ui->tableWidgetTransactions->setItem(row, 3, new QTableWidgetItem("MonthlyGoal"));
+            ui->tableWidgetTransactions->setItem(row, 4, new QTableWidgetItem(QString::number(amount)));
+            ui->tableWidgetTransactions->setItem(row, 5, new QTableWidgetItem(remarks));
+            row++;
+        }
     }
 }
 

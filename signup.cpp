@@ -51,23 +51,12 @@ void signup::on_buttonCreateAccount_clicked()
         return;
     }
 
-    // Username validation
-    bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+    // Allow only letters and digits in username
     for (const QChar &ch : username) {
-        if (ch.isUpper()) hasUpper = true;
-        else if (ch.isLower()) hasLower = true;
-        else if (ch.isDigit()) hasDigit = true;
-        else hasSpecial = true;
-    }
-
-    if (hasSpecial) {
-        QMessageBox::warning(this, "Error", "Username must not contain special characters.");
-        return;
-    }
-
-    if (!(hasUpper && hasLower && hasDigit)) {
-        QMessageBox::warning(this, "Error", "Username must contain at least 1 uppercase, 1 lowercase, and 1 number.");
-        return;
+        if (!ch.isLetterOrNumber()) {
+            QMessageBox::warning(this, "Error", "Username must not contain special characters.");
+            return;
+        }
     }
 
     if (password.length() < 8) {
@@ -75,15 +64,16 @@ void signup::on_buttonCreateAccount_clicked()
         return;
     }
 
-    bool passHasUpper = false, passHasLower = false, passHasDigit = false, passHasSpecial = false;
+    // Password rules: must include upper, lower, digit, special
+    bool hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
     for (const QChar &ch : password) {
-        if (ch.isUpper()) passHasUpper = true;
-        else if (ch.isLower()) passHasLower = true;
-        else if (ch.isDigit()) passHasDigit = true;
-        else passHasSpecial = true;
+        if (ch.isUpper()) hasUpper = true;
+        else if (ch.isLower()) hasLower = true;
+        else if (ch.isDigit()) hasDigit = true;
+        else hasSpecial = true;
     }
 
-    if (!(passHasUpper && passHasLower && passHasDigit && passHasSpecial)) {
+    if (!(hasUpper && hasLower && hasDigit && hasSpecial)) {
         QMessageBox::warning(this, "Error", "Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.");
         return;
     }
