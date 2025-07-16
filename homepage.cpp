@@ -16,7 +16,11 @@ homepage::homepage(int userId, QWidget *parent)
     currentUserId(userId)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
+    ui->labelWelcome->setText("Welcome, Let's get started!");
 }
+
 
 homepage::~homepage()
 {

@@ -23,13 +23,13 @@
     <rect>
      <x>390</x>
      <y>80</y>
-     <width>300</width>
-     <height>40</height>
+     <width>321</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 18pt &quot;Segoe UI&quot;;
+     font: 700 35pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
    </string>
    </property>
@@ -51,7 +51,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+     font: 600 14pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
    </string>
    </property>
@@ -70,9 +70,12 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+
+     font: 600 12pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
+     border: 2px solid black;
+     border-radius: 6px;
    </string>
    </property>
   </widget>
@@ -87,7 +90,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+     font: 600 14pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
    </string>
    </property>
@@ -106,9 +109,12 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+
+     font: 600 12pt &quot;Segoe UI&quot;;
      background: white;
      color: rgb(0, 0, 0);
+     border: 2px solid black;
+     border-radius: 6px;
    </string>
    </property>
    <property name="minimum">
@@ -129,7 +135,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+     font: 600 14pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
    </string>
    </property>
@@ -166,7 +172,7 @@
   <widget class="QPushButton" name="buttonSubmit">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>480</x>
      <y>380</y>
      <width>200</width>
      <height>40</height>
@@ -174,21 +180,22 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 12pt &quot;Segoe UI&quot;;
-     background: white;
+     font: 700 14pt &quot;Segoe UI&quot;;
+
+background-color: rgb(170, 170, 170);
      color: rgb(0, 0, 0);
      border: 2px solid black;
      border-radius: 6px;
    </string>
    </property>
    <property name="text">
-    <string>Submit</string>
+    <string>SUBMIT</string>
    </property>
   </widget>
   <widget class="QPushButton" name="buttonBack">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>480</x>
      <y>450</y>
      <width>200</width>
      <height>40</height>
@@ -196,15 +203,16 @@
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 12pt &quot;Segoe UI&quot;;
-     background: white;
+     font: 700 14pt &quot;Segoe UI&quot;;
+
+background-color: rgb(170, 170, 170);
      color: rgb(0, 0, 0);
      border: 2px solid black;
      border-radius: 6px;
    </string>
    </property>
    <property name="text">
-    <string>Back to Homepage</string>
+    <string>BACK</string>
    </property>
   </widget>
  </widget>

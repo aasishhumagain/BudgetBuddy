@@ -16,6 +16,8 @@ analyzereport::analyzereport(int userId, QWidget *parent) :
     currentUserId(userId)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
 
     QStringList months = {
         "January", "February", "March", "April", "May", "June",
@@ -28,6 +30,7 @@ analyzereport::analyzereport(int userId, QWidget *parent) :
 
     connect(ui->buttonBack, &QPushButton::clicked, this, &analyzereport::onBackButtonClicked);
     connect(ui->buttonFilter, &QPushButton::clicked, this, &analyzereport::onFilterClicked);
+
 }
 
 analyzereport::~analyzereport()

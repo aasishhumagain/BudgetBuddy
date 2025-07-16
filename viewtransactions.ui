@@ -6,311 +6,242 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
-    <height>720</height>
+    <width>1282</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>BudgetBuddy - View Transactions</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-    background-color: rgb(202, 219, 194);
-   </string>
+   <string notr="true">background-color: rgb(202, 219, 194);</string>
   </property>
-
-  <!-- Title -->
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>20</y>
-     <width>300</width>
+     <x>420</x>
+     <y>40</y>
+     <width>501</width>
      <height>40</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 35pt &quot;Segoe UI&quot;; color: black;</string>
+   </property>
    <property name="text">
-    <string>Your Transactions</string>
+    <string>YOUR TRANSACTIONS</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 18pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
-  <!-- Type Label -->
   <widget class="QLabel" name="labelType">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>80</y>
+     <x>280</x>
+     <y>100</y>
      <width>80</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Type:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- Type Combo -->
   <widget class="QComboBox" name="comboBoxTypeFilter">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>80</y>
+     <x>420</x>
+     <y>100</y>
      <width>150</width>
      <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-   </string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
   </widget>
-
-  <!-- Category Label -->
   <widget class="QLabel" name="labelCategory">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>80</y>
-     <width>80</width>
+     <x>639</x>
+     <y>100</y>
+     <width>91</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Category:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- Category Combo -->
   <widget class="QComboBox" name="comboBoxCategoryFilter">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>80</y>
+     <x>750</x>
+     <y>100</y>
      <width>150</width>
      <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-   </string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
   </widget>
-
-  <!-- From Label -->
   <widget class="QLabel" name="labelFrom">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>140</y>
+     <x>280</x>
+     <y>160</y>
      <width>80</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>From:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- From Date -->
   <widget class="QDateEdit" name="dateEditFrom">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>140</y>
+     <x>420</x>
+     <y>160</y>
      <width>150</width>
      <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-   </string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
   </widget>
-
-  <!-- To Label -->
   <widget class="QLabel" name="labelTo">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>140</y>
+     <x>660</x>
+     <y>160</y>
      <width>80</width>
      <height>25</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
+   </property>
    <property name="text">
     <string>To:</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     color: rgb(0, 0, 0);
-   </string>
-   </property>
   </widget>
-
-  <!-- To Date -->
   <widget class="QDateEdit" name="dateEditTo">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>140</y>
+     <x>750</x>
+     <y>160</y>
      <width>150</width>
      <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-     font: 600 11pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-   </string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
   </widget>
-
-  <!-- Apply Filter -->
   <widget class="QPushButton" name="buttonApplyFilter">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>200</y>
-     <width>180</width>
+     <x>549</x>
+     <y>220</y>
+     <width>191</width>
      <height>40</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
    <property name="text">
     <string>Apply Filter</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 12pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-     border: 2px solid black;
-     border-radius: 6px;
-   </string>
-   </property>
   </widget>
-
-  <!-- Clear Filter -->
   <widget class="QPushButton" name="buttonClearFilter">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>200</y>
-     <width>180</width>
+     <x>759</x>
+     <y>220</y>
+     <width>191</width>
      <height>40</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
    <property name="text">
     <string>Clear Filter</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 12pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-     border: 2px solid black;
-     border-radius: 6px;
-   </string>
-   </property>
   </widget>
-
-  <!-- Export Button -->
   <widget class="QPushButton" name="buttonExport">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>200</y>
-     <width>180</width>
+     <x>339</x>
+     <y>220</y>
+     <width>191</width>
      <height>40</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
    <property name="text">
     <string>Export Transactions</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">
-     font: 600 12pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-     border: 2px solid black;
-     border-radius: 6px;
-   </string>
-   </property>
   </widget>
-
-  <!-- Table -->
   <widget class="QTableWidget" name="tableWidgetTransactions">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>180</x>
      <y>270</y>
      <width>920</width>
-     <height>350</height>
+     <height>261</height>
     </rect>
-   </property>
-  </widget>
-
-  <!-- Back -->
-  <widget class="QPushButton" name="buttonBack">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>640</y>
-     <width>200</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Back to Homepage</string>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 12pt "Segoe UI";
-     background: white;
-     color: rgb(0, 0, 0);
-     border: 2px solid black;
-     border-radius: 6px;
-   </string>
+     QTableWidget {
+       background-color: white;
+       color: black;
+       font: 12pt &quot;Segoe UI&quot;;
+     }
+     QHeaderView::section {
+       background-color: #dcdcdc;
+       font-weight: bold;
+       border: 1px solid black;
+     }
+     QTableWidget::item {
+       padding: 5px;
+     }
+    </string>
    </property>
   </widget>
-
+  <widget class="QPushButton" name="buttonBack">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>550</y>
+     <width>221</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 700 16pt &quot;Segoe UI&quot;; background-color: rgb(189, 189, 189); color: black; border: 2px solid black; border-radius: 6px;</string>
+   </property>
+   <property name="text">
+    <string>BACK TO HOMEPAGE</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

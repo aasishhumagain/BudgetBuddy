@@ -21,9 +21,14 @@ profilepage::profilepage(int userId, QWidget *parent) :
     currentUserId(userId)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
 
-    connect(ui->buttonBack, &QPushButton::clicked, this, &profilepage::on_buttonBack_clicked);
+    // Set the welcome message with bold and uppercase username
+    QString userName = DatabaseManager::instance().getUserNameById(currentUserId);
+    ui->labelWelcome->setText("Welcome, <b>" + userName.toUpper() + "!</b>");
 
+    // Load profile photo
     QByteArray imageData = DatabaseManager::instance().getUserPhoto(currentUserId);
     if (!imageData.isEmpty()) {
         QPixmap pix;
@@ -32,6 +37,8 @@ profilepage::profilepage(int userId, QWidget *parent) :
     } else {
         ui->labelPhoto->setText("No photo");
     }
+
+    connect(ui->buttonBack, &QPushButton::clicked, this, &profilepage::on_buttonBack_clicked);
 }
 
 profilepage::~profilepage()

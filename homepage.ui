@@ -39,7 +39,7 @@ background-color: rgb(255, 252, 248);</string>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="labelWelcome">
     <property name="geometry">
      <rect>
       <x>-30</x>
@@ -54,7 +54,7 @@ background-color: transparent;
 color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
-     <string>      Welcome, Let's Get Started!!</string>
+     <string>      Welcome, [USER] </string>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonAddTransaction">

@@ -11,6 +11,8 @@ monthlygoals::monthlygoals(int userId, QWidget *parent)
     , currentUserId(userId)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
 
     ui->comboBoxMonth->addItems({"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"});
     ui->spinBoxYear->setRange(2000, 2100);

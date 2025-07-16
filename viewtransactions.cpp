@@ -22,6 +22,8 @@ viewtransactions::viewtransactions(QWidget *parent, int userId) :
     currentUserId(userId)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
 
     this->currentUserName = DatabaseManager::instance().getUserNameById(currentUserId);
 

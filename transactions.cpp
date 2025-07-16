@@ -16,6 +16,8 @@ transactions::transactions(QWidget *parent, int userId) :
     currentUserId(userId)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
 
     // Amount validator
     QDoubleValidator *validator = new QDoubleValidator(0.01, 1000000.00, 2, this);

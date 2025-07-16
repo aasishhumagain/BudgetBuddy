@@ -10,6 +10,8 @@ signup::signup(QWidget *parent) :
     ui(new Ui::signup)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->setWindowState(Qt::WindowMaximized);
 
     // Set placeholder text
     ui->lineEditUsername->setPlaceholderText("Enter Username");

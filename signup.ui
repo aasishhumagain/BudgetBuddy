@@ -21,15 +21,15 @@
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>80</y>
-     <width>300</width>
+     <x>480</x>
+     <y>130</y>
+     <width>431</width>
      <height>40</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 18pt &quot;Segoe UI&quot;;
+     font: 700 35pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
     </string>
    </property>
@@ -43,15 +43,15 @@
   <widget class="QLabel" name="labelUsername">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>180</y>
+     <x>480</x>
+     <y>230</y>
      <width>100</width>
      <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+     font: 600 16pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
     </string>
    </property>
@@ -62,8 +62,8 @@
   <widget class="QLineEdit" name="lineEditUsername">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>180</y>
+     <x>620</x>
+     <y>230</y>
      <width>200</width>
      <height>35</height>
     </rect>
@@ -85,15 +85,15 @@
   <widget class="QLabel" name="labelPassword">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>230</y>
+     <x>480</x>
+     <y>280</y>
      <width>100</width>
      <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+     font: 600 16pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
     </string>
    </property>
@@ -104,8 +104,8 @@
   <widget class="QLineEdit" name="lineEditPassword">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>230</y>
+     <x>620</x>
+     <y>280</y>
      <width>200</width>
      <height>35</height>
     </rect>
@@ -130,10 +130,10 @@
   <widget class="QCheckBox" name="checkBoxShowPassword">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>235</y>
+     <x>840</x>
+     <y>280</y>
      <width>151</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -149,15 +149,15 @@
   <widget class="QLabel" name="labelConfirmPwd">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>280</y>
-     <width>140</width>
+     <x>419</x>
+     <y>330</y>
+     <width>201</width>
      <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 11pt &quot;Segoe UI&quot;;
+     font: 600 16pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
     </string>
    </property>
@@ -168,8 +168,8 @@
   <widget class="QLineEdit" name="lineEditConfirmPwd">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>280</y>
+     <x>620</x>
+     <y>330</y>
      <width>200</width>
      <height>35</height>
     </rect>
@@ -194,23 +194,24 @@
   <widget class="QPushButton" name="buttonCreateAccount">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>350</y>
+     <x>620</x>
+     <y>400</y>
      <width>200</width>
      <height>45</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">
-     font: 600 12pt &quot;Segoe UI&quot;;
+     font: 700 16pt &quot;Segoe UI&quot;;
      color: rgb(0, 0, 0);
-     background: white;
+
+background-color: rgb(147, 147, 147);
      border: 2px solid black;
      border-radius: 6px;
    </string>
    </property>
    <property name="text">
-    <string>Signup</string>
+    <string>SIGN UP</string>
    </property>
   </widget>
  </widget>
