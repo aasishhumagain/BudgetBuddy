@@ -9,7 +9,7 @@ class viewtransactions;
 
 class viewtransactions : public QDialog
 {
-    Q_OBJECT   // ✅ Must be here!
+    Q_OBJECT
 
 public:
     explicit viewtransactions(QWidget *parent = nullptr, int userId = -1);
@@ -28,7 +28,7 @@ private:
     Ui::viewtransactions *ui;
     int currentUserId;
 
-    QString currentUserName;   // ✅ This is fine now!
+    QString currentUserName;
 };
 
 #endif // VIEWTRANSACTIONS_H

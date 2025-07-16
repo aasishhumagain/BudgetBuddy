@@ -121,8 +121,8 @@ void transactions::on_buttonSubmit_clicked()
                 this,
                 "⚠️ Monthly Limit Exceeded",
                 QString("This expense exceeds your monthly goal!\n\n"
-                        "Monthly Limit: ₹%1\nSpent So Far: ₹%2\nRemaining: ₹%3\n"
-                        "Attempting to Add: ₹%4\nYou’d exceed by: ₹%5\n\n"
+                        "Monthly Limit: %1\nSpent So Far: %2\nRemaining: %3\n"
+                        "Attempting to Add: %4\nYou’d exceed by: %5\n\n"
                         "Do you still want to add this transaction?")
                     .arg(totalGoal)
                     .arg(totalSpent)
