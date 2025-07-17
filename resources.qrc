@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/images">
-        <file>blob.png</file>
-    </qresource>
+ <qresource prefix="/">
+  <file>images/blob.png</file>
+ </qresource>
 </RCC>

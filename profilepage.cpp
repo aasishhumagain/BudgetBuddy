@@ -33,7 +33,7 @@ profilepage::profilepage(int userId, QWidget *parent) :
     if (!imageData.isEmpty()) {
         QPixmap pix;
         pix.loadFromData(imageData);
-        ui->labelPhoto->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        ui->labelPhoto->setPixmap(pix.scaled(ui->labelPhoto->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     } else {
         ui->labelPhoto->setText("No photo");
     }
@@ -97,7 +97,7 @@ void profilepage::on_buttonChangePhoto_clicked()
     if (DatabaseManager::instance().updateUserPhoto(currentUserId, imageData)) {
         QPixmap pix;
         pix.loadFromData(imageData);
-        ui->labelPhoto->setPixmap(pix.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        ui->labelPhoto->setPixmap(pix.scaled(ui->labelPhoto->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
         QMessageBox::information(this, "Success", "Profile photo updated!");
     } else {
         QMessageBox::warning(this, "Error", "Failed to save photo to database.");
