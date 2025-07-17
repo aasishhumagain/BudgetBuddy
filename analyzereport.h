@@ -12,7 +12,7 @@ class analyzereport : public QDialog
     Q_OBJECT
 
 public:
-    explicit analyzereport(int userId, QWidget *parent = nullptr);  // ✅ update this
+    explicit analyzereport(int userId, QWidget *parent = nullptr);  // Constructor with user ID
     ~analyzereport();
 
 private slots:
@@ -20,10 +20,10 @@ private slots:
     void onFilterClicked();
 
 private:
-    void generatePieChart(const QString &month, int year);
+    void generatePieChart(const QString &month, int year);  // Core chart + UI updater
 
     Ui::analyzereport *ui;
-    int currentUserId;  // ✅ to store passed user ID
+    int currentUserId;  // Stores current user ID for filtering
 };
 
 #endif // ANALYZEREPORT_H

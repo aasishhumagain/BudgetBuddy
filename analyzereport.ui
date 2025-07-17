@@ -248,6 +248,25 @@
     <string>Back to Homepage</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelNetBalance">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>220</y>
+     <width>700</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
+   </property>
+   <property name="text">
+    <string>Income - Expenses:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

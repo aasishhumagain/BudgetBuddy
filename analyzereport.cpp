@@ -55,6 +55,7 @@ void analyzereport::generatePieChart(const QString &month, int year)
     int monthIndex = ui->comboBoxMonth->currentIndex() + 1;
     QString formattedMonth = QString("%1").arg(monthIndex, 2, 10, QChar('0'));
 
+
     // 1. Total Income
     double totalIncome = 0.0;
     QSqlQuery incomeQuery;
@@ -110,7 +111,13 @@ void analyzereport::generatePieChart(const QString &month, int year)
     ui->labelTotalExpenses->setText("Total Expenses: " + QString::number(totalExpense, 'f', 2));
     ui->labelTotalMonthlyGoal->setText("Total Monthly Goal: " + QString::number(goalAmount, 'f', 2));
     double remaining = goalAmount - totalExpense;
+    double income_remaining = totalIncome - totalExpense;
     ui->labelRemainingBudget->setText("Remaining Budget: " + QString::number(remaining, 'f', 2));
+    ui->labelNetBalance->setText("Remaining Net Balance:: " + QString::number(income_remaining, 'f', 2));
+
+
+    double netBalance = totalIncome - totalExpense;
+    ui->labelNetBalance->setText("Income - Expenses: " + QString::number(netBalance, 'f', 2));
 
     // 5. Category Breakdown for Pie Chart
     QPieSeries *series = new QPieSeries();
