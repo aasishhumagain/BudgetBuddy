@@ -11,11 +11,17 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     QDialog(parent)
 {
     setWindowTitle("Reset Password");
+    setStyleSheet("background-color: rgb(202, 219, 194);");
+
+    QString commonStyle = "font: 10pt \"Segoe UI\"; background-color: transparent; color: black;";
 
     // Labels
     QLabel *labelUsername = new QLabel("Username:");
     QLabel *labelNewPassword = new QLabel("Enter new password:");
     QLabel *labelConfirmPassword = new QLabel("Confirm new password:");
+    labelUsername->setStyleSheet(commonStyle);
+    labelNewPassword->setStyleSheet(commonStyle);
+    labelConfirmPassword->setStyleSheet(commonStyle);
 
     // Inputs
     lineEditUsername = new QLineEdit();
@@ -25,13 +31,19 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     lineEditNewPassword->setEchoMode(QLineEdit::Password);
     lineEditConfirmPassword->setEchoMode(QLineEdit::Password);
 
-    // Show password checkbox - now placed BELOW both fields
+    lineEditUsername->setStyleSheet(commonStyle);
+    lineEditNewPassword->setStyleSheet(commonStyle);
+    lineEditConfirmPassword->setStyleSheet(commonStyle);
+
+    // Show password checkbox
     checkBoxShowPassword = new QCheckBox("Show password");
-    checkBoxShowPassword->setStyleSheet("font: 600 10pt \"Segoe UI\"; color: black;");
+    checkBoxShowPassword->setStyleSheet("font: 600 10pt \"Segoe UI\"; background-color: transparent; color: black;");
 
     // Buttons
     buttonReset = new QPushButton("Reset Password");
     buttonCancel = new QPushButton("Cancel");
+    buttonReset->setStyleSheet(commonStyle);
+    buttonCancel->setStyleSheet(commonStyle);
 
     // Form layout
     QFormLayout *formLayout = new QFormLayout;
@@ -47,7 +59,7 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     // Main layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(formLayout);
-    mainLayout->addWidget(checkBoxShowPassword);  // Show password below all inputs
+    mainLayout->addWidget(checkBoxShowPassword);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
