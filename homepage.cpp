@@ -19,6 +19,12 @@ homepage::homepage(int userId, QWidget *parent)
     this->setWindowFlags(Qt::Window);
     this->setWindowState(Qt::WindowMaximized);
     ui->labelWelcome->setText("Welcome, Let's get started!");
+    QPixmap Pixmap(":/images/icon.png");
+    ui->labelIcon->setPixmap(Pixmap);
+
+
+
+ui->labelIcon->setScaledContents(true);
 }
 
 
