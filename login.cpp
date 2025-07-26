@@ -24,14 +24,19 @@ login::login(QWidget *parent) :
 
     // Set up blob image as full background
 
-    QPixmap Pixmap(":/images/blob.png"); // Uses the image from resources.qrc
-    if (!Pixmap.isNull()) {
-        ui->labelBlob->setPixmap(Pixmap);
+    QPixmap Pixmap1(":/images/blob.png"); // Uses the image from resources.qrc
+    if (!Pixmap1.isNull()) {
+        ui->labelBlob->setPixmap(Pixmap1);
     } else {
         qDebug() << "❌ Failed to load blob.png";
+        QPixmap Pixmap2(":/images/icon.png");
+         ui->labelIcon->setPixmap(Pixmap2);
+
+
     }
     ui->labelBlob->setScaledContents(true);
-    ui->labelBlob->lower(); // Send blob behind all UI elements
+    ui->labelBlob->lower();
+  ui->labelIcon->setScaledContents(true);    // Send blob behind all UI elements
 
     // Setup password field
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
