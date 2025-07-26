@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>BudgetBuddy - Monthly Goals</string>
+   <string>BudgetBuddy</string>
   </property>
   <property name="styleSheet">
    <string notr="true">
