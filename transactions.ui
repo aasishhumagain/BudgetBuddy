@@ -21,10 +21,10 @@
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>60</y>
-     <width>461</width>
-     <height>40</height>
+     <x>410</x>
+     <y>50</y>
+     <width>541</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -43,7 +43,7 @@
   <widget class="QLabel" name="labelAmount">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>450</x>
      <y>140</y>
      <width>111</width>
      <height>31</height>
@@ -61,7 +61,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLineEdit" name="lineEditAmount">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>560</x>
      <y>134</y>
      <width>251</width>
      <height>51</height>
@@ -87,8 +87,8 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="labelCategory">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>194</y>
+     <x>450</x>
+     <y>190</y>
      <width>111</width>
      <height>41</height>
     </rect>
@@ -106,7 +106,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QComboBox" name="comboBoxCategory">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>560</x>
      <y>200</y>
      <width>251</width>
      <height>51</height>
@@ -125,7 +125,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="labelType">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>450</x>
      <y>254</y>
      <width>111</width>
      <height>41</height>
@@ -144,7 +144,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QComboBox" name="comboBoxType">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>560</x>
      <y>266</y>
      <width>251</width>
      <height>51</height>
@@ -162,7 +162,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="labelDate">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>450</x>
      <y>330</y>
      <width>131</width>
      <height>41</height>
@@ -181,7 +181,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QDateEdit" name="dateEdit">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>560</x>
      <y>330</y>
      <width>251</width>
      <height>51</height>
@@ -200,7 +200,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="labelRemarks">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>450</x>
      <y>394</y>
      <width>111</width>
      <height>41</height>
@@ -219,7 +219,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLineEdit" name="lineEditRemarks">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>560</x>
      <y>396</y>
      <width>252</width>
      <height>51</height>
@@ -242,8 +242,8 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="buttonSubmit">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>462</y>
+     <x>560</x>
+     <y>470</y>
      <width>251</width>
      <height>51</height>
     </rect>
@@ -252,7 +252,7 @@ color: rgb(0, 0, 0);</string>
     <string notr="true">
      font: 700 18pt &quot;Segoe UI&quot;;
 
-background-color: rgb(189, 189, 189);
+background-color: #FFFFF0;
      color: rgb(0, 0, 0);
      border: 2px solid black;
      border-radius: 6px;
@@ -265,7 +265,7 @@ background-color: rgb(189, 189, 189);
   <widget class="QPushButton" name="buttonBack">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>560</x>
      <y>540</y>
      <width>251</width>
      <height>51</height>
@@ -275,7 +275,7 @@ background-color: rgb(189, 189, 189);
     <string notr="true">
      font: 700 18pt &quot;Segoe UI&quot;;
 
-background-color: rgb(189, 189, 189);
+background-color: rgb(184, 184, 184);
      color: rgb(0, 0, 0);
      border: 2px solid black;
      border-radius: 6px;
