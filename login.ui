@@ -106,7 +106,7 @@ color: rgb(0, 0, 0);</string>
    <property name="styleSheet">
     <string notr="true">color: rgb(0, 0, 0);
 background-color: transparent;
-font: 600 9pt &quot;Segoe UI&quot;;
+font: 700 10pt &quot;Segoe UI&quot;;
 border : none;
 border-color: transparent;</string>
    </property>
@@ -124,7 +124,8 @@ border-color: transparent;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(58, 116, 86);
+    <string notr="true">;
+background-color: rgb(63, 129, 87);
 font: 700 14pt &quot;Segoe UI&quot;;
 color: rgb(0, 0, 0);
 border: 2px solid rgb(0, 0, 0);
@@ -137,7 +138,7 @@ border-radius : 8px;</string>
   <widget class="QLabel" name="labelOr">
    <property name="geometry">
     <rect>
-     <x>610</x>
+     <x>600</x>
      <y>390</y>
      <width>111</width>
      <height>21</height>
@@ -145,7 +146,7 @@ border-radius : 8px;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: transparent;
-font: 600 9pt &quot;Segoe UI&quot;;
+font: 700 10pt &quot;Segoe UI&quot;;
 color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
@@ -175,30 +176,42 @@ border-radius : 8px;</string>
   <widget class="QLabel" name="labelIcon">
    <property name="geometry">
     <rect>
-     <x>910</x>
-     <y>140</y>
-     <width>37</width>
-     <height>12</height>
+     <x>809</x>
+     <y>30</y>
+     <width>350</width>
+     <height>350</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent;
+</string>
+   </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resources.qrc">:/images/icon.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="labelBlob">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>10</y>
+     <x>300</x>
+     <y>0</y>
      <width>691</width>
-     <height>651</height>
+     <height>661</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent;</string>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
