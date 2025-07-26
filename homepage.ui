@@ -31,7 +31,7 @@
    <property name="styleSheet">
     <string notr="true">
 border: 2px solid rgb(0,0,0);
-background-color: rgb(255, 252, 248);</string>
+background-color: #FFFFF0;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Shape::StyledPanel</enum>
@@ -42,7 +42,7 @@ background-color: rgb(255, 252, 248);</string>
    <widget class="QLabel" name="labelWelcome">
     <property name="geometry">
      <rect>
-      <x>-30</x>
+      <x>0</x>
       <y>0</y>
       <width>831</width>
       <height>81</height>
@@ -68,7 +68,7 @@ color: rgb(0, 0, 0);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">
-background-color: rgb(255, 252, 248);
+background-color: #FFFFF0;
 border: 2px solid rgb(0,0,0);
 border-radius : 20px;
 font: 600 18pt &quot;Segoe UI&quot;;
@@ -89,7 +89,7 @@ color:rgb(0, 0, 0)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">
-background-color: rgb(255, 252, 248);
+background-color: #FFFFF0;
 border: 2px solid rgb(0,0,0);
 border-radius : 20px;
 font: 600 18pt &quot;Segoe UI&quot;;
@@ -110,7 +110,7 @@ color:rgb(0, 0, 0)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">
-background-color: rgb(255, 252, 248);
+background-color: #FFFFF0;
 border: 2px solid rgb(0,0,0);
 border-radius : 20px;
 font: 600 18pt &quot;Segoe UI&quot;;
@@ -131,7 +131,7 @@ color:rgb(0, 0, 0)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">
-background-color: rgb(255, 252, 248);
+background-color: #FFFFF0;
 border: 2px solid rgb(0,0,0);
 border-radius : 20px;
 font: 600 18pt &quot;Segoe UI&quot;;
@@ -153,8 +153,8 @@ color:rgb(0, 0, 0)</string>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(202, 202, 202);
-font: 600 15pt &quot;Segoe UI&quot;;
+background-color: rgb(184, 184, 184);
+font: 700 15pt &quot;Segoe UI&quot;;
 border: 2px solid rgb(0, 0, 0);
 border-radius : 6px;</string>
    </property>
@@ -173,8 +173,8 @@ border-radius : 6px;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(202, 202, 202);
-font: 600 15pt &quot;Segoe UI&quot;;
+background-color: rgb(184, 184, 184);
+font: 700 15pt &quot;Segoe UI&quot;;
 border: 2px solid rgb(0, 0, 0);
 border-radius : 6px;</string>
    </property>
@@ -182,7 +182,25 @@ border-radius : 6px;</string>
     <string>LOGOUT</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelIcon">
+   <property name="geometry">
+    <rect>
+     <x>-100</x>
+     <y>-40</y>
+     <width>300</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resources.qrc">:/images/icon.png</pixmap>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
