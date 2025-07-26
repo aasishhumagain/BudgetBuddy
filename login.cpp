@@ -23,7 +23,7 @@ login::login(QWidget *parent) :
     ui->lineEditPassword->setPlaceholderText("Enter Password");
 
     // Set up blob image as full background
-    ui->labelBlob->setGeometry(0, 0, this->width(), this->height());
+
     QPixmap Pixmap(":/images/blob.png"); // Uses the image from resources.qrc
     if (!Pixmap.isNull()) {
         ui->labelBlob->setPixmap(Pixmap);
