@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     }
 
     login loginWindow;
-    loginWindow.show();
+   loginWindow.showMaximized(); ;
 
     return a.exec();
 }
