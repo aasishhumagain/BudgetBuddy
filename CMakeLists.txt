@@ -11,11 +11,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # -------- Find Required Qt Modules --------
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Charts)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Charts PrintSupport)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts PrintSupport)
-
 
 # -------- All Source Files --------
 set(PROJECT_SOURCES
@@ -30,7 +27,10 @@ set(PROJECT_SOURCES
     viewtransactions.cpp viewtransactions.h viewtransactions.ui
     analyzereport.cpp analyzereport.h analyzereport.ui
     forgotpassword.cpp forgotpassword.h
-
+    forgotpassword.h forgotpassword.cpp
+    profilepage.h profilepage.cpp profilepage.ui
+    changepassword.h changepassword.cpp
+    resources.qrc                    # ✅ appicon.ico included via QRC
 )
 
 # -------- Add Executable --------
@@ -38,12 +38,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(BudgetBuddy_2
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        forgotpassword.h forgotpassword.cpp
-        profilepage.h profilepage.cpp profilepage.ui
-        changepassword.h changepassword.cpp
-        resources.qrc
-
-
     )
 else()
     add_executable(BudgetBuddy_2 ${PROJECT_SOURCES})
@@ -58,7 +52,6 @@ target_link_libraries(BudgetBuddy_2
     Qt${QT_VERSION_MAJOR}::Sql
     Qt${QT_VERSION_MAJOR}::Charts
     Qt${QT_VERSION_MAJOR}::PrintSupport
-
 )
 
 # -------- macOS/iOS Configuration (Optional) --------
