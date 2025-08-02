@@ -22,9 +22,7 @@ login::login(QWidget *parent) :
     ui->lineEditUsername->setPlaceholderText("Enter Username");
     ui->lineEditPassword->setPlaceholderText("Enter Password");
 
-    // Set up blob image as full background
-
-    QPixmap Pixmap1(":/images/blob.png"); // Uses the image from resources.qrc
+    QPixmap Pixmap1(":/images/blob.png");
     if (!Pixmap1.isNull()) {
         ui->labelBlob->setPixmap(Pixmap1);
     } else {
@@ -36,12 +34,8 @@ login::login(QWidget *parent) :
     }
     ui->labelBlob->setScaledContents(true);
     ui->labelBlob->lower();
-  ui->labelIcon->setScaledContents(true);    // Send blob behind all UI elements
-
-    // Setup password field
+    ui->labelIcon->setScaledContents(true);
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
-
-    // Connect checkbox to toggle visibility
     connect(ui->checkBoxPassword, &QCheckBox::toggled, this, &login::on_checkBoxPassword_toggled);
 }
 

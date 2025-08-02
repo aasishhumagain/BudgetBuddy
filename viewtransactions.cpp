@@ -1,6 +1,5 @@
 #include "viewtransactions.h"
 #include "ui_viewtransactions.h"
-
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QTableWidgetItem>
@@ -78,7 +77,6 @@ void viewtransactions::loadTransactionData()
 
     int row = 0;
 
-    // 🟦 Fetch transactions
     if (selectedCategory != "Monthly Goal") {
         QString sql = R"(
             SELECT id, date, category, type, amount, remarks
@@ -118,7 +116,6 @@ void viewtransactions::loadTransactionData()
         }
     }
 
-    // 🟨 Fetch monthly goals if category is "All" or explicitly "Monthly Goal"
     if (selectedCategory == "All" || selectedCategory == "Monthly Goal") {
         QSqlQuery goalQuery;
         goalQuery.prepare(R"(
@@ -186,7 +183,7 @@ void viewtransactions::on_buttonExport_clicked()
         int rows = ui->tableWidgetTransactions->rowCount();
         for (int i = 0; i < rows; ++i) {
             QStringList rowData;
-            for (int j = 1; j < 6; ++j) { // skip ID
+            for (int j = 1; j < 6; ++j) {
                 QString cell = ui->tableWidgetTransactions->item(i, j)->text();
                 cell.replace(",", " ");
                 rowData << cell;
@@ -202,7 +199,7 @@ void viewtransactions::on_buttonExport_clicked()
         int rows = ui->tableWidgetTransactions->rowCount();
         for (int i = 0; i < rows; ++i) {
             html += "<tr>";
-            for (int j = 1; j < 6; ++j) { // skip ID
+            for (int j = 1; j < 6; ++j) {
                 QString cell = ui->tableWidgetTransactions->item(i, j)->text();
                 html += "<td>" + cell + "</td>";
             }
@@ -289,8 +286,8 @@ void viewtransactions::deleteSelectedTransaction()
 
 void viewtransactions::clearFilters()
 {
-    ui->comboBoxTypeFilter->setCurrentIndex(0);    // All
-    ui->comboBoxCategoryFilter->setCurrentIndex(0); // All
+    ui->comboBoxTypeFilter->setCurrentIndex(0);
+    ui->comboBoxCategoryFilter->setCurrentIndex(0);
 
     QDate today = QDate::currentDate();
     QDate firstOfMonth(today.year(), today.month(), 1);

@@ -33,5 +33,4 @@ private:
 
     void showMessage(const QString &msg);
 };
-
 #endif // CHANGEPASSWORD_H

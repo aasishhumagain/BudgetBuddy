@@ -83,7 +83,7 @@ void DatabaseManager::initializeTables()
 QString DatabaseManager::getUserNameById(int userId)
 {
     QSqlQuery query;
-    query.prepare("SELECT username FROM users WHERE id = :id"); // ✅ Correct column name!
+    query.prepare("SELECT username FROM users WHERE id = :id");
     query.bindValue(":id", userId);
     if (query.exec() && query.next()) {
         return query.value(0).toString();

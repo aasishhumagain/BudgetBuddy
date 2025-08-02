@@ -10,9 +10,7 @@ int main(int argc, char *argv[])
         qDebug() << "Database failed to open!";
         return -1;
     }
-
     login loginWindow;
     loginWindow.show();
-
     return a.exec();
 }

@@ -34,7 +34,6 @@ void monthlygoals::showMessage(const QString &msg)
 
 void monthlygoals::onSubmitClicked()
 {
-    // DEBUG: Show all rows in monthly_goals
     QSqlQuery debugQuery;
     if (debugQuery.exec("SELECT user_id, year, month, amount FROM monthly_goals")) {
         while (debugQuery.next()) {
@@ -61,8 +60,6 @@ void monthlygoals::onSubmitClicked()
         showMessage("Amount must be greater than zero.");
         return;
     }
-
-    // ✅ Use INSERT OR REPLACE to avoid UNIQUE constraint error
     QSqlQuery query;
     query.prepare(R"(
         INSERT INTO monthly_goals (user_id, month, year, amount)

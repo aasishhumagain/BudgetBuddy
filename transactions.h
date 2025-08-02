@@ -12,7 +12,7 @@ class transactions : public QDialog
     Q_OBJECT
 
 public:
-    explicit transactions(QWidget *parent = nullptr, int userId = -1); // userId passed
+    explicit transactions(QWidget *parent = nullptr, int userId = -1);
     ~transactions();
 
 private slots:
@@ -22,7 +22,7 @@ private slots:
 
 private:
     Ui::transactions *ui;
-    int currentUserId; // store userId
+    int currentUserId;
     void showMessage(const QString &msg);
 };
 
