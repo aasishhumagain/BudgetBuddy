@@ -4,6 +4,7 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QDebug>
 
 monthlygoals::monthlygoals(int userId, QWidget *parent)
     : QDialog(parent)
@@ -23,7 +24,7 @@ monthlygoals::monthlygoals(int userId, QWidget *parent)
     ui->spinBoxYear->setValue(QDate::currentDate().year());
 
     connect(ui->buttonSubmit, &QPushButton::clicked, this, &monthlygoals::onSubmitClicked);
-    connect(ui->buttonBack, &QPushButton::clicked, this, &::monthlygoals::on_buttonBack_clicked);
+    connect(ui->buttonBack, &QPushButton::clicked, this, &monthlygoals::on_buttonBack_clicked);
 }
 
 monthlygoals::~monthlygoals()
@@ -38,10 +39,11 @@ void monthlygoals::showMessage(const QString &msg)
 
 void monthlygoals::onSubmitClicked()
 {
+    // Optional debug: print all monthly_goals
     QSqlQuery debugQuery;
     if (debugQuery.exec("SELECT user_id, year, month, amount FROM monthly_goals")) {
-        while (debugQuery.next())
-        {
+        while (debugQuery.next()) {
+            qDebug() << "Goal Row - User:" << debugQuery.value(0).toInt()
             << "Year:" << debugQuery.value(1).toInt()
             << "Month:" << debugQuery.value(2).toString()
             << "Amount:" << debugQuery.value(3).toDouble();
@@ -50,8 +52,8 @@ void monthlygoals::onSubmitClicked()
         qDebug() << "DEBUG query failed:" << debugQuery.lastError().text();
     }
 
-    int monthIndex = ui->comboBoxMonth->currentIndex(); // 0-based index
-    QString month = QString("%1").arg(monthIndex + 1, 2, 10, QChar('0')); // convert to "01"-"12"
+    int monthIndex = ui->comboBoxMonth->currentIndex(); // 0-based
+    QString month = QString("%1").arg(monthIndex + 1, 2, 10, QChar('0')); // "01"-"12"
     int year = ui->spinBoxYear->value();
     QString amountText = ui->lineEditAmount->text();
 
