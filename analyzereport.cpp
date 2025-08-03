@@ -3,15 +3,14 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QChart>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarCategoryAxis>
 #include <QVBoxLayout>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDate>
 #include <QDebug>
-#include <QtCharts/QBarSet>
-#include <QtCharts/QBarSeries>
-#include <QtCharts/QBarCategoryAxis>
-
 
 analyzereport::analyzereport(int userId, QWidget *parent) :
     QDialog(parent),
@@ -22,18 +21,16 @@ analyzereport::analyzereport(int userId, QWidget *parent) :
     this->setWindowFlags(Qt::Window);
     this->setWindowState(Qt::WindowMaximized);
 
-    QStringList months = {
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    };
-    ui->comboBoxMonth->addItems(months);
-
-    ui->spinBoxYear->setRange(2000, 2100);
-    ui->spinBoxYear->setValue(QDate::currentDate().year());
-
     connect(ui->buttonBack, &QPushButton::clicked, this, &analyzereport::onBackButtonClicked);
-    connect(ui->buttonFilter, &QPushButton::clicked, this, &analyzereport::onFilterClicked);
+    connect(ui->buttonApplyFilter, &QPushButton::clicked, this, &analyzereport::onFilterClicked);
+    connect(ui->buttonClearFilter, &QPushButton::clicked, this, [this]() {
+        ui->dateEditFrom->setDate(QDate::currentDate().addMonths(-1));
+        ui->dateEditTo->setDate(QDate::currentDate());
+    });
+
     ui->comboBoxChartType->addItems({"Category Pie Chart", "Income vs Expense Bar Chart"});
+    ui->dateEditFrom->setDate(QDate::currentDate().addMonths(-1));
+    ui->dateEditTo->setDate(QDate::currentDate());
 }
 
 analyzereport::~analyzereport()
@@ -48,22 +45,19 @@ void analyzereport::onBackButtonClicked()
 
 void analyzereport::onFilterClicked()
 {
-    QString month = ui->comboBoxMonth->currentText();
-    int year = ui->spinBoxYear->value();
-
+    QDate fromDate = ui->dateEditFrom->date();
+    QDate toDate = ui->dateEditTo->date();
     QString chartType = ui->comboBoxChartType->currentText();
+
     if (chartType == "Income vs Expense Bar Chart") {
-        generateBarChart(month, year);
+        generateBarChart(fromDate, toDate);
     } else {
-        generatePieChart(month, year);
+        generatePieChart(fromDate, toDate);
     }
 }
 
-void analyzereport::generateBarChart(const QString &month, int year)
+void analyzereport::generateBarChart(const QDate &fromDate, const QDate &toDate)
 {
-    int monthIndex = ui->comboBoxMonth->currentIndex() + 1;
-    QString formattedMonth = QString("%1").arg(monthIndex, 2, 10, QChar('0'));
-
     double totalIncome = 0.0, totalExpense = 0.0;
     QSqlQuery query;
 
@@ -72,12 +66,11 @@ void analyzereport::generateBarChart(const QString &month, int year)
         FROM transactions
         WHERE type = 'Income'
           AND user_id = :userId
-          AND strftime('%m', date) = :month
-          AND strftime('%Y', date) = :year
+          AND date BETWEEN :from AND :to
     )");
     query.bindValue(":userId", currentUserId);
-    query.bindValue(":month", formattedMonth);
-    query.bindValue(":year", QString::number(year));
+    query.bindValue(":from", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to", toDate.toString("yyyy-MM-dd"));
     if (query.exec() && query.next())
         totalIncome = query.value(0).toDouble();
 
@@ -86,34 +79,38 @@ void analyzereport::generateBarChart(const QString &month, int year)
         FROM transactions
         WHERE type = 'Expense'
           AND user_id = :userId
-          AND strftime('%m', date) = :month
-          AND strftime('%Y', date) = :year
+          AND date BETWEEN :from AND :to
     )");
     query.bindValue(":userId", currentUserId);
-    query.bindValue(":month", formattedMonth);
-    query.bindValue(":year", QString::number(year));
+    query.bindValue(":from", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to", toDate.toString("yyyy-MM-dd"));
     if (query.exec() && query.next())
         totalExpense = query.value(0).toDouble();
 
-    QBarSet *set = new QBarSet("Amount");
-    *set << totalIncome << totalExpense;
+    QBarSet *incomeSet = new QBarSet("Income");
+    QBarSet *expenseSet = new QBarSet("Expense");
+    *incomeSet << totalIncome;
+    *expenseSet << totalExpense;
+    incomeSet->setColor(Qt::blue);
+    expenseSet->setColor(Qt::red);
 
     QBarSeries *series = new QBarSeries();
-    series->append(set);
+    series->append(incomeSet);
+    series->append(expenseSet);
 
     QStringList categories;
-    categories << "Income" << "Expense";
+    categories << " ";
 
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
 
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Income vs Expense - " + month + " " + QString::number(year));
+    chart->setTitle("Income vs Expense (" + fromDate.toString("MMM d") + " to " + toDate.toString("MMM d") + ")");
     chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
     chart->createDefaultAxes();
-    chart->legend()->setVisible(false);
+    chart->legend()->setVisible(true);
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -132,98 +129,78 @@ void analyzereport::generateBarChart(const QString &month, int year)
     layout->addWidget(chartView);
 }
 
-void analyzereport::generatePieChart(const QString &month, int year)
+void analyzereport::generatePieChart(const QDate &fromDate, const QDate &toDate)
 {
-    int monthIndex = ui->comboBoxMonth->currentIndex() + 1;
-    QString formattedMonth = QString("%1").arg(monthIndex, 2, 10, QChar('0'));
+    double totalIncome = 0.0, totalExpense = 0.0, goalAmount = 0.0;
 
+    QSqlQuery query;
 
-    double totalIncome = 0.0;
-    QSqlQuery incomeQuery;
-    incomeQuery.prepare(R"(
-        SELECT SUM(amount)
-        FROM transactions
-        WHERE type = 'Income'
-          AND user_id = :userId
-          AND strftime('%m', date) = :month
-          AND strftime('%Y', date) = :year
+    query.prepare(R"(
+        SELECT SUM(amount) FROM transactions
+        WHERE type = 'Income' AND user_id = :userId
+          AND date BETWEEN :from AND :to
     )");
-    incomeQuery.bindValue(":userId", currentUserId);
-    incomeQuery.bindValue(":month", formattedMonth);
-    incomeQuery.bindValue(":year", QString::number(year));
-    if (incomeQuery.exec() && incomeQuery.next())
-        totalIncome = incomeQuery.value(0).toDouble();
+    query.bindValue(":userId", currentUserId);
+    query.bindValue(":from", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to", toDate.toString("yyyy-MM-dd"));
+    if (query.exec() && query.next())
+        totalIncome = query.value(0).toDouble();
 
-    double totalExpense = 0.0;
-    QSqlQuery expenseQuery;
-    expenseQuery.prepare(R"(
-        SELECT SUM(amount)
-        FROM transactions
-        WHERE type = 'Expense'
-          AND user_id = :userId
-          AND strftime('%m', date) = :month
-          AND strftime('%Y', date) = :year
+    query.prepare(R"(
+        SELECT SUM(amount) FROM transactions
+        WHERE type = 'Expense' AND user_id = :userId
+          AND date BETWEEN :from AND :to
     )");
-    expenseQuery.bindValue(":userId", currentUserId);
-    expenseQuery.bindValue(":month", formattedMonth);
-    expenseQuery.bindValue(":year", QString::number(year));
-    if (expenseQuery.exec() && expenseQuery.next())
-        totalExpense = expenseQuery.value(0).toDouble();
+    query.bindValue(":userId", currentUserId);
+    query.bindValue(":from", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to", toDate.toString("yyyy-MM-dd"));
+    if (query.exec() && query.next())
+        totalExpense = query.value(0).toDouble();
 
-    double goalAmount = 0.0;
-    QSqlQuery goalQuery;
-    goalQuery.prepare(R"(
-        SELECT SUM(amount)
-        FROM monthly_goals
+    query.prepare(R"(
+        SELECT SUM(amount) FROM monthly_goals
         WHERE user_id = :userId
-          AND month = :month
-          AND year = :year
+          AND date BETWEEN :from AND :to
     )");
-    goalQuery.bindValue(":userId", currentUserId);
-    goalQuery.bindValue(":month", formattedMonth);
-    goalQuery.bindValue(":year", year);
-    if (goalQuery.exec() && goalQuery.next())
-        goalAmount = goalQuery.value(0).toDouble();
+    query.bindValue(":userId", currentUserId);
+    query.bindValue(":from", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to", toDate.toString("yyyy-MM-dd"));
+    if (query.exec() && query.next())
+        goalAmount = query.value(0).toDouble();
 
     ui->labelTotalIncome->setText("Total Income: " + QString::number(totalIncome, 'f', 2));
     ui->labelTotalExpenses->setText("Total Expenses: " + QString::number(totalExpense, 'f', 2));
     ui->labelTotalMonthlyGoal->setText("Total Monthly Goal: " + QString::number(goalAmount, 'f', 2));
-    double remaining = goalAmount - totalExpense;
-    double income_remaining = totalIncome - totalExpense;
-    ui->labelRemainingBudget->setText("Remaining Budget: " + QString::number(remaining, 'f', 2));
-    ui->labelNetBalance->setText("Remaining Net Balance:: " + QString::number(income_remaining, 'f', 2));
-
 
     double netBalance = totalIncome - totalExpense;
+    double remaining = goalAmount - totalExpense;
+
+    ui->labelRemainingBudget->setText("Remaining Budget: " + QString::number(remaining, 'f', 2));
     ui->labelNetBalance->setText("Income - Expenses: " + QString::number(netBalance, 'f', 2));
 
     QPieSeries *series = new QPieSeries();
-    double totalCategoryExpense = 0.0;
     QVector<QPair<QString, double>> categoryData;
+    double totalCategoryExpense = 0.0;
 
-    QSqlQuery catQuery;
-    catQuery.prepare(R"(
-        SELECT category, SUM(amount)
-        FROM transactions
-        WHERE type = 'Expense'
-          AND user_id = :userId
-          AND strftime('%m', date) = :month
-          AND strftime('%Y', date) = :year
+    query.prepare(R"(
+        SELECT category, SUM(amount) FROM transactions
+        WHERE type = 'Expense' AND user_id = :userId
+          AND date BETWEEN :from AND :to
         GROUP BY category
     )");
-    catQuery.bindValue(":userId", currentUserId);
-    catQuery.bindValue(":month", formattedMonth);
-    catQuery.bindValue(":year", QString::number(year));
-    if (!catQuery.exec()) {
-        qDebug() << "Chart query failed:" << catQuery.lastError().text();
+    query.bindValue(":userId", currentUserId);
+    query.bindValue(":from", fromDate.toString("yyyy-MM-dd"));
+    query.bindValue(":to", toDate.toString("yyyy-MM-dd"));
+    if (!query.exec()) {
+        qDebug() << "Chart query failed:" << query.lastError().text();
         return;
     }
 
-    while (catQuery.next()) {
-        QString category = catQuery.value(0).toString();
-        double amount = catQuery.value(1).toDouble();
-        totalCategoryExpense += amount;
+    while (query.next()) {
+        QString category = query.value(0).toString();
+        double amount = query.value(1).toDouble();
         categoryData.append({category, amount});
+        totalCategoryExpense += amount;
     }
 
     if (categoryData.isEmpty()) {
@@ -234,29 +211,25 @@ void analyzereport::generatePieChart(const QString &month, int year)
 
     for (const auto &entry : categoryData) {
         QPieSlice *slice = series->append(entry.first, entry.second);
+        double percentage = (entry.second / totalCategoryExpense) * 100.0;
+        QString tooltip = QString("%1: %2 (%3%)")
+                              .arg(entry.first)
+                              .arg(entry.second, 0, 'f', 2)
+                              .arg(QString::number(percentage, 'f', 1));
+        slice->setLabel(tooltip);
+        slice->setLabelVisible(true);
 
-        if (totalCategoryExpense > 0) {
-            double percentage = (entry.second / totalCategoryExpense) * 100.0;
-            QString tooltip = QString("%1: %2 (%3%)")
-                                  .arg(entry.first)
-                                  .arg(entry.second, 0, 'f', 2)
-                                  .arg(QString::number(percentage, 'f', 1));
-
-            slice->setLabel(tooltip);
-            slice->setLabelVisible(true);
-
-            connect(slice, &QPieSlice::hovered, this, [=](bool hovered) {
-                if (hovered)
-                    ui->labelHoverInfo->setText(tooltip);
-                else
-                    ui->labelHoverInfo->clear();
-            });
-        }
+        connect(slice, &QPieSlice::hovered, this, [=](bool hovered) {
+            if (hovered)
+                ui->labelHoverInfo->setText(tooltip);
+            else
+                ui->labelHoverInfo->clear();
+        });
     }
 
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Expenses in " + month + " " + QString::number(year));
+    chart->setTitle("Expenses by Category (" + fromDate.toString("MMM d") + " to " + toDate.toString("MMM d") + ")");
     chart->legend()->setAlignment(Qt::AlignRight);
 
     QChartView *chartView = new QChartView(chart);
