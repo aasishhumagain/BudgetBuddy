@@ -10,7 +10,7 @@ class DatabaseManager : public QObject
 
 public:
     explicit DatabaseManager(QObject *parent = nullptr);
-    ~DatabaseManager(); // ✅ Must be public
+    ~DatabaseManager();
 
     static DatabaseManager& instance();
 
@@ -18,7 +18,7 @@ public:
     bool openDatabase();
     void closeDatabase();
 
-    QString getUserNameById(int userId); // ✅ Declare this!
+    QString getUserNameById(int userId);
 
     QString getUserPhotoPath(int userId);
     bool updateUserPhoto(int userId, const QByteArray &imageData);

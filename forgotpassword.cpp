@@ -15,7 +15,6 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
 
     QString commonStyle = "font: 10pt \"Segoe UI\"; background-color: transparent; color: black;";
 
-    // Labels
     QLabel *labelUsername = new QLabel("Username:");
     QLabel *labelNewPassword = new QLabel("Enter new password:");
     QLabel *labelConfirmPassword = new QLabel("Confirm new password:");
@@ -23,7 +22,6 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     labelNewPassword->setStyleSheet(commonStyle);
     labelConfirmPassword->setStyleSheet(commonStyle);
 
-    // Inputs
     lineEditUsername = new QLineEdit();
     lineEditNewPassword = new QLineEdit();
     lineEditConfirmPassword = new QLineEdit();
@@ -35,35 +33,29 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
     lineEditNewPassword->setStyleSheet(commonStyle);
     lineEditConfirmPassword->setStyleSheet(commonStyle);
 
-    // Show password checkbox
     checkBoxShowPassword = new QCheckBox("Show password");
     checkBoxShowPassword->setStyleSheet("font: 600 10pt \"Segoe UI\"; background-color: transparent; color: black;");
 
-    // Buttons
     buttonReset = new QPushButton("Reset Password");
     buttonCancel = new QPushButton("Cancel");
     buttonReset->setStyleSheet(commonStyle);
     buttonCancel->setStyleSheet(commonStyle);
 
-    // Form layout
     QFormLayout *formLayout = new QFormLayout;
     formLayout->addRow(labelUsername, lineEditUsername);
     formLayout->addRow(labelNewPassword, lineEditNewPassword);
     formLayout->addRow(labelConfirmPassword, lineEditConfirmPassword);
 
-    // Button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(buttonReset);
     buttonLayout->addWidget(buttonCancel);
 
-    // Main layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(formLayout);
     mainLayout->addWidget(checkBoxShowPassword);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
-    // Connections
     connect(buttonReset, &QPushButton::clicked, this, &ForgotPassword::on_buttonReset_clicked);
     connect(buttonCancel, &QPushButton::clicked, this, &ForgotPassword::on_buttonCancel_clicked);
     connect(checkBoxShowPassword, &QCheckBox::toggled, this, &ForgotPassword::on_checkBoxShowPassword_toggled);
@@ -71,7 +63,7 @@ ForgotPassword::ForgotPassword(QWidget *parent) :
 
 ForgotPassword::~ForgotPassword()
 {
-    // Children auto-deleted
+
 }
 
 void ForgotPassword::showMessage(const QString &msg)
@@ -95,7 +87,6 @@ void ForgotPassword::on_buttonReset_clicked()
         return;
     }
 
-    // Enforce password complexity
     if (newPassword.length() < 8) {
         showMessage("Password must be at least 8 characters long.");
         return;
@@ -114,7 +105,6 @@ void ForgotPassword::on_buttonReset_clicked()
         return;
     }
 
-    // Check if old password is the same
     QSqlQuery checkQuery;
     checkQuery.prepare("SELECT password FROM users WHERE username = :username");
     checkQuery.bindValue(":username", username);
@@ -129,7 +119,6 @@ void ForgotPassword::on_buttonReset_clicked()
         return;
     }
 
-    // Update password
     QSqlQuery updateQuery;
     updateQuery.prepare("UPDATE users SET password = :password WHERE username = :username");
     updateQuery.bindValue(":password", newPassword);
@@ -137,7 +126,7 @@ void ForgotPassword::on_buttonReset_clicked()
 
     if (updateQuery.exec() && updateQuery.numRowsAffected() > 0) {
         showMessage("Password updated successfully!");
-        accept();  // Close dialog
+        accept();
     } else {
         showMessage("Password update failed.");
     }
@@ -145,7 +134,7 @@ void ForgotPassword::on_buttonReset_clicked()
 
 void ForgotPassword::on_buttonCancel_clicked()
 {
-    reject();  // Close dialog
+    reject();
 }
 
 void ForgotPassword::on_checkBoxShowPassword_toggled(bool checked)

@@ -21,10 +21,7 @@ homepage::homepage(int userId, QWidget *parent)
     ui->labelWelcome->setText("Welcome, Let's get started!");
     QPixmap Pixmap(":/images/icon.png");
     ui->labelIcon->setPixmap(Pixmap);
-
-
-
-ui->labelIcon->setScaledContents(true);
+    ui->labelIcon->setScaledContents(true);
 }
 
 
@@ -67,9 +64,7 @@ void homepage::on_buttonProfile_clicked()
 
 void homepage::handleLogout()
 {
-    this->close();  // Close homepage
-    // Maybe reopen login
-    // Example:
+    this->close();
     login *loginPage = new login();
     loginPage->show();
 }
@@ -89,5 +84,4 @@ void homepage::on_buttonLogout_clicked()
         login *loginPage = new login();
         loginPage->show();
     }
-    // If Cancel, do nothing — user stays on homepage.
 }

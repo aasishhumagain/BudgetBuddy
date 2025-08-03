@@ -16,10 +16,8 @@ ChangePassword::ChangePassword(int userId, QWidget *parent) :
     setWindowTitle("Change Password");
     setStyleSheet("background-color: rgb(202, 219, 194);");
 
-    // Style string
     QString commonStyle = "font: 10pt \"Segoe UI\"; background-color: transparent; color: black;";
 
-    // Labels
     QLabel *labelOldPassword = new QLabel("Enter old password:");
     QLabel *labelNewPassword = new QLabel("Enter new password:");
     QLabel *labelConfirmPassword = new QLabel("Confirm new password:");
@@ -27,7 +25,6 @@ ChangePassword::ChangePassword(int userId, QWidget *parent) :
     labelNewPassword->setStyleSheet(commonStyle);
     labelConfirmPassword->setStyleSheet(commonStyle);
 
-    // Inputs
     lineEditOldPassword = new QLineEdit();
     lineEditNewPassword = new QLineEdit();
     lineEditConfirmPassword = new QLineEdit();
@@ -40,35 +37,29 @@ ChangePassword::ChangePassword(int userId, QWidget *parent) :
     lineEditNewPassword->setStyleSheet(commonStyle);
     lineEditConfirmPassword->setStyleSheet(commonStyle);
 
-    // Show password checkbox
     checkBoxShowPassword = new QCheckBox("Show password");
     checkBoxShowPassword->setStyleSheet("font: 600 10pt \"Segoe UI\"; background-color: transparent; color: black;");
 
-    // Main buttons
     buttonChange = new QPushButton("Change Password");
     buttonCancel = new QPushButton("Cancel");
     buttonChange->setStyleSheet(commonStyle);
     buttonCancel->setStyleSheet(commonStyle);
 
-    // Form layout
     QFormLayout *formLayout = new QFormLayout;
     formLayout->addRow(labelOldPassword, lineEditOldPassword);
     formLayout->addRow(labelNewPassword, lineEditNewPassword);
     formLayout->addRow(labelConfirmPassword, lineEditConfirmPassword);
 
-    // Button layout
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(buttonChange);
     buttonLayout->addWidget(buttonCancel);
 
-    // Main layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(formLayout);
     mainLayout->addWidget(checkBoxShowPassword);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
-    // Connections
     connect(buttonChange, &QPushButton::clicked, this, &ChangePassword::on_buttonChange_clicked);
     connect(buttonCancel, &QPushButton::clicked, this, &ChangePassword::on_buttonCancel_clicked);
     connect(checkBoxShowPassword, &QCheckBox::toggled, this, &ChangePassword::on_checkBoxShowPassword_toggled);
@@ -76,7 +67,7 @@ ChangePassword::ChangePassword(int userId, QWidget *parent) :
 
 ChangePassword::~ChangePassword()
 {
-    // Children auto-deleted by Qt
+
 }
 
 void ChangePassword::showMessage(const QString &msg)
@@ -105,7 +96,6 @@ void ChangePassword::on_buttonChange_clicked()
         return;
     }
 
-    // Enforce password complexity
     if (newPassword.length() < 8) {
         showMessage("Password must be at least 8 characters long.");
         return;

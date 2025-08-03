@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>BudgetBuddy</string>
+   <string>BudgetBuddy - Login</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(202, 219, 194);</string>

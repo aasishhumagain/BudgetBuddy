@@ -17,7 +17,7 @@ public:
 
 private slots:
     void on_buttonCreateAccount_clicked();
-    void on_checkBoxShowPassword_toggled(bool checked); // NEW
+    void on_checkBoxShowPassword_toggled(bool checked);
 
 private:
     Ui::signup *ui;

@@ -24,11 +24,9 @@ profilepage::profilepage(int userId, QWidget *parent) :
     this->setWindowFlags(Qt::Window);
     this->setWindowState(Qt::WindowMaximized);
 
-    // Set the welcome message with bold and uppercase username
     QString userName = DatabaseManager::instance().getUserNameById(currentUserId);
     ui->labelWelcome->setText("Welcome, <b>" + userName.toUpper() + "!</b>");
 
-    // Load profile photo
     QByteArray imageData = DatabaseManager::instance().getUserPhoto(currentUserId);
     if (!imageData.isEmpty()) {
         QPixmap pix;
@@ -54,7 +52,7 @@ void profilepage::on_buttonBack_clicked()
 void profilepage::on_buttonChangePassword_clicked()
 {
     ChangePassword dlg(currentUserId, this);
-    dlg.exec();  // Opens password change dialog
+    dlg.exec();
 }
 
 void profilepage::on_buttonLogout_clicked()
@@ -72,7 +70,6 @@ void profilepage::on_buttonLogout_clicked()
         login *loginPage = new login();
         loginPage->show();
     }
-    // If Cancel, do nothing.
 }
 
 void profilepage::on_buttonChangePhoto_clicked()

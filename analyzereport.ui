@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>BudgetBuddy</string>
+   <string>BudgetBuddy - Report Analysis</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(202, 219, 194);</string>
@@ -76,6 +76,41 @@
      <x>640</x>
      <y>110</y>
      <width>121</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+     font: 600 11pt &quot;Segoe UI&quot;;
+     background: white;
+     color: black;
+     border: 2px solid black;
+     border-radius: 5px;
+    </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelChartType">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>80</y>
+     <width>151</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; color: black;</string>
+   </property>
+   <property name="text">
+    <string>Chart Type:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxChartType">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>110</y>
+     <width>151</width>
      <height>30</height>
     </rect>
    </property>

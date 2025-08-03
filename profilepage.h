@@ -23,7 +23,7 @@ private slots:
 
 private:
     Ui::profilepage *ui;
-    int currentUserId; // ✅ Only need this now!
+    int currentUserId;
 
 signals:
     void logoutRequested();

@@ -6,7 +6,6 @@
 #include <QDoubleValidator>
 #include <QDebug>
 
-// Category presets
 const QStringList expenseCategories = {"Food", "Fuel", "Rent", "Shopping", "Misc"};
 const QStringList incomeCategories = {"Salary", "Misc"};
 
@@ -19,21 +18,17 @@ transactions::transactions(QWidget *parent, int userId) :
     this->setWindowFlags(Qt::Window);
     this->setWindowState(Qt::WindowMaximized);
 
-    // Amount validator
     QDoubleValidator *validator = new QDoubleValidator(0.01, 1000000.00, 2, this);
     validator->setNotation(QDoubleValidator::StandardNotation);
     ui->lineEditAmount->setValidator(validator);
 
-    // Type selector
     ui->comboBoxType->addItems({"Expense", "Income"});
     ui->dateEdit->setCalendarPopup(true);
     ui->dateEdit->setDate(QDate::currentDate());
 
-    // Connect events
     connect(ui->comboBoxType, &QComboBox::currentTextChanged, this, &transactions::on_typeChanged);
     connect(ui->buttonBack, &QPushButton::clicked, this, &transactions::on_buttonBack_clicked);
 
-    // Set initial category options
     on_typeChanged(ui->comboBoxType->currentText());
 }
 

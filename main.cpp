@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QIcon>
 #include "databasemanager.h"
 #include "login.h"
 

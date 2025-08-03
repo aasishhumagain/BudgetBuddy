@@ -12,7 +12,7 @@ class monthlygoals : public QDialog
     Q_OBJECT
 
 public:
-    explicit monthlygoals(int userId, QWidget *parent = nullptr);  // pass userId from homepage
+    explicit monthlygoals(int userId, QWidget *parent = nullptr);
     ~monthlygoals();
 
 private slots:
@@ -21,8 +21,8 @@ private slots:
 
 private:
     Ui::monthlygoals *ui;
-    int currentUserId;  // ✅ only here
-    void showMessage(const QString &msg);  // ✅ Add this line
+    int currentUserId;
+    void showMessage(const QString &msg);
 };
 
 #endif // MONTHLYGOALS_H
