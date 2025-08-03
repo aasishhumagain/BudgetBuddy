@@ -21,8 +21,8 @@ private slots:
     void onFilterClicked();
 
 private:
-    void generatePieChart(const QDate &fromDate, const QDate &toDate);
-    void generateBarChart(const QDate &fromDate, const QDate &toDate);
+    void generatePieChart(const QDate &monthStart, const QDate &monthEnd);
+    void generateBarChart(const QDate &monthStart, const QDate &monthEnd);
 
     Ui::analyzereport *ui;
     int currentUserId;

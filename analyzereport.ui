@@ -16,7 +16,6 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(202, 219, 194);</string>
   </property>
-
   <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
@@ -27,109 +26,73 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 700 35pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 700 35pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Your Report Analysis</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelChartType">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>110</y>
+     <x>520</x>
+     <y>160</y>
      <width>121</width>
      <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 12pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Chart Type:</string>
    </property>
   </widget>
-
   <widget class="QComboBox" name="comboBoxChartType">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>110</y>
+     <x>650</x>
+     <y>160</y>
      <width>200</width>
      <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 11pt "Segoe UI"; background: white; color: black; border: 2px solid black; border-radius: 5px;</string>
+    <string notr="true">font: 600 11pt &quot;Segoe UI&quot;; background: white; color: black; border: 2px solid black; border-radius: 5px;</string>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelFrom">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>260</x>
      <y>160</y>
      <width>80</width>
      <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
-    <string>From:</string>
+    <string>Month\</string>
    </property>
   </widget>
-
-  <widget class="QDateEdit" name="dateEditFrom">
+  <widget class="QComboBox" name="comboBoxMonth">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>360</x>
      <y>160</y>
      <width>150</width>
      <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 12pt "Segoe UI"; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
    </property>
   </widget>
-
-  <widget class="QLabel" name="labelTo">
-   <property name="geometry">
-    <rect>
-     <x>600</x>
-     <y>160</y>
-     <width>80</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
-   </property>
-   <property name="text">
-    <string>To:</string>
-   </property>
-  </widget>
-
-  <widget class="QDateEdit" name="dateEditTo">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>160</y>
-     <width>150</width>
-     <height>35</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 600 12pt "Segoe UI"; background: white; color: black; border: 2px solid black; border-radius: 6px;</string>
-   </property>
-  </widget>
-
   <widget class="QPushButton" name="buttonApplyFilter">
    <property name="geometry">
     <rect>
@@ -139,14 +102,13 @@
      <height>35</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
+   </property>
    <property name="text">
     <string>Apply Filter</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">font: 600 12pt "Segoe UI"; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
-   </property>
   </widget>
-
   <widget class="QPushButton" name="buttonClearFilter">
    <property name="geometry">
     <rect>
@@ -156,14 +118,13 @@
      <height>35</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
+   </property>
    <property name="text">
     <string>Clear Filter</string>
    </property>
-   <property name="styleSheet">
-    <string notr="true">font: 600 12pt "Segoe UI"; background-color: #FFFFF0; color: black; border: 2px solid black; border-radius: 6px;</string>
-   </property>
   </widget>
-
   <widget class="QLabel" name="labelTotalIncome">
    <property name="geometry">
     <rect>
@@ -174,13 +135,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Total Income:</string>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelTotalExpenses">
    <property name="geometry">
     <rect>
@@ -191,13 +151,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Total Expenses:</string>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelTotalMonthlyGoal">
    <property name="geometry">
     <rect>
@@ -208,13 +167,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Total Monthly Goal:</string>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelRemainingBudget">
    <property name="geometry">
     <rect>
@@ -225,13 +183,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Remaining Budget:</string>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelNetBalance">
    <property name="geometry">
     <rect>
@@ -242,16 +199,15 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Income - Expenses:</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
   <widget class="QFrame" name="chartWidget">
    <property name="geometry">
     <rect>
@@ -265,13 +221,12 @@
     <string notr="true">background: white; border: 2px solid black;</string>
    </property>
    <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
+    <enum>QFrame::Shape::StyledPanel</enum>
    </property>
    <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
+    <enum>QFrame::Shadow::Raised</enum>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelHoverInfo">
    <property name="geometry">
     <rect>
@@ -282,13 +237,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 12pt "Segoe UI"; color: rgb(0, 85, 255);</string>
+    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; color: rgb(0, 85, 255);</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
   <widget class="QLabel" name="labelWarnings">
    <property name="geometry">
     <rect>
@@ -299,16 +253,15 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 16pt "Segoe UI"; color: red;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: red;</string>
    </property>
    <property name="text">
     <string>Status:</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-
   <widget class="QPushButton" name="buttonBack">
    <property name="geometry">
     <rect>
@@ -319,13 +272,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 700 14pt "Segoe UI"; color: black; border: 2px solid black; border-radius: 6px; background-color: rgb(184, 184, 184);</string>
+    <string notr="true">font: 700 14pt &quot;Segoe UI&quot;; color: black; border: 2px solid black; border-radius: 6px; background-color: rgb(184, 184, 184);</string>
    </property>
    <property name="text">
     <string>BACK TO HOMEPAGE</string>
    </property>
   </widget>
-
  </widget>
  <resources/>
  <connections/>

@@ -55,23 +55,6 @@ void profilepage::on_buttonChangePassword_clicked()
     dlg.exec();
 }
 
-void profilepage::on_buttonLogout_clicked()
-{
-    QMessageBox::StandardButton reply = QMessageBox::question(
-        this,
-        "Confirm Logout",
-        "Are you sure you want to logout?",
-        QMessageBox::Yes | QMessageBox::Cancel
-        );
-
-    if (reply == QMessageBox::Yes) {
-        this->close();
-
-        login *loginPage = new login();
-        loginPage->show();
-    }
-}
-
 void profilepage::on_buttonChangePhoto_clicked()
 {
     QString filePath = QFileDialog::getOpenFileName(
