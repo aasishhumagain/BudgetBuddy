@@ -4,6 +4,7 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QDebug>
 
 monthlygoals::monthlygoals(int userId, QWidget *parent)
     : QDialog(parent)
@@ -14,12 +15,16 @@ monthlygoals::monthlygoals(int userId, QWidget *parent)
     this->setWindowFlags(Qt::Window);
     this->setWindowState(Qt::WindowMaximized);
 
-    ui->comboBoxMonth->addItems({"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"});
+    ui->comboBoxMonth->addItems({
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    });
+
     ui->spinBoxYear->setRange(2000, 2100);
     ui->spinBoxYear->setValue(QDate::currentDate().year());
 
     connect(ui->buttonSubmit, &QPushButton::clicked, this, &monthlygoals::onSubmitClicked);
-    connect(ui->buttonBack, &QPushButton::clicked, this, &::monthlygoals::on_buttonBack_clicked);
+    connect(ui->buttonBack, &QPushButton::clicked, this, &monthlygoals::on_buttonBack_clicked);
 }
 
 monthlygoals::~monthlygoals()
@@ -34,6 +39,7 @@ void monthlygoals::showMessage(const QString &msg)
 
 void monthlygoals::onSubmitClicked()
 {
+    // Optional debug: print all monthly_goals
     QSqlQuery debugQuery;
     if (debugQuery.exec("SELECT user_id, year, month, amount FROM monthly_goals")) {
         while (debugQuery.next()) {
@@ -46,7 +52,8 @@ void monthlygoals::onSubmitClicked()
         qDebug() << "DEBUG query failed:" << debugQuery.lastError().text();
     }
 
-    QString month = ui->comboBoxMonth->currentText();
+    int monthIndex = ui->comboBoxMonth->currentIndex(); // 0-based
+    QString month = QString("%1").arg(monthIndex + 1, 2, 10, QChar('0')); // "01"-"12"
     int year = ui->spinBoxYear->value();
     QString amountText = ui->lineEditAmount->text();
 
@@ -60,6 +67,7 @@ void monthlygoals::onSubmitClicked()
         showMessage("Amount must be greater than zero.");
         return;
     }
+
     QSqlQuery query;
     query.prepare(R"(
         INSERT INTO monthly_goals (user_id, month, year, amount)

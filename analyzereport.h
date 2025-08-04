@@ -2,6 +2,7 @@
 #define ANALYZEREPORT_H
 
 #include <QDialog>
+#include <QDate>
 
 namespace Ui {
 class analyzereport;
@@ -20,8 +21,8 @@ private slots:
     void onFilterClicked();
 
 private:
-    void generatePieChart(const QString &month, int year);
-    void generateBarChart(const QString &month, int year);
+    void generatePieChart(const QDate &monthStart, const QDate &monthEnd);
+    void generateBarChart(const QDate &monthStart, const QDate &monthEnd);
 
     Ui::analyzereport *ui;
     int currentUserId;

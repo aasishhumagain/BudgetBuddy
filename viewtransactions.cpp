@@ -241,22 +241,31 @@ void viewtransactions::editSelectedTransaction()
     }
 
     QString currentAmount = ui->tableWidgetTransactions->item(row, 4)->text();
-    bool ok;
+    QString currentRemarks = ui->tableWidgetTransactions->item(row, 5)->text();
+
+    bool okAmount, okRemarks;
     double newAmount = QInputDialog::getDouble(this, "Edit Amount",
                                                "Enter new amount:",
-                                               currentAmount.toDouble(), 0, 1e9, 2, &ok);
-    if (!ok) return;
+                                               currentAmount.toDouble(), 0, 1e9, 2, &okAmount);
+    if (!okAmount) return;
+
+    QString newRemarks = QInputDialog::getText(this, "Edit Remarks",
+                                               "Edit transaction remarks:",
+                                               QLineEdit::Normal,
+                                               currentRemarks, &okRemarks);
+    if (!okRemarks) return;
 
     QSqlQuery query;
-    query.prepare("UPDATE transactions SET amount = :amount WHERE id = :id");
+    query.prepare("UPDATE transactions SET amount = :amount, remarks = :remarks WHERE id = :id");
     query.bindValue(":amount", newAmount);
+    query.bindValue(":remarks", newRemarks);
     query.bindValue(":id", id);
 
     if (query.exec()) {
         QMessageBox::information(this, "Updated", "Transaction updated.");
         loadTransactionData();
     } else {
-        QMessageBox::warning(this, "Error", "Update failed.");
+        QMessageBox::warning(this, "Error", "Update failed: " + query.lastError().text());
     }
 }
 
