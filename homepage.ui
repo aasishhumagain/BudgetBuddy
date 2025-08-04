@@ -186,9 +186,9 @@ border-radius : 6px;</string>
    <property name="geometry">
     <rect>
      <x>-100</x>
-     <y>-40</y>
-     <width>300</width>
-     <height>300</height>
+     <y>-30</y>
+     <width>315</width>
+     <height>315</height>
     </rect>
    </property>
    <property name="text">
