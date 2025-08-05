@@ -1,0 +1,10 @@
+Download the ZIP file and then follow the instructions:
+
+Drag all the files from 
+- UIs
+- Header Files
+- CPPs
+- Miscellaneous
+and place it in C:\Users\--\--\BudgetBuddy_2
+
+After that open up QT and enjoy the build!
