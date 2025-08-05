@@ -38,14 +38,14 @@
   <widget class="QLabel" name="labelChartType">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>160</y>
-     <width>121</width>
+     <x>550</x>
+     <y>130</y>
+     <width>91</width>
      <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 600 12pt &quot;Segoe UI&quot;; color: black;</string>
+    <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
     <string>Chart Type:</string>
@@ -55,9 +55,9 @@
    <property name="geometry">
     <rect>
      <x>650</x>
-     <y>160</y>
-     <width>200</width>
-     <height>30</height>
+     <y>130</y>
+     <width>150</width>
+     <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -68,7 +68,7 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>160</y>
+     <y>130</y>
      <width>80</width>
      <height>25</height>
     </rect>
@@ -77,14 +77,14 @@
     <string notr="true">font: 600 16pt &quot;Segoe UI&quot;; color: black;</string>
    </property>
    <property name="text">
-    <string>Month\</string>
+    <string>Month:</string>
    </property>
   </widget>
   <widget class="QComboBox" name="comboBoxMonth">
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>160</y>
+     <y>130</y>
      <width>150</width>
      <height>35</height>
     </rect>
@@ -96,8 +96,8 @@
   <widget class="QPushButton" name="buttonApplyFilter">
    <property name="geometry">
     <rect>
-     <x>870</x>
-     <y>160</y>
+     <x>820</x>
+     <y>130</y>
      <width>150</width>
      <height>35</height>
     </rect>
@@ -112,8 +112,8 @@
   <widget class="QPushButton" name="buttonClearFilter">
    <property name="geometry">
     <rect>
-     <x>1030</x>
-     <y>160</y>
+     <x>990</x>
+     <y>130</y>
      <width>150</width>
      <height>35</height>
     </rect>
@@ -129,7 +129,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>210</y>
+     <y>180</y>
      <width>300</width>
      <height>30</height>
     </rect>
@@ -145,7 +145,7 @@
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>210</y>
+     <y>180</y>
      <width>300</width>
      <height>30</height>
     </rect>
@@ -161,7 +161,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>250</y>
+     <y>220</y>
      <width>300</width>
      <height>30</height>
     </rect>
@@ -177,7 +177,7 @@
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>250</y>
+     <y>220</y>
      <width>300</width>
      <height>30</height>
     </rect>
@@ -193,8 +193,8 @@
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>280</y>
-     <width>700</width>
+     <y>250</y>
+     <width>591</width>
      <height>31</height>
     </rect>
    </property>
@@ -212,7 +212,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>320</y>
+     <y>290</y>
      <width>700</width>
      <height>251</height>
     </rect>
@@ -247,7 +247,7 @@
    <property name="geometry">
     <rect>
      <x>550</x>
-     <y>580</y>
+     <y>550</y>
      <width>200</width>
      <height>30</height>
     </rect>
@@ -266,7 +266,7 @@
    <property name="geometry">
     <rect>
      <x>550</x>
-     <y>620</y>
+     <y>590</y>
      <width>200</width>
      <height>40</height>
     </rect>
