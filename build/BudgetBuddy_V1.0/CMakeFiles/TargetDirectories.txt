@@ -1,0 +1,9 @@
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/BudgetBuddy_2.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/edit_cache.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/rebuild_cache.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/list_install_components.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/install.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/install/local.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/install/strip.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/BudgetBuddy_2_autogen_timestamp_deps.dir
+C:/Users/aasis/Downloads/BudgetBuddy_2/build/BudgetBuddy_V1.0/CMakeFiles/BudgetBuddy_2_autogen.dir
