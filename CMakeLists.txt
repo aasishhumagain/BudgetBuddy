@@ -17,7 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts PrintS
 # -------- All Source Files --------
 set(PROJECT_SOURCES
     main.cpp
-    mainwindow.cpp mainwindow.h mainwindow.ui
+
     databasemanager.cpp databasemanager.h
     login.cpp login.h login.ui
     signup.cpp signup.h signup.ui
@@ -30,7 +30,8 @@ set(PROJECT_SOURCES
     forgotpassword.h forgotpassword.cpp
     profilepage.h profilepage.cpp profilepage.ui
     changepassword.h changepassword.cpp
-    resources.qrc                    # ✅ appicon.ico included via QRC
+    resources.qrc
+    appicon.rc
 )
 
 # -------- Add Executable --------
