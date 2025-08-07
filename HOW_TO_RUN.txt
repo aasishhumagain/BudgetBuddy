@@ -1,0 +1,24 @@
+Instructions for Setting Up the BudgetBuddy_2 Project
+
+1. Download the Provided ZIP File.
+
+2. Extract the Contents of the ZIP File.
+
+3. Navigate to the Following Folders Within the Extracted Directory:
+   - UIs
+   - Header Files
+   - CPPs
+   - Miscellaneous
+
+4. Copy All Files from These Folders and paste them into the following directory on your local machine:
+
+   C:\Users\--\--\BudgetBuddy_2
+
+   Note: Please ensure that the destination directory exists before copying the files. 
+   If it does not, create it manually.
+
+5. Launch Qt Creator.
+
+6. Open the Project from the BudgetBuddy_2 Folder, and allow Qt to configure the build environment as needed.
+
+7. Build and Run the Project to begin using BudgetBuddy_2.
