@@ -126,15 +126,15 @@ BudgetBuddy/
 1. **Install Qt 5 or 6** (ensure QtCharts is included)
 2. Clone the repository:
    ```bash
-   git clone https://github.com/aasishhumagain/BudgetBuddy_test
-   cd BudgetBuddy_test
+   git clone https://github.com/aasishhumagain/BudgetBuddy
+   cd BudgetBuddy
    ```
 3. Build with Qt Creator **or** manually:
    ```bash
    mkdir build && cd build
    cmake ..
    make
-   ./BudgetBuddy_test
+   ./BudgetBuddy
    ```
 
 ---
